@@ -41,8 +41,8 @@
             <button name = "auth" >Войти</button>
         </form>
     
-        <form method="GET" action="auth_vk/index.php">
-            <button type="submit" name="auth">Войти VK</button>
+        <form method="GET" action="auth_vk/">
+            <button type="submit" name="auth">Войти через VK</button>
         </form>
     </div>
     <?php require_once 'footer.php';?>
