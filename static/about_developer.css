@@ -1,0 +1,36 @@
+.head_word{
+    margin-top: 20px;
+    font-size: 28px;
+}
+
+.form_word{
+    font-size: 24px;
+}
+
+p{
+    font-size: 20px;
+}
+
+span{
+    font-size: 20px;
+}
+
+@media (max-width: 1240px) {
+
+    .head_word{
+        margin-top: 15px;
+        font-size: 24px;
+    }
+
+    .form_word{
+        font-size: 20px;
+    }
+
+    p{
+        font-size: 16px;
+    }
+
+    span{
+        font-size: 16px;
+    }
+}

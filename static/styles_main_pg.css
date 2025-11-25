@@ -1,0 +1,266 @@
+.slider-container {
+  margin-top: 50px;
+  position: relative;
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+}
+
+.prev-button, .next-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  color: white;
+}
+
+.prev-button {
+  left: 20px;
+}
+
+.next-button {
+  right: 20px;
+}
+
+.prev-button img, .next-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.container_main_page_content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 50px;
+}
+
+.game_rectangle {
+    width: 100%;
+    height: 100px;
+    background-color: #747474;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.img_game_main{
+  object-fit: cover;
+  width: 175px;
+  height: 85%;
+  margin: 10px;
+}
+
+.text_game_main_description{
+    width: 100%;
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.game_text_main {
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.slider {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.slide.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.head_word{
+    font-size: 36px;
+}
+
+@media (max-width: 1240px) {
+    body {
+        font-size: 24px;
+    }
+
+    .container {
+    max-width: 700px;
+    }
+
+    .container_header{
+    max-width: 800px;
+    }
+
+    .logo_word {
+        margin-top: 75px;
+        margin-bottom: 75px;
+        font-size: 24px;
+    }
+
+    .image-container {
+        width: 75px;
+        height: 75px;
+    }
+
+    input::placeholder {
+        font-size: 18px;
+    }
+
+    .search_icon_main{
+        width: 24px;
+        height: 24px;
+    }
+
+    .input_main_search {
+        height: 12px;
+        padding: 8px;
+        border: 3px solid #484848;
+        font-size: 20px;
+    }
+
+    .header_links a {
+        padding: 8px;
+        font-size: 18px;
+    }
+
+    .slider-container {
+        height: 330px;
+    }
+
+    .prev-button, .next-button {
+        width: 45px;
+        height: 45px;
+    }
+
+    .game_rectangle {
+        height: 75px;
+    }
+
+    .text_game_main_description{
+        font-size: 12px;
+    }
+
+    .game_text_main {
+        font-size: 20px;
+    }
+
+    .head_word{
+        font-size: 24px;
+    }
+}
+@media (max-width: 940px){
+    .slider-container {
+        height: 42vw;
+        width: 100%;
+    }
+
+    .container_header{
+        max-width: 800px;
+    }
+
+    .logo_word {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+
+    .game_rectangle {
+        height: 65px;
+    }
+
+    .header_links ul{
+        display: block;
+    }
+
+    .input_main_search {
+        margin-left: 1%;
+        margin-bottom: 1%;
+    }
+
+    .container_header{
+        justify-content: center;
+    }
+
+    .submit-button {
+        transform: translateY(-58%);
+    }
+
+    .container {
+        padding: 25px; 
+    }
+
+    .head_word{
+        margin-top: 25px;
+    }
+
+    .slider-container {
+        margin-top: 25px;
+    }
+
+    .container_main_page_content {
+        margin-top: 25px;
+    }
+
+    .text_game_main_description{
+        font-size: 12px;
+    }
+
+    .game_text_main {
+        font-size: 16px;
+    }
+
+    .slider a {
+        width: 100%;
+        height: 100%;
+        flex-shrink: 0;
+    }
+
+    .slider {
+        height: 100%; 
+    }
+    
+    .slide img {
+        object-fit: contain;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+

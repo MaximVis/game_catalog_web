@@ -1,0 +1,43 @@
+<?php
+
+// define('DB_HOST', 'localhost');
+// define('DB_NAME', 'game_catalog_2');
+// define('DB_USER', 'postgres');
+// define('DB_PASS', '12345678');
+
+// function get_db_connection() {
+//     $connection_string = sprintf(
+//         "host=%s dbname=%s user=%s password=%s",
+//         DB_HOST, DB_NAME, DB_USER, DB_PASS
+//     );
+    
+//     $dbconn = pg_connect($connection_string);
+    
+//     if (!$dbconn) {
+//         return false;
+//     }
+    
+//     return $dbconn;}
+
+define('DB_HOST', 'gamecatalog2-gamecatalog2.e.aivencloud.com');
+define('DB_NAME', 'defaultdb');
+define('DB_USER', 'avnadmin');
+define('DB_PASS', 'AVNS_YLSxC5mPPaAX7j5VkX6');
+define('DB_PORT', '26989');
+define('DB_SSLMODE', 'require');
+
+function get_db_connection() {
+    $connection_string = sprintf(
+        "host=%s port=%s dbname=%s user=%s password=%s sslmode=%s",
+        DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS, DB_SSLMODE
+    );
+    
+    $dbconn = pg_connect($connection_string);
+    
+    if (!$dbconn) {
+        die("Ошибка подключения к базе данных");
+    }
+    
+    return $dbconn;
+}
+

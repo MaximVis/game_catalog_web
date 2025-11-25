@@ -1,0 +1,84 @@
+.game_rectangle, .game_rectangle_max {
+    width: 100%;
+    height: 100px;
+    background-color: #747474;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.img_game_main, .img_game_main_max{
+  object-fit: cover;
+  width: 200px;
+  height: 85%;
+  aspect-ratio: 27/9;
+  margin: 10px;
+}
+
+.text_game_main_description, .text_game_main_description_max{
+    width: 100%;
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.game_text_main, .game_text_main_max {
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.container_main_page_content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+
+@media (max-width: 1240px) {
+
+    .game_rectangle, .game_rectangle_max {
+        height: 75px;
+    }
+
+    .text_game_main_description, .text_game_main_description_max{
+        font-size: 12px;
+    }
+
+    .game_text_main {
+        font-size: 20px;
+    }
+
+    .img_game_main,  .img_game_main_max{
+        width: 175px;
+        aspect-ratio: 16/9;
+    }
+
+}
+@media (max-width: 940px){
+
+    .game_rectangle, .game_rectangle_max {
+        height: 65px;
+    }
+
+    .text_game_main_description, .text_game_main_description_max{
+        font-size: 12px;
+    }
+
+    .game_text_main {
+        font-size: 16px;
+    }
+
+    .container_main_page_content {
+    margin-top: 25px;
+    }
+}

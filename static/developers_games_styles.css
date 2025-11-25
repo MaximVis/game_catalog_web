@@ -1,0 +1,150 @@
+.container_items_content {
+    display: flex;
+    width: 100%;
+    margin-top: 0px;
+}
+
+.items_content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 70%;
+    order: 1;
+    overflow: hidden;
+}
+
+.items_select {
+    overflow: hidden;
+    padding: 10px;
+    background: #747474;
+    width: 35%;
+    order: 2;
+    margin-left: 10px;
+    height: 100%;
+}
+
+
+.item_rectangle {
+    width: 100%;
+    height: 75px;
+    background-color: #747474;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.img_game_main{
+    object-fit: cover;
+    width: 175px;
+    height: 60px;
+    margin: 10px;
+}
+
+.text_game_main_description{
+    width: 100%;
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.game_text_main {
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.input_items_search {
+    padding: 10px;
+    width: 100%;
+    height: 45px;
+    border: 4px solid #484848;
+    color: white;
+    background: #747474;
+    font-size: 24px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1240px) {
+
+    .input_items_search {
+        font-size: 20px;
+    }
+
+    .input_items_search {
+        padding: 5px;
+        height: 35px;
+        font-size: 18px;
+    }
+
+    .input_items_search::placeholder{
+        font-size: 18px;
+    }
+
+
+    .text_game_main_description{
+        font-size: 14px;
+    }
+
+    .game_text_main {
+        font-size: 20px;
+    }
+
+
+}
+
+@media (max-width: 940px){
+    .container_items_content {
+        display: block;
+    }
+
+    .items_select {
+        padding: 0px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        width: 100%;
+        margin: 0 auto;
+        display: grid;
+        place-items: center;
+    }
+
+    .items_content {
+        padding-top: 25px;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .input_items_search{
+        width: 98%;
+        font-size: 18px;
+        padding: 5px;
+        height: 40px;
+    }
+
+    .input_items_search::placeholder{
+        font-size: 16px;
+    }
+
+    .item_rectangle {
+        height: 65px;
+    }
+
+    .img_game_main{
+        width: 125px;
+        height: 85%;
+    }
+
+    .text_game_main_description{
+        font-size: 12px;
+    }
+
+    .game_text_main {
+        font-size: 16px;
+    }
+}

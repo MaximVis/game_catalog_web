@@ -1,0 +1,258 @@
+.container_items_content {
+    display: flex;
+    width: 100%;
+    margin-top: 0px;
+}
+
+.items_content {
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    width: 70%;
+    order: 1;
+    overflow: hidden;
+}
+
+.items_select {
+    overflow: hidden;
+    padding: 10px;
+    background: #747474;
+    width: 35%;
+    order: 2; 
+    margin-left: 10px; 
+    height: 100%;
+}
+
+
+.item_rectangle {
+    width: 100%; 
+    height: 75px; 
+    background-color: #747474; 
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.img_game_main{
+  object-fit: cover;
+  width: 200px;
+  height: 85%;
+  aspect-ratio: 16/9;
+  margin: 10px;
+}
+
+.text_game_main_description{
+    width: 100%; 
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.game_text_main {
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.input_items_search {
+    padding: 10px;
+    width: 100%;
+    height: 45px;
+    border: 4px solid #484848;
+    color: white;
+    background: #747474;
+    font-size: 24px;
+    box-sizing: border-box;
+}
+
+.items_list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.selectable {
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    border: 4px solid #484848;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.square {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #484848;
+    background-color: transparent;
+    position: relative;
+    flex-shrink: 0;
+}
+
+li.selected .square {
+    background-color: white;
+}
+
+li.selected .square::after {
+    content: '';
+    width: 15px;
+    height: 15px;
+    background-color: #484848;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hidden {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 1240px) {
+
+    .input_items_search {
+        font-size: 20px;
+    }
+
+    .selectable {
+        font-size: 18px;
+        padding: 5px;
+    }
+
+    .input_items_search {
+        padding: 5px;
+        height: 35px;
+        font-size: 18px;
+    }
+
+    .input_items_search::placeholder{
+        font-size: 18px;
+    }
+
+    .square {
+        width: 15px;
+        height: 15px;
+    }
+
+    li.selected .square::after {
+        width: 10px;
+        height: 10px;
+        transform: translate(-45%, -55%);
+    }
+
+    /* .img_game_main{
+        width: 175px;
+        height: 80%;
+    } */
+    .img_game_main{
+        width: 175px;
+        aspect-ratio: 18/9;
+
+    }
+
+    .text_game_main_description{
+        font-size: 14px;
+    }
+
+    .game_text_main {
+        font-size: 20px;
+    }
+
+    .item_rectangle {
+        height: 65px;
+    }
+
+
+}
+
+@media (max-width: 940px){
+    .container_items_content {
+        display: block;
+    }
+
+    .items_select {
+        padding: 0px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        width: 100%;
+        margin: 0 auto;
+        height: auto;
+        display: grid;
+        place-items: center;
+    }
+
+    .items_content {
+        padding-top: 25px;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .selectable {
+       width: 100%;
+       margin-left: 0;
+       box-sizing: border-box;
+       font-size: 18px;
+    }
+
+
+    .input_items_search{
+        width: 98%;
+        font-size: 18px;
+        padding: 5px;
+        height: 40px;
+    }
+
+    .input_items_search::placeholder{
+        font-size: 18px;
+    }
+
+    .items_list {
+        width: 98%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .item_rectangle {
+        height: 60px;
+    }
+
+    .img_game_main{
+      width: 125px;
+      height: 85%;
+    }
+
+    .text_game_main_description{
+        font-size: 12px;
+    }
+
+    .game_text_main {
+        font-size: 16px;
+    }
+}
+
+
+
+

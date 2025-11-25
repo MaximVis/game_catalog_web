@@ -1,0 +1,139 @@
+.container_main_page_content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.game_text_description_game{
+    font-size: 26px;
+}
+
+
+
+
+
+.game_info{
+    margin-top: 25px; 
+    padding: 15px;
+    border: 1px solid #747474;
+    min-height: 40px;
+}
+
+.item_game_info, .genre_tag, .category_tag{
+    display: inline-block;
+    background: #747474;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 26px;
+    margin: 1px; 
+}
+
+.genres_block{
+    margin-bottom: 25px;
+}
+
+.item_block{
+    display: flex;
+    flex-wrap: wrap; gap: 5px;
+}
+
+.head_cat_gen{
+    margin-bottom: 15px; 
+    display: block;
+}
+
+.remove_category, .remove_genre{
+    margin-left: 5px;
+    cursor: pointer;
+    transform: translateY(-10%);
+}
+
+
+.img_game {
+    display: block;
+    max-width: 100%;
+    height: 500px;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.game_text_description_game {
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    font-size: 16px;
+    text-align: justify;
+    padding: 0 10px;
+}
+
+
+
+
+@media (max-width: 1240px) {
+
+    .game_text_description_game{
+        font-size: 22px;
+    }
+
+    .game_info{
+        margin-top: 20px; 
+        padding: 10px;
+    }
+
+    .item_game_info{
+        font-size: 22px;
+    }
+
+    .img_game {
+        height: 450px;
+        padding: 8px;
+    }
+    
+    .game_text_description_game {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+
+}
+@media (max-width: 940px){
+
+    .game_text_description_game{
+        font-size: 18px;
+    }
+
+    .game_info{
+        margin-top: 15px; 
+        padding: 5px;
+    }
+
+    .item_game_info{
+        border-radius: 1px;
+        font-size: 18px;
+    }
+
+    .head_cat_gen{
+        margin-bottom: 10px;
+    }
+
+    .img_game {
+        height: 250px;
+        padding: 6px;
+        border-radius: 8px;
+    }
+    
+    .game_text_description_game {
+        font-size: 16px;
+        line-height: 1.4;
+        padding: 0 5px;
+    }
+
+   
+}
