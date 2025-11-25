@@ -1,16 +1,13 @@
 <?php
-
     require_once 'auth_func.php';
     if (isUserLoggedIn()) {
         header('Location: admin_page.php');
         exit();
     }
-    
 ?>
 
 <!DOCTYPE html>
 <html lang="ru">
-
 
 <head>
     <meta charset="UTF-8">
@@ -21,9 +18,7 @@
     <link rel="stylesheet" href="static/footer.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="static/auth.js" defer></script>
-
 </head>
-
 
 <body>
     <?php require_once 'shapka.php';?>
@@ -32,6 +27,24 @@
         <?php require_once 'shapka_menu.php';?>
 
         <h1 class = "head_word">Авторизация</h1>
+        
+        <?php if (isset($_GET['error'])): ?>
+            <div class="error-message">
+                <?php 
+                switch($_GET['error']) {
+                    case 'vk_auth_failed':
+                        echo 'Ошибка авторизации через VK. Попробуйте снова.';
+                        break;
+                    case 'vk_access_denied':
+                        echo 'Доступ к VK отменен.';
+                        break;
+                    default:
+                        echo 'Произошла ошибка при авторизации.';
+                }
+                ?>
+            </div>
+        <?php endif; ?>
+        
         <form class = "admin_form" id = "auth_form" method="POST">
             <label class="form_word">Логин:</label>
             <input class = "input_form" type="text" id="admin_name" name="admin_name" placeholder="Введите логин"><br>
@@ -47,5 +60,4 @@
     </div>
     <?php require_once 'footer.php';?>
 </body>
-
 </html>

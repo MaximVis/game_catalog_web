@@ -1,11 +1,17 @@
 <?php
-session_start();
+// Подключаем функции аутентификации
 require_once '../auth_func.php';
 
 // Конфигурация VK App
 $client_id = '54349334'; // Замените на ID вашего приложения VK
 $client_secret = 'zVJ0tun5n2uxKo7PPKCB'; // Замените на защищенный ключ вашего приложения VK
 $redirect_uri = 'https://game-catalog-ddgp.onrender.com/auth_vk/callback.php'; // Замените на ваш домен
+
+// Если пользователь уже авторизован, перенаправляем в админку
+if (isUserLoggedIn()) {
+    header('Location: ../admin_page.php');
+    exit();
+}
 
 // Если код авторизации получен
 if (isset($_GET['code'])) {
@@ -43,6 +49,10 @@ if (isset($_GET['code'])) {
             
             // Авторизуем пользователя
             loginUser($login);
+            
+            // Сохраняем информацию VK в сессии
+            $_SESSION['vk_user_id'] = $user_id;
+            $_SESSION['vk_user_name'] = $user_info['first_name'] . ' ' . $user_info['last_name'];
             
             // Перенаправляем в админ-панель
             header('Location: ../admin_page.php');

@@ -1,27 +1,29 @@
 <?php
-
     require_once 'auth_func.php';
 
     if (!isUserLoggedIn()) {
         header('Location: auth_page.php');
         exit();
     }
-?>
 
-<?php
-	require_once 'title_desc_keywords_func.php';
+    // Обработка выхода должна быть в самом начале
+    if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+        logoutUser();
+        header('Location: auth_page.php');
+        exit;
+    }
 
-	$meta = set_meta(
-		'Админ панель', 
-		'Панель администратора, редактирование/удаление/создание новых игр, разработчиков, жанров и категорий',
-		'Панель администратора, удаление, добавление, редактирование, игр, игры, жанры, категории, разработчики'
-	);
+    require_once 'title_desc_keywords_func.php';
+
+    $meta = set_meta(
+        'Админ панель', 
+        'Панель администратора, редактирование/удаление/создание новых игр, разработчиков, жанров и категорий',
+        'Панель администратора, удаление, добавление, редактирование, игр, игры, жанры, категории, разработчики'
+    );
 ?>
 
 <!DOCTYPE html>
 <html lang="ru">
-
-
 
 <head>
     <meta charset="UTF-8">
@@ -37,24 +39,19 @@
     <?php require_once 'shapka.php';?>
     
     <div class="container"><!-- основной контент -->
-		<?php require_once 'shapka_menu.php';?>
+        <?php require_once 'shapka_menu.php';?>
 
         <div class="header_">
-            <span class="login"><?php echo $_SESSION['user_login']; ?></span>
+            <span class="login">
+                <?php 
+                echo $_SESSION['user_login']; 
+                if (isset($_SESSION['vk_user_name'])) {
+                    echo ' (' . $_SESSION['vk_user_name'] . ')';
+                }
+                ?>
+            </span>
             <a href="?action=logout" class="logout">Выход</a>
         </div>
-
-        <?php
-
-            require_once 'auth_func.php';
-
-            if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-                logoutUser();
-                header('Location: auth_page.php');
-                exit;
-            }
-
-        ?>
 
         <h1 class = "head_word">Панель администратора</h1>
         <form action="admin_developers_page.php" method="GET"><button class ="button_menu">Добавить нового разработчика</button></br></form>
