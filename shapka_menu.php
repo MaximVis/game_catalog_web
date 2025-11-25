@@ -1,12 +1,12 @@
 <div class = "container_main_pages">
     <nav class = "header_links"><!-- шапка (меню) -->
         <ul>
-            <li><a href="https://k0j268qj-80.inc1.devtunnels.ms/">Главная</a></li>
-            <li><a href="https://k0j268qj-80.inc1.devtunnels.ms/games_search.php">Игры</a></li>
-            <li><a href="https://k0j268qj-80.inc1.devtunnels.ms/categories.php">Категории</a></li>
-            <li><a href="https://k0j268qj-80.inc1.devtunnels.ms/genre.php">Жанры</a></li>
-            <li><a href="https://k0j268qj-80.inc1.devtunnels.ms/developers.php">Разработчики</a></li>
-            <li><a href="https://k0j268qj-80.inc1.devtunnels.ms/auth_page.php">Войти</a></li>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/games_search.php">Игры</a></li>
+            <li><a href="/categories.php">Категории</a></li>
+            <li><a href="/genre.php">Жанры</a></li>
+            <li><a href="/developers.php">Разработчики</a></li>
+            <li><a href="/auth_page.php">Войти</a></li>
         </ul>
     </nav>
     <form class = "main_search" action="games_search.php" method="GET">
