@@ -1,11 +1,5 @@
 <?php
-// Подключаем функции аутентификации
 require_once '../auth_func.php';
-
-// Конфигурация VK App
-$client_id = '54349334'; // Замените на ID вашего приложения VK
-$client_secret = 'zVJ0tun5n2uxKo7PPKCB'; // Замените на защищенный ключ вашего приложения VK
-$redirect_uri = 'https://game-catalog-ddgp.onrender.com/auth_vk/callback.php'; // Замените на ваш домен
 
 // Если пользователь уже авторизован, перенаправляем в админку
 if (isUserLoggedIn()) {
@@ -13,73 +7,139 @@ if (isUserLoggedIn()) {
     exit();
 }
 
-// Если код авторизации получен
-if (isset($_GET['code'])) {
-    $code = $_GET['code'];
-    
-    // Получаем access token
-    $token_url = "https://oauth.vk.com/access_token?" . http_build_query([
-        'client_id' => $client_id,
-        'client_secret' => $client_secret,
-        'redirect_uri' => $redirect_uri,
-        'code' => $code
-    ]);
-    
-    $token_response = file_get_contents($token_url);
-    $token_data = json_decode($token_response, true);
-    
-    if (isset($token_data['access_token'])) {
-        $access_token = $token_data['access_token'];
-        $user_id = $token_data['user_id'];
-        
-        // Получаем информацию о пользователе
-        $user_url = "https://api.vk.com/method/users.get?" . http_build_query([
-            'user_ids' => $user_id,
-            'fields' => 'first_name,last_name',
-            'access_token' => $access_token,
-            'v' => '5.131'
-        ]);
-        
-        $user_response = file_get_contents($user_url);
-        $user_data = json_decode($user_response, true);
-        
-        if (isset($user_data['response'][0])) {
-            $user_info = $user_data['response'][0];
-            $login = "vk_" . $user_id; // Создаем уникальный логин
-            
-            // Авторизуем пользователя
-            loginUser($login);
-            
-            // Сохраняем информацию VK в сессии
-            $_SESSION['vk_user_id'] = $user_id;
-            $_SESSION['vk_user_name'] = $user_info['first_name'] . ' ' . $user_info['last_name'];
-            
-            // Перенаправляем в админ-панель
-            header('Location: ../admin_page.php');
-            exit();
-        }
-    }
-    
-    // Если что-то пошло не так
-    header('Location: ../auth_page.php?error=vk_auth_failed');
-    exit();
-}
+// ID вашего приложения VK Mini Apps
+$app_id = '54349334'; // Замените на ID вашего приложения
 
-// Если ошибка
-if (isset($_GET['error'])) {
-    header('Location: ../auth_page.php?error=vk_access_denied');
-    exit();
-}
-
-// Первый шаг - перенаправление на авторизацию VK
-$auth_url = "https://oauth.vk.com/authorize?" . http_build_query([
-    'client_id' => $client_id,
-    'redirect_uri' => $redirect_uri,
-    'response_type' => 'code',
-    'scope' => 'email', // Можно добавить другие права при необходимости
-    'display' => 'page'
-]);
-
-header('Location: ' . $auth_url);
-exit();
 ?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация через VK ID</title>
+    <script src="https://unpkg.com/@vkid/sdk@2.0.0/dist/index.min.js"></script>
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .vk-button {
+            background-color: #4a76a8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .loading {
+            color: #666;
+        }
+        .error {
+            color: red;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Авторизация через VK ID</h2>
+        
+        <div id="auth-container">
+            <button class="vk-button" onclick="initVKAuth()">Войти через VK ID</button>
+        </div>
+        
+        <div id="status"></div>
+        
+        <div style="margin-top: 20px;">
+            <a href="../auth_page.php">← Назад к обычной авторизации</a>
+        </div>
+    </div>
+
+    <script>
+        let vkId;
+        
+        function initVKAuth() {
+            const status = document.getElementById('status');
+            status.innerHTML = '<div class="loading">Инициализация VK ID...</div>';
+            
+            try {
+                // Инициализация VK ID
+                vkId = new VKID({
+                    app: <?php echo $app_id; ?>,
+                    redirectUri: '<?php echo "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/callback.php"; ?>',
+                    state: '<?php echo bin2hex(random_bytes(16)); ?>'
+                });
+                
+                // Запуск авторизации
+                vkId.auth({
+                    onSuccess: function(response) {
+                        status.innerHTML = '<div class="loading">Авторизация успешна, обработка...</div>';
+                        
+                        // Отправляем данные на сервер для проверки
+                        processVKAuth(response);
+                    },
+                    onError: function(error) {
+                        console.error('VK ID Auth Error:', error);
+                        status.innerHTML = '<div class="error">Ошибка авторизации: ' + error.error_description + '</div>';
+                    }
+                });
+            } catch (error) {
+                console.error('VK ID Init Error:', error);
+                status.innerHTML = '<div class="error">Ошибка инициализации VK ID</div>';
+            }
+        }
+        
+        function processVKAuth(authData) {
+            // Отправляем данные на сервер для обработки
+            fetch('process_vk_auth.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token: authData.token,
+                    user: authData.user,
+                    type: authData.type
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    status.innerHTML = '<div style="color: green;">Авторизация успешна! Перенаправление...</div>';
+                    setTimeout(() => {
+                        window.location.href = '../admin_page.php';
+                    }, 1000);
+                } else {
+                    status.innerHTML = '<div class="error">Ошибка: ' + data.message + '</div>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                status.innerHTML = '<div class="error">Ошибка связи с сервером</div>';
+            });
+        }
+        
+        // Альтернативный способ для старых версий VK ID
+        function fallbackVKAuth() {
+            const status = document.getElementById('status');
+            status.innerHTML = '<div class="loading">Открывается окно авторизации VK...</div>';
+            
+            // Открываем окно авторизации VK
+            const width = 600;
+            const height = 500;
+            const left = (screen.width - width) / 2;
+            const top = (screen.height - height) / 2;
+            
+            window.open(
+                `https://id.vk.com/auth?return_auth_hash=1&redirect_uri=${encodeURIComponent(window.location.origin + '/auth_vk/callback.php')}&response_type=code&v=1.0&app_id=<?php echo $app_id; ?>`,
+                'VK Auth',
+                `width=${width},height=${height},left=${left},top=${top}`
+            );
+        }
+    </script>
+</body>
+</html>
