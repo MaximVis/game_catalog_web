@@ -32,45 +32,41 @@ $(document).ready(function(){
       $.post("pagination.php", {array_params:array_params, query:query_to_bd}, function(data) {
       var response = JSON.parse(data);
 
-      
-      // Общие настройки
-      const BASE_URL = 'https://k0j268qj-80.inc1.devtunnels.ms';
-
       // Конфигурация для разных типов запросов
       const queryConfig = {
         developers_get: {
           container: '.item.items_content',
-          hrefTemplate: (name) => `${BASE_URL}/developers_games.php?input_items_search=${encodeURIComponent(name)}`,
+          hrefTemplate: (name) => `/developers_games.php?input_items_search=${encodeURIComponent(name)}`,
           itemClass: 'item_rectangle',
           isDeveloper: true
         },
         developers_post: {
           container: '.item.items_content',
-          hrefTemplate: (name) => `${BASE_URL}/developers_games.php?input_items_search=${encodeURIComponent(name)}`,
+          hrefTemplate: (name) => `/developers_games.php?input_items_search=${encodeURIComponent(name)}`,
           itemClass: 'item_rectangle',
           isDeveloper: true
         },
         developers_admin: {
           container: '.item.items_content',
-          hrefTemplate: (name) => `${BASE_URL}/admin_developers_page.php?input_items_search=${encodeURIComponent(name)}`,
+          hrefTemplate: (name) => `/admin_developers_page.php?input_items_search=${encodeURIComponent(name)}`,
           itemClass: 'item_rectangle',
           isDeveloper: true
         },
         games_search_admin: {
           container: '.container_main_page_content',
-          hrefTemplate: (name) => `${BASE_URL}/game_admin.php?game=${encodeURIComponent(name)}`,
+          hrefTemplate: (name) => `/game_admin.php?game=${encodeURIComponent(name)}`,
           itemClass: 'game_rectangle',
           isDeveloper: false
         },
         developers_games: {
           container: '.item.items_content',
-          hrefTemplate: (name) => `${BASE_URL}/game.php?game=${encodeURIComponent(name)}`,
+          hrefTemplate: (name) => `/game.php?game=${encodeURIComponent(name)}`,
           itemClass: 'item_rectangle',
           isDeveloper: false
         },
         default: {
           container: '.container_main_page_content',
-          hrefTemplate: (name) => `${BASE_URL}/game.php?game=${encodeURIComponent(name)}`,
+          hrefTemplate: (name) => `/game.php?game=${encodeURIComponent(name)}`,
           itemClass: 'game_rectangle',
           isDeveloper: false
         }
@@ -158,102 +154,3 @@ $(document).ready(function(){
   }
 });
 });
-
-
-
-// if(query === 'developers_get' || query === 'developers_post')
-//       {
-//         for (let i = 0; i < response.autor_id.length; i++)
-//         {
-//           console.log("1");
-//           $(".item.items_content").append(
-//             '<a href="https://k0j268qj-80.inc1.devtunnels.ms/developers_games.php?input_items_search=' + 
-//             encodeURIComponent(response.autor_name[i]) + 
-//             '"><div class="item_rectangle"><img class="img_game_main" src="devs_imgs/' + 
-//             response.autor_id[i] + response.extension[i]+
-//             '" alt="' + 
-//             response.autor_name[i] + 
-//             '"><div class="game_text_main">' + 
-//             response.autor_name[i] + 
-//             '</div></div></a>'
-//           );
-//         }
-//       }
-//       else if (query === 'developers_admin'){
-//         for (let i = 0; i < response.autor_id.length; i++)
-//         {
-//           console.log("adm_pang_dev");
-//           $(".item.items_content").append(
-//             '<a href="https://k0j268qj-80.inc1.devtunnels.ms/admin_developers_page.php?input_items_search=' + 
-//             encodeURIComponent(response.autor_name[i]) + 
-//             '"><div class="item_rectangle"><img class="img_game_main" src="devs_imgs/' + 
-//             response.autor_id[i] + response.extension[i]+
-//             '" alt="' + 
-//             response.autor_name[i] + 
-//             '"><div class="game_text_main">' + 
-//             response.autor_name[i] + 
-//             '</div></div></a>'
-//           );
-//         }
-//       }
-//       else if('games_search_admin')
-//       {
-//         for (let i = 0; i < response.game_id.length; i++)
-//         {
-//           $(".container_main_page_content").append(
-//             '<a href="https://k0j268qj-80.inc1.devtunnels.ms/game_admin.php?game=' + 
-//             encodeURIComponent(response.game_name[i]) + 
-//             '"><div class="game_rectangle"><img class="img_game_main" src="game_imgs/' + 
-//             response.game_id[i] + response.extension[i]+
-//             '" alt="' + 
-//             response.game_name[i] + 
-//             '"><div class="game_text_main">' + 
-//             response.game_name[i] + 
-//             '<div class="text_game_main_description">' + 
-//             response.genres[i] + 
-//             '</div></div></div></a>'
-//           );
-//         }
-//       }
-//       else
-//       {
-//         for (let i = 0; i < response.game_id.length; i++)
-//         {
-//           if (query == 'developers_games')
-//           {
-//             console.log("2");
-//             $(".item.items_content").append(
-//               '<a href="https://k0j268qj-80.inc1.devtunnels.ms/game.php?game=' + 
-//               encodeURIComponent(response.game_name[i]) + 
-//               '"><div class="item_rectangle"><img class="img_game_main" src="game_imgs/' + 
-//               response.game_id[i] + response.extension[i]+
-//               '" alt="' + 
-//               response.game_name[i] + 
-//               '"><div class="game_text_main">' + 
-//               response.game_name[i] + 
-//               '<div class="text_game_main_description">' + 
-//               response.genres[i] + 
-//               '</div></div></div></a>'
-//             );
-//           }
-//           else
-//           {
-//             console.log("3");
-//             $(".container_main_page_content").append(
-//               '<a href="https://k0j268qj-80.inc1.devtunnels.ms/game.php?game=' + 
-//               encodeURIComponent(response.game_name[i]) + 
-//               '"><div class="game_rectangle"><img class="img_game_main" src="game_imgs/' + 
-//               response.game_id[i] + response.extension[i]+
-//               '" alt="' + 
-//               response.game_name[i] + 
-//               '"><div class="game_text_main">' + 
-//               response.game_name[i] + 
-//               '<div class="text_game_main_description">' + 
-//               response.genres[i] + 
-//               '</div></div></div></a>'
-//             );
-//           }
-//         }
-//       }
-
-
