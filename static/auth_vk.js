@@ -36,12 +36,12 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("uuser", data.user_id);
             
              $.post("auth.php", {login:data.user_id, is_vk_auth: true}, function(data) {
-            if(response['success'] == true){
+            if(data['success'] == true){
                 window.location.href = "admin_page.php";
             }
             else{//messege box
                 const authMessage = document.getElementById('auth_message');
-                authMessage.textContent = response['message'];
+                authMessage.textContent = data['message'];
             }
         });
         }
