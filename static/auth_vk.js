@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
-                console.error('Ошибка:', error);
                 authMessage.textContent = "Ошибка соединения с сервером";
             });
         }
