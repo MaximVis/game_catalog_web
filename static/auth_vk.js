@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     if ('VKIDSDK' in window) {
         const VKID = window.VKIDSDK;
+        const authMessage = document.getElementById('auth_message');
 
         // Инициализация конфигурации
         VKID.Config.init({
@@ -8,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
             redirectUrl: 'https://game-catalog-ddgp.onrender.com/admin_page.php',
             responseMode: VKID.ConfigResponseMode.Callback,
             source: VKID.ConfigSource.LOWCODE,
-            scope: 'mail',
+            scope: 'email',
         });
 
         // Создание экземпляра OneTap
@@ -32,15 +33,26 @@ document.addEventListener('DOMContentLoaded', function() {
         // Функция обработки успешной авторизации
         function vkidOnSuccess(data) {
             console.log('Авторизация успешна:', data);
-            // Здесь можно добавить логику обработки успешной авторизации
-            // Например, отправку данных на сервер или перенаправление
+
+            if (data.user && data.user.email) {
+                const userEmail = data.user.email;
+                const { loginUser } = require('./auth_func.js');
+                loginUser(userEmail);
+
+                
+            }
+            else{
+                authMessage.textContent = "Ошибка получения данных логина";
+            }
+
+
+           
         }
         
         // Функция обработки ошибок
         function vkidOnError(error) {
             console.error('Ошибка авторизации:', error);
-            // Здесь можно добавить логику обработки ошибок
-            // Например, показ сообщения пользователю
+            authMessage.textContent = "Ошибка авторизации";
         }
     } else {
         console.error('VKID SDK не загружен');
