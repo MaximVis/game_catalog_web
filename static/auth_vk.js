@@ -33,6 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Функция обработки успешной авторизации
         function vkidOnSuccess(data) {
             console.log('Авторизация успешна:', data);
+            console.log('Авторизация успешна:', data.user);
+            console.log('Авторизация успешна:', data.user.first_name);
 
             
 
