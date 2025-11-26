@@ -87,7 +87,7 @@
             <div class = "item items_content">
             
             <?php foreach ($list_games as $game): ?>
-                <a href = "https://k0j268qj-80.inc1.devtunnels.ms/game.php?game=<?= urlencode($game['game_name']) ?>">
+                <a href = "/game.php?game=<?= urlencode($game['game_name']) ?>">
                     <div class="item_rectangle">
                         <?php
                             $images = glob('game_imgs/' . $game['game_id'] . '.{png,jpg,jpeg}', GLOB_BRACE);

@@ -112,8 +112,8 @@
 			<?php foreach ($games as $game): ?>
 				<?php 
 					$url = $admin_search 
-						? 'https://k0j268qj-80.inc1.devtunnels.ms/game_admin.php?game=' 
-						: 'https://k0j268qj-80.inc1.devtunnels.ms/game.php?game=';
+						? '/game_admin.php?game=' 
+						: '/game.php?game=';
 					echo '<a href="' . $url . urlencode($game['game_name']) . '">';
 				?>
 					<div class="game_rectangle">

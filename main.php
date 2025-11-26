@@ -55,7 +55,7 @@
 		<h2 class = "head_word">Новинки</h2>
 		<div class = container_main_page_content><!-- блоки игр -->	
 			<?php foreach ($games as $game): ?>
-				<a href = "https://k0j268qj-80.inc1.devtunnels.ms/game.php?game=<?= urlencode($game['game_name']) ?>">
+				<a href = "/game.php?game=<?= urlencode($game['game_name']) ?>">
 					<div class="game_rectangle">
 						<?php
 							$images = glob('game_imgs/' . $game['game_id'] . '.{png,jpg,jpeg,gif,webp}', GLOB_BRACE);

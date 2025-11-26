@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
         {
             $(".item.items_content").append(
     $('<a>', {
-        href: 'https://k0j268qj-80.inc1.devtunnels.ms/game.php?game=' + encodeURIComponent(response.game_name[i])
+        href: '/game.php?game=' + encodeURIComponent(response.game_name[i])
     }).append(
         $('<div>', {
             class: 'item_rectangle'

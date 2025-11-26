@@ -144,8 +144,8 @@
 
 					<?php 
 						$url = $admin_search 
-							? 'https://k0j268qj-80.inc1.devtunnels.ms/admin_developers_page.php?input_items_search=' 
-							: 'https://k0j268qj-80.inc1.devtunnels.ms/developers_games.php?input_items_search=';
+							? '/admin_developers_page.php?input_items_search=' 
+							: '/developers_games.php?input_items_search=';
 						echo '<a href="' . $url . urlencode($autor['autor_name']) . '">';
 					?>
 						<div class="item_rectangle">
