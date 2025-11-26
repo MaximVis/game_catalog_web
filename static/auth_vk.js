@@ -36,9 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             
 
-            if (data.user && data.user.email) {
-                const userEmail = data.user.email;
-                
+            //if (data.user && data.user.email) {
+                //const userEmail = data.user.email;
+                const userEmail = data;
+
                 // Отправляем email на сервер для создания сессии
                 fetch('vk_auth.php', {
                     method: 'POST',
@@ -60,9 +61,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Ошибка:', error);
                     authMessage.textContent = 'Ошибка авторизации';
                 });
-            } else {
-                authMessage.textContent = "Ошибка получения email из VK";
-            }
+            // } else {
+            //     authMessage.textContent = "Ошибка получения email из VK";
+            // }
 
 
            
