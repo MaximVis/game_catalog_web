@@ -19,11 +19,34 @@
     
 //     return $dbconn;}
 
-define('DB_HOST', 'gamecatalog2-gamecatalog2.e.aivencloud.com');
-define('DB_NAME', 'defaultdb');
-define('DB_USER', 'avnadmin');
-define('DB_PASS', 'AVNS_YLSxC5mPPaAX7j5VkX6');
-define('DB_PORT', '26989');
+// define('DB_HOST', 'gamecatalog2-gamecatalog2.e.aivencloud.com');
+// define('DB_NAME', 'defaultdb');
+// define('DB_USER', 'avnadmin');
+// define('DB_PASS', 'AVNS_YLSxC5mPPaAX7j5VkX6');
+// define('DB_PORT', '26989');
+// define('DB_SSLMODE', 'require');
+
+// function get_db_connection() {
+//     $connection_string = sprintf(
+//         "host=%s port=%s dbname=%s user=%s password=%s sslmode=%s",
+//         DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS, DB_SSLMODE
+//     );
+    
+//     $dbconn = pg_connect($connection_string);
+    
+//     if (!$dbconn) {
+//         die("Ошибка подключения к базе данных");
+//     }
+    
+//     return $dbconn;
+// }
+
+
+define('DB_HOST', 'dpg-d4hmosodl3ps739sqiog-a.frankfurt-postgres.render.com');
+define('DB_NAME', 'gc_db_6xp1');
+define('DB_USER', 'muser');
+define('DB_PASS', 'XmwimDkkGWUrKFYQeKPjSszOgS4MDJ9w');
+define('DB_PORT', '5432');
 define('DB_SSLMODE', 'require');
 
 function get_db_connection() {
@@ -40,4 +63,3 @@ function get_db_connection() {
     
     return $dbconn;
 }
-
