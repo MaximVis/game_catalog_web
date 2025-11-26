@@ -61,8 +61,8 @@
             const VKID = window.VKIDSDK;
 
             VKID.Config.init({
-                app: 54349334,
-                redirectUrl: 'https://game-catalog-ddgp.onrender.com/auth_vk/callback.php',
+                app: 54355269,
+                redirectUrl: 'https://game-catalog-ddgp.onrender.com/admin_page.php',
                 responseMode: VKID.ConfigResponseMode.Callback,
                 source: VKID.ConfigSource.LOWCODE,
                 scope: '', // Заполните нужными доступами по необходимости
