@@ -35,16 +35,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log("uuser", data.user_id);
             
-            $.post("auth.php", {login:data.user_id, is_vk_auth: true}, function(data) {
-            console.log(data);
-            if(data['success'] == true){
+            $.post("auth.php", {login:data.user_id, is_vk_auth: true}, function(resp) {
+            console.log(resp);
+            resp = JSON.parse(resp);
+            if(resp['success'] == true){
                 window.location.href = "admin_page.php";
             }
             else{//messege box
                 const authMessage = document.getElementById('auth_message');
-                authMessage.textContent = data['message'];
+                authMessage.textContent = resp['message'];
             }
-            response = JSON.parse(data);
+            response = JSON.parse(resp);
             console.log(response);
         });
         }
