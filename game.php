@@ -145,7 +145,7 @@ if(isset($game_name) && isset($result['game_description'])) {
 
         <h1 class = "head_word">
             <?php echo htmlspecialchars($result['game_name']); ?> </br>
-                Разработчик: <a href="https://k0j268qj-80.inc1.devtunnels.ms/developers_games.php?input_items_search=<?php echo urlencode($result['autor_name']); ?>">
+                Разработчик: <a href="/developers_games.php?input_items_search=<?php echo urlencode($result['autor_name']); ?>">
                 <?php echo $result['autor_name']; ?></a>
         </h1>
         <div class = container_main_page_content><!-- блоки игр -->
