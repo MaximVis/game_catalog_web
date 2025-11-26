@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if (!empty($email)) {
         loginUser($result['admin_login']);
+        echo json_encode(['success' => true, 'redirect' => 'admin_page.php']);
 
     //     // Проверяем, существует ли пользователь с таким email
     //     require_once 'query_func.php';
