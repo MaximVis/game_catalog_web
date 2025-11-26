@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
             redirectUrl: 'https://game-catalog-ddgp.onrender.com/admin_page.php',
             responseMode: VKID.ConfigResponseMode.Callback,
             source: VKID.ConfigSource.LOWCODE,
-            scope: 'email',
+            scope: 'email, first_name,last_name',
         });
 
         // Создание экземпляра OneTap
