@@ -25,6 +25,20 @@ function loginUser($login) {
 }
 
 // Проверка авторизации
+// function isUserLoggedIn() {
+//     return isset(
+//         $_SESSION['logged_in'],
+//         $_SESSION['user_login'],
+//         $_SESSION['login_time'],
+//         $_SESSION['user_agent'],
+//         $_SESSION['ip_address']
+//     ) 
+//     && $_SESSION['logged_in'] === true
+//     && $_SESSION['user_agent'] === $_SERVER['HTTP_USER_AGENT']
+//     && $_SESSION['ip_address'] === $_SERVER['REMOTE_ADDR']
+//     && (time() - $_SESSION['login_time']) < 31536000; // 1 год (31536000 секунд)
+// }
+
 function isUserLoggedIn() {
     return isset(
         $_SESSION['logged_in'],
@@ -36,7 +50,7 @@ function isUserLoggedIn() {
     && $_SESSION['logged_in'] === true
     && $_SESSION['user_agent'] === $_SERVER['HTTP_USER_AGENT']
     && $_SESSION['ip_address'] === $_SERVER['REMOTE_ADDR']
-    && (time() - $_SESSION['login_time']) < 31536000; // 1 год (31536000 секунд)
+    && (time() - $_SESSION['login_time']) < 31536000; // 1 год
 }
 
 // Выход

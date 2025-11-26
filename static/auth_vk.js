@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Инициализация конфигурации
         VKID.Config.init({
-            app: 54355269,
+            app: 54358629,
             redirectUrl: 'https://game-catalog-ddgp.onrender.com/admin_page.php',
             responseMode: VKID.ConfigResponseMode.Callback,
             source: VKID.ConfigSource.LOWCODE,
@@ -31,44 +31,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Функция обработки успешной авторизации
-        function vkidOnSuccess(data) {
-            console.log('Авторизация успешна:', data);
-            console.log('Авторизация успешна:', data.user);
-            console.log('Авторизация успешна:', data.user.first_name);
-
-            
-
-            //if (data.user && data.user.email) {
-                //const userEmail = data.user.email;
-                const userEmail = data;
-
-                // Отправляем email на сервер для создания сессии
-                fetch('vk_auth.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email: userEmail })
+       function vkidOnSuccess(data) {
+            // Отправляем данные на сервер для создания сессии
+            fetch('vk_auth.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    access_token: data.access_token,
+                    user_id: data.user_id,
+                    email: data.email,
+                    first_name: data.first_name,
+                    last_name: data.last_name
                 })
-                .then(response => response.json())
-                .then(result => {
-                    if (result.success) {
-                        // Сессия создана, перенаправляем
-                        window.location.href = result.redirect;
-                    } else {
-                        authMessage.textContent = result.message;
-                    }
-                })
-                .catch(error => {
-                    console.error('Ошибка:', error);
-                    authMessage.textContent = 'Ошибка авторизации';
-                });
-            // } else {
-            //     authMessage.textContent = "Ошибка получения email из VK";
-            // }
-
-
-           
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    window.location.href = 'admin_page.php';
+                } else {
+                    authMessage.textContent = result.message || "Ошибка авторизации";
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                authMessage.textContent = "Ошибка соединения с сервером";
+            });
         }
         
         // Функция обработки ошибок
