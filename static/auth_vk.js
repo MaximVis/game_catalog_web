@@ -35,26 +35,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log("uuser", data.user_id);
             
-             $.post("auth.php", {login:data.user_id, is_vk_auth: true}, function(data) {
+            $.post("auth.php", {login:data.user_id, is_vk_auth: true}, function(data) {
+            console.log(data);
             if(data['success'] == true){
                 window.location.href = "admin_page.php";
-
-                setTimeout(function() {
-                    window.location.href = "admin_page.php";
-                }, 100); // Задержка 100ms обычно достаточно
-
-                setTimeout(() => window.location.replace("admin_page.php"), 100);
-
-                 const link = document.createElement('a');
-                link.href = "admin_page.php";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
             }
             else{//messege box
                 const authMessage = document.getElementById('auth_message');
                 authMessage.textContent = data['message'];
             }
+            response = JSON.parse(data);
+            console.log(response);
         });
         }
         
