@@ -13,35 +13,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Валидация полученных данных
     if (empty($access_token) || empty($user_id)) {
         echo json_encode(['success' => false, 'message' => 'Недостаточно данных от VK']);
+        console.log("data1", $user_id, $email);
         exit();
     }
     
     // Дополнительная проверка токена через VK API (опционально)
     $vk_user_info = verifyVKToken($access_token, $user_id);
     
-    if ($vk_user_info) {
+    // ПРАВИЛЬНАЯ проверка токена через VK API
+    $vk_user_info = verifyVKToken($access_token);
+    
+    if ($vk_user_info && isset($vk_user_info['response'][0]['id'])) {
+        $vk_id = $vk_user_info['response'][0]['id'];
         
-        // Создаем сессию
-        $login = "vk_" . $user_id; // Уникальный логин для VK пользователя
-        loginUser($login);
-        
-        echo json_encode(['success' => true]);
+        // Сравниваем ID из токена с ID от клиента
+        if ($vk_id == $user_id) {
+            // Успешная проверка - создаем сессию
+            $vk_login = "vk_" . $user_id;
+            
+            loginUser($vk_login);
+            $_SESSION['auth_type'] = 'vk';
+            $_SESSION['vk_user_id'] = $user_id;
+            $_SESSION['user_email'] = $email;
+            $_SESSION['first_name'] = $first_name;
+            $_SESSION['last_name'] = $last_name;
+            
+            echo json_encode([
+                'success' => true, 
+                'redirect' => 'admin_page.php'
+            ]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Несоответствие ID пользователя']);
+        }
     } else {
-        echo json_encode(['success' => false, 'message' => 'Ошибка проверки токена VK']);
+        echo json_encode(['success' => false, 'message' => 'Неверный токен VK']);
     }
+    exit();
 }
 
-function verifyVKToken($access_token, $user_id) {
-    // Проверяем токен через VK API
+function verifyVKToken($access_token) {
     $url = "https://api.vk.com/method/users.get?access_token={$access_token}&v=5.131";
     
-    $response = file_get_contents($url);
-    $data = json_decode($response, true);
+    $context = stream_context_create([
+        'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+        ],
+        'http' => [
+            'timeout' => 10,
+            'ignore_errors' => true
+        ]
+    ]);
     
-    if (isset($data['response'][0]['id']) && $data['response'][0]['id'] == $user_id) {
-        return $data['response'][0];
+    $response = @file_get_contents($url, false, $context);
+    
+    if ($response === FALSE) {
+        return false;
     }
     
-    return false;
+    $data = json_decode($response, true);
+    
+    // Логируем ответ для отладки
+    error_log("VK API Response: " . print_r($data, true));
+    
+    return $data;
 }
 ?>
