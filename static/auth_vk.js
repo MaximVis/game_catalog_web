@@ -33,6 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Функция обработки успешной авторизации
        function vkidOnSuccess(data) {
             // Отправляем данные на сервер для создания сессии
+            console.log(data);
+
             fetch('vk_auth.php', {
                 method: 'POST',
                 headers: {
