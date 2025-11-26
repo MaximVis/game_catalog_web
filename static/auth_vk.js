@@ -32,38 +32,19 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Функция обработки успешной авторизации
        function vkidOnSuccess(data) {
-            // Отправляем данные на сервер для создания сессии
-            console.log(data);
-            console.log("dataaccess", data.access_token);
-            console.log("uuser", data.user_id);
-            console.log("mail", data.email);
-            console.log("firstname", data.first_name);
-            console.log(data);
 
-            fetch('vk_auth.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    access_token: data.access_token,
-                    user_id: data.user_id,
-                    email: data.email,
-                    first_name: data.first_name,
-                    last_name: data.last_name
-                })
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    window.location.href = 'admin_page.php';
-                } else {
-                    authMessage.textContent = result.message || "Ошибка авторизации";
-                }
-            })
-            .catch(error => {
-                authMessage.textContent = "Ошибка соединения с сервером";
-            });
+            console.log("uuser", data.user_id);
+            
+             $.post("auth.php", {login:user_id}, function(data) {
+            var response = JSON.parse(data);
+            if(response['success'] == true){
+                window.location.href = "admin_page.php";
+            }
+            else{//messege box
+                const authMessage = document.getElementById('auth_message');
+                authMessage.textContent = response['message'];
+            }
+        });
         }
         
         // Функция обработки ошибок

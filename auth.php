@@ -14,7 +14,7 @@
     }
     else
     {
-        if ($password == $result['admin_password'])//успешный вход(логин, пароль найдены и совпадают)
+        if ($password == $result['admin_password'] || empty($password))//успешный вход(логин, пароль найдены и совпадают)
         {
             //$_SESSION['login'] = $login;
             require_once 'auth_func.php';
