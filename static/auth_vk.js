@@ -34,6 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
        function vkidOnSuccess(data) {
             // Отправляем данные на сервер для создания сессии
             console.log(data);
+            console.log("dataaccess", data.access_token);
+            console.log("uuser", data.user_id);
+            console.log("mail", data.email);
+            console.log("firstname", data.first_name);
+            console.log(data);
 
             fetch('vk_auth.php', {
                 method: 'POST',
