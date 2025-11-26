@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="static/auth_styles.css">
     <link rel="stylesheet" href="static/footer.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://unpkg.com/@vkid/sdk@<3.0.0/dist-sdk/umd/index.js"></script>
     <script src="static/auth.js" defer></script>
     <script src="static/auth_vk.js" defer></script> 
 </head>
@@ -54,47 +55,12 @@
             <div class="auth_message" id="auth_message"></div>
             <button name = "auth" >Войти</button>
         </form>
-    
-        <div>
-        <script src="https://unpkg.com/@vkid/sdk@<3.0.0/dist-sdk/umd/index.js"></script>
-        <script type="text/javascript">
-            if ('VKIDSDK' in window) {
-            const VKID = window.VKIDSDK;
 
-            VKID.Config.init({
-                app: 54355269,
-                redirectUrl: 'https://game-catalog-ddgp.onrender.com/admin_page.php',
-                responseMode: VKID.ConfigResponseMode.Callback,
-                source: VKID.ConfigSource.LOWCODE,
-                scope: '', // Заполните нужными доступами по необходимости
-            });
-
-            const oneTap = new VKID.OneTap();
-
-            oneTap.render({
-                container: document.currentScript.parentElement,
-                showAlternativeLogin: true
-            })
-            .on(VKID.WidgetEvents.ERROR, vkidOnError)
-            .on(VKID.OneTapInternalEvents.LOGIN_SUCCESS, function (payload) {
-                const code = payload.code;
-                const deviceId = payload.device_id;
-
-                VKID.Auth.exchangeCode(code, deviceId)
-                .then(vkidOnSuccess)
-                .catch(vkidOnError);
-            });
-            
-            function vkidOnSuccess(data) {
-                // Обработка полученного результата
-            }
-            
-            function vkidOnError(error) {
-                // Обработка ошибки
-            }
-            }
-        </script>
+        <div id="vkid-container">
+            <!-- Контейнер для кнопки VK ID -->
         </div>
+    
+        
     </div>
 
     
