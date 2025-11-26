@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="static/footer.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="static/auth.js" defer></script>
+    <script src="static/auth_vk.js" defer></script> 
 </head>
 
 <body>
@@ -27,7 +28,7 @@
         <?php require_once 'shapka_menu.php';?>
 
         <h1 class = "head_word">Авторизация</h1>
-        
+         
         <?php if (isset($_GET['error'])): ?>
             <div class="error-message">
                 <?php 
