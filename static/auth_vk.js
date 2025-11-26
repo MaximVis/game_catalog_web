@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(resp);
             resp = JSON.parse(resp);
             if(resp['success'] == true){
+                console.log("RED<TRUE");
                 window.location.href = "admin_page.php";
             }
             else{//messege box
