@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Инициализация конфигурации
         VKID.Config.init({
-            app: 54358629,
+            app: 54355269,
             redirectUrl: 'https://game-catalog-ddgp.onrender.com/admin_page.php',
             responseMode: VKID.ConfigResponseMode.Callback,
             source: VKID.ConfigSource.LOWCODE,
