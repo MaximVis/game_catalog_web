@@ -13,9 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Валидация полученных данных
     if (empty($access_token) || empty($user_id)) {
         echo json_encode(['success' => false, 'message' => 'Недостаточно данных от VK']);
-        console.log("data1", $user_id, $email);
         exit();
     }
+
+    console.log("data1", $user_id, $email, $first_name);
     
     // Дополнительная проверка токена через VK API (опционально)
     $vk_user_info = verifyVKToken($access_token, $user_id);
