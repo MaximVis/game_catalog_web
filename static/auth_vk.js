@@ -34,16 +34,14 @@ document.addEventListener('DOMContentLoaded', function() {
         function vkidOnSuccess(data) {
             console.log('Авторизация успешна:', data);
 
-            if (data.user && data.user.email) {
-                const userEmail = data.user.email;
-                const { loginUser } = require('./auth_func.js');
-                loginUser(userEmail);
 
-                
-            }
-            else{
-                authMessage.textContent = "Ошибка получения данных логина";
-            }
+            const userEmail = data.user.email;
+            const { loginUser } = require('./auth_func.js');
+            loginUser(userEmail);
+
+            console.log(userEmail);
+            console.log("data", data);
+            console.log("user", user);
 
 
            
