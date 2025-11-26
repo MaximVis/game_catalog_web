@@ -36,9 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("uuser", data.user_id);
             
             $.post("auth.php", {login:data.user_id, is_vk_auth: true}, function(resp) {
-            if (typeof resp === 'string') {
-                resp = JSON.parse(resp);
-            }
+            resp = JSON.parse(resp);
             if(resp['success'] == true){
                 console.log("RED<TRUE");
                 window.location.href = "admin_page.php";
