@@ -34,14 +34,35 @@ document.addEventListener('DOMContentLoaded', function() {
         function vkidOnSuccess(data) {
             console.log('Авторизация успешна:', data);
 
+            
 
-            const userEmail = data.user.email;
-            const { loginUser } = require('./auth_func.js');
-            loginUser(userEmail);
-
-            console.log(userEmail);
-            console.log("data", data);
-            console.log("user", user);
+            if (data.user && data.user.email) {
+                const userEmail = data.user.email;
+                
+                // Отправляем email на сервер для создания сессии
+                fetch('vk_auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: userEmail })
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        // Сессия создана, перенаправляем
+                        window.location.href = result.redirect;
+                    } else {
+                        authMessage.textContent = result.message;
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    authMessage.textContent = 'Ошибка авторизации';
+                });
+            } else {
+                authMessage.textContent = "Ошибка получения email из VK";
+            }
 
 
            
