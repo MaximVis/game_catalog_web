@@ -65,6 +65,18 @@ button[name="auth"]:active {
     margin-top: 25px;
 }
 
+.vkc__styles__ButtonText{
+    margin-top: 10px;
+}
+
+.vkc__styles__SecondaryButton vkc__styles__ButtonMedium{
+    color: white;
+}
+
+.vkc__styles__SecondaryButtonText{
+    color: #747474;
+}
+
 
 @media (max-width: 1240px) {
 
