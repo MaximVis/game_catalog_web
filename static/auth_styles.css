@@ -65,12 +65,12 @@ button[name="auth"]:active {
     margin-top: 25px;
 }
 
-.vkc__styles__ButtonText{
-    margin-top: 10px;
+.vkc__styles__ButtonOneTap{
+    margin-top: 10px !important;
 }
 
-.vkc__styles__SecondaryButton vkc__styles__ButtonMedium{
-    color: white;
+.vkc__styles__SecondaryButton{
+    color: white !important;
 }
 
 .vkc__styles__SecondaryButtonText{
