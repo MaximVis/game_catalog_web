@@ -29,23 +29,6 @@
         <?php require_once 'shapka_menu.php';?>
 
         <h1 class = "head_word">Авторизация</h1>
-         
-        <?php if (isset($_GET['error'])): ?>
-            <div class="error-message">
-                <?php 
-                switch($_GET['error']) {
-                    case 'vk_auth_failed':
-                        echo 'Ошибка авторизации через VK. Попробуйте снова.';
-                        break;
-                    case 'vk_access_denied':
-                        echo 'Доступ к VK отменен.';
-                        break;
-                    default:
-                        echo 'Произошла ошибка при авторизации.';
-                }
-                ?>
-            </div>
-        <?php endif; ?>
         
         <form class = "admin_form" id = "auth_form" method="POST">
             <label class="form_word">Логин:</label>

@@ -6,7 +6,6 @@
         exit();
     }
 
-    // Обработка выхода должна быть в самом начале
     if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         logoutUser();
         header('Location: auth_page.php');

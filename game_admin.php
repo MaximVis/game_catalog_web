@@ -1,39 +1,4 @@
 <?php
-        
-        require_once 'query_func.php';
-
-        $genres = get_query_answer("genres", 0);
-        $selected_genre = [];
-
-        $categories = get_query_answer("categories", 0);
-        $selected_category = [];
-
-        $bAdd_game = False;
-
-        if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['game']))
-        {
-
-            $game_name = urldecode($_GET['game']);
-
-            $result = get_query_answer("game", $game_name);
-            $text_dscrpt = str_replace('<br>', "\n", $result['game_description']);
-
-            if (!$result)
-            {
-                die('Ошибка соединения');
-                exit();
-            }
-
-            $game_genres = get_query_answer("game_genres", $result['game_id']);
-            $game_categories = get_query_answer("game_categories", $result['game_id']);
-        }
-        else
-        {
-            $bAdd_game = True;
-        }
-	?>
-
-<?php
 
     require_once 'auth_func.php';
 
@@ -43,6 +8,43 @@
     }
 
 ?>
+
+<?php
+        
+    require_once 'query_func.php';
+
+    $genres = get_query_answer("genres", 0);
+    $selected_genre = [];
+
+    $categories = get_query_answer("categories", 0);
+    $selected_category = [];
+
+    $bAdd_game = False;
+
+    if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['game']))
+    {
+
+        $game_name = urldecode($_GET['game']);
+
+        $result = get_query_answer("game", $game_name);
+        $text_dscrpt = str_replace('<br>', "\n", $result['game_description']);
+
+        if (!$result)
+        {
+            die('Ошибка соединения');
+            exit();
+        }
+
+        $game_genres = get_query_answer("game_genres", $result['game_id']);
+        $game_categories = get_query_answer("game_categories", $result['game_id']);
+    }
+    else
+    {
+        $bAdd_game = True;
+    }
+?>
+
+
 
 <?php
 
