@@ -65,23 +65,6 @@ button[name="auth"]:active {
     margin-top: 25px;
 }
 
-.vkc__styles__ButtonOneTap{
-    margin-top: 10px !important;
-}
-
-.vkc__styles__SecondaryButton{
-    color: white !important;
-}
-
-.vkc__styles__SecondaryButtonText{
-    color: #747474;
-}
-
-.auth_but{
-    margin-bottom: 10px;
-}
-
-
 @media (max-width: 1240px) {
 
     .head_word {
