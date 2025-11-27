@@ -1,10 +1,10 @@
 RewriteEngine On
 
 # Правило для семантических URL (новый формат)
-RewriteRule ^game/([a-zA-Z0-9_-]+)/?$ game.php?game=$1 [L,QSA]
+RewriteRule ^game/([^/]+)/?$ game.php?game=$1 [L,QSA]
 
-# Правило для обратной совместимости (старый формат)
-RewriteCond %{QUERY_STRING} ^game=([^&]+) [NC]
+# Редирект со старых URL на новые (уберите если хотите сохранить оба формата)
+RewriteCond %{THE_REQUEST} /game\.php\?game=([^\s&]+) [NC]
 RewriteRule ^game\.php$ /game/%1? [R=301,L]
 
 # Если файл или директория существуют - используем их

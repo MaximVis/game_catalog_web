@@ -1,0 +1,11 @@
+User-agent: *
+
+Allow: /
+
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /cgi-bin/
+
+# Укажите путь к вашей карте сайта (если она уже создана)
+Sitemap: https://game-catalog-ddgp.onrender.com/sitemap.xml
