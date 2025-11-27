@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALLGAMES- каталог игр</title>
+    <title>Авторизация</title>
     <link rel="stylesheet" href="static/base_styles.css">
     <link rel="stylesheet" href="static/auth_styles.css">
     <link rel="stylesheet" href="static/footer.css">
@@ -36,7 +36,7 @@
             <label class = "form_word">Пароль:</label>
             <input class = "input_form" type="password" id="admin_password" name="admin_password" placeholder="Введите пароль"><br>
             <div class="auth_message" id="auth_message"></div>
-            <button name = "auth" >Войти</button>
+            <button class = "auth_but" name = "auth" >Войти</button>
         </form>
 
         <div id="vkid-container">

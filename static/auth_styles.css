@@ -77,6 +77,10 @@ button[name="auth"]:active {
     color: #747474;
 }
 
+.auth_but{
+    margin-bottom: 10px;
+}
+
 
 @media (max-width: 1240px) {
 

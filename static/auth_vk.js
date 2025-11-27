@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
             redirectUrl: 'https://game-catalog-ddgp.onrender.com/admin_page.php',
             responseMode: VKID.ConfigResponseMode.Callback,
             source: VKID.ConfigSource.LOWCODE,
-            scope: 'email, first_name,last_name',
+            scope: '',
         });
 
         // Создание экземпляра OneTap
@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Рендеринг кнопки в контейнер
         oneTap.render({
             container: document.getElementById('vkid-container'),
+            scheme: 'dark',
             showAlternativeLogin: true
         })
         .on(VKID.WidgetEvents.ERROR, vkidOnError)
