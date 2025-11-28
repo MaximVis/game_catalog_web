@@ -96,7 +96,7 @@ if(isset($game_name) && isset($result['game_description'])) {
         'Игра '.$game_name.', описание игры, '.$category_string.', '.$genre_string
     );
 }
-?>
+?> 
 
 
 <!DOCTYPE html>
