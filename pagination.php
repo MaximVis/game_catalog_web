@@ -1,5 +1,11 @@
 <?php
 
+if (basename($_SERVER['SCRIPT_FILENAME']) === basename(__FILE__)) {
+    http_response_code(403);
+    header('Location: /page_403.php');
+    exit('Direct access not permitted');
+}
+
 $query = $_POST['query'];
 $array_params = $_POST['array_params'];
 
