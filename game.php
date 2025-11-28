@@ -1,34 +1,14 @@
 <?php
-    if($_SERVER["REQUEST_METHOD"] == "GET")
+    if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['game']))
     {
         require_once 'query_func.php';
-
-        $game_name = null;
-        $result = null;
-        
-        // СПОСОБ 1: Новые семантические URL (приоритет)
-        if(preg_match('#^/game/([^/]+)/?$#', $_SERVER['REQUEST_URI'], $matches)) {
-            $game_name = urldecode($matches[1]);
-        }
-        // СПОСОБ 2: Старые URL с параметром (обратная совместимость)
-        elseif(isset($_GET['game'])) {
-            $game_name = urldecode($_GET['game']);
-        }
-        
-        // Если название игры получено любым способом
-        if($game_name) {
-            $result = get_query_answer("game_category_genre", $game_name);
-            
-            if (!$result) {
-                http_response_code(404);
-                require_once 'page_404.php';
-                exit;
-            }
-        }
-        else {
-            // Если игра не указана ни в одном формате
-            header("Location: main.php");
-            exit();
+        $game_name = urldecode($_GET['game']);
+        $result = get_query_answer("game_category_genre", $game_name);
+        if (!$result)
+        {
+            http_response_code(404);
+            require_once 'page_404.php';
+            exit;
         }
     }
     else
