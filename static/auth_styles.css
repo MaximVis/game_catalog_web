@@ -65,6 +65,10 @@ button[name="auth"]:active {
     margin-top: 25px;
 }
 
+.auth_but{
+    margin-bottom: 10px;
+}
+
 @media (max-width: 1240px) {
 
     .head_word {
