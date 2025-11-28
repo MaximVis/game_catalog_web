@@ -4,13 +4,26 @@ Allow: /
 Sitemap: https://game-catalog-e6tw.onrender.com/sitemap.xml
 
 # Запрещаем доступ к служебным папкам
-Disallow: /admin/
-Disallow: /includes/
-Disallow: /tmp/
-Disallow: /config/
+Disallow: /admin_
+Disallow: /auth_
+Disallow: /page_
+Disallow: /config
+Disallow: /footer
+Disallow: /game_admin
+Disallow: /pagination
+Disallow: /query_func
+Disallow: /shapka
+Disallow: /shapka_menu
+Disallow: /uploader
+
+# Параметры URL
+Disallow: /*?*
+Disallow: /*?search_game=
+Disallow: /*?input_items_search=
+
+# конкретные страницы игр из sitemap
+Allow: /game.php?game=*
 
 # Разрешаем индексацию важных страниц
-Allow: /css/
-Allow: /js/
-Allow: /images/
+Allow: /
 
