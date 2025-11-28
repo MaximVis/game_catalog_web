@@ -1,6 +1,12 @@
 <?php
 // uploader.php
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(403);
+    header('Location: /page_403.php');
+    exit();
+}
+
 umask(0000);
 
 $query_list = 

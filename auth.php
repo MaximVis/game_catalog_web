@@ -1,5 +1,11 @@
 <?php
 
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        http_response_code(403);
+        header('Location: /page_403.php');
+        exit('');
+    }
+
     $login = $_POST['login'];
     $password = isset($_POST['password']);
     $is_vk_auth = isset($_POST['is_vk_auth']);
