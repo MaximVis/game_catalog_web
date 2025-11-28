@@ -1,7 +1,7 @@
 <div class = "container_main_pages">
     <nav class = "header_links"><!-- шапка (меню) -->
         <ul>
-            <li><a href="/">Главная</a></li>
+            <li><a href="main.php">Главная</a></li>
             <li><a href="/games_search.php">Игры</a></li>
             <li><a href="/categories.php">Категории</a></li>
             <li><a href="/genre.php">Жанры</a></li>
