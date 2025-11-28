@@ -1,11 +1,16 @@
 User-agent: *
-
 Allow: /
 
-Disallow: /admin/
-Disallow: /private/
-Disallow: /tmp/
-Disallow: /cgi-bin/
+Sitemap: https://game-catalog-e6tw.onrender.com/sitemap.xml
 
-# Укажите путь к вашей карте сайта (если она уже создана)
-Sitemap: https://game-catalog-ddgp.onrender.com/sitemap.xml
+# Запрещаем доступ к служебным папкам
+Disallow: /admin/
+Disallow: /includes/
+Disallow: /tmp/
+Disallow: /config/
+
+# Разрешаем индексацию важных страниц
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
