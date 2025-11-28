@@ -1,11 +1,13 @@
 <?php
 // uploader.php
+require_once 'auth_func.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isUserLoggedIn()) {
     http_response_code(403);
     header('Location: /page_403.php');
     exit();
 }
+
 
 umask(0000);
 
