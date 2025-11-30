@@ -112,29 +112,20 @@ $(document).ready(function(){
             {
                 console.log('update_game___');
 
-                subMessage.textContent = "Не готово";
-                return;
-
-
-                console.log('update_author');
-                formData.append('query', 'update_game');
-                formData.append('game_id', game_id);
-                formData.append('developer_name', developer);
-                console.log('dev', developer);
                 if(screensaverFile)
                 {
                     formData.append('screensaver', screensaverFile);
                 }
+
                 if(game_description != basedDescription)
                 {
                     formData.append('game_description', game_description);
                 }
+
                 if(game_name != Basedgame_name)
                 {
-
                     response_game = await checkDeveloperExists(game_name, "game_search");
-
-                    if (response_game.game_name && response_game.game_name.toString().trim() !== '') {
+                    if (response_game === false) {
                         subMessage.textContent = "Игра уже существует, сохранение не выполнено";
                         return;
                     }
@@ -145,14 +136,17 @@ $(document).ready(function(){
 
                 if(developer != basedAuthor)//проверка существования разработчика
                 {
-                    response = await checkDeveloperExists(developer, "developer_search");
-
-                    console.log("resp,", response);
-                    if (response.autor_name && response.autor_name.toString().trim() !== '') {
-                        subMessage.textContent = "Разработчик уже существует, сохранение не выполнено";
+                    response_dev = await checkDeveloperExists(developer, "developer_search");
+                    if (response_dev.autor_name.length === 0) {
+                        subMessage.textContent = "Разработчик не найден, сохранение игры не выполнено";
                         return;
                     }
+                    
+                    formData.append('developer_name', developer);
                 }
+
+                formData.append('query', 'update_game');
+                formData.append('game_id', game_id);
             }
             else
             {
@@ -166,14 +160,18 @@ $(document).ready(function(){
                 
 
                 response_game = await checkDeveloperExists(game_name, "game_search");
-                console.log(response_game);
-
                 if (response_game === false) {
                     subMessage.textContent = "Игра уже существует, сохранение не выполнено";
                     return;
                 }
 
-                bGame_update = false;
+
+                response_dev = await checkDeveloperExists(developer, "developer_search");
+                if (response_dev.autor_name.length === 0) {
+                    subMessage.textContent = "Разработчик не найден, сохранение игры не выполнено";
+                    return;
+                }
+                
 
                 console.log('add_game');
                 formData.append('query', 'add_game');
