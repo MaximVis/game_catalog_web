@@ -175,7 +175,7 @@
                             }
                         ?>"><?php 
                         if (!$bAdd_game && isset($text_dscrpt)) {
-                            echo htmlspecialchars($text_dscrpt);
+                            echo $text_dscrpt, $result['game_description'], htmlspecialchars($result['game_description']);
                         }
                     ?></textarea>
 
