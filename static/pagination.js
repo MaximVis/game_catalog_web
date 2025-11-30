@@ -32,7 +32,7 @@ $(document).ready(function(){
       $.post("pagination.php", {array_params:array_params, query:query_to_bd}, function(data) {
       var response = JSON.parse(data);
 
-      // Конфигурация для разных типов запросов
+      // конфигурация для разных типов запросов
       const queryConfig = {
         developers_get: {
           container: '.item.items_content',
@@ -72,7 +72,7 @@ $(document).ready(function(){
         }
       };
 
-      // Функция создания элемента для разработчика
+      // функция создания элемента для разработчика
       function createDeveloperElement(item, config) {
         return $('<a>', {
           href: config.hrefTemplate(item.autor_name),
@@ -93,7 +93,7 @@ $(document).ready(function(){
         });
       }
 
-      // Функция создания элемента для игры
+      // функция создания элемента для игры
       function createGameElement(item, config) {
         return $('<a>', {
           href: config.hrefTemplate(item.game_name)
@@ -119,7 +119,7 @@ $(document).ready(function(){
         );
       }
 
-      // Функция создания элементов на основе конфигурации
+      // функция создания элементов на основе конфигурации
       function createItems(response, config) {
         const container = $(config.container);
         const items = config.isDeveloper ? response.autor_id : response.game_id;
@@ -143,10 +143,8 @@ $(document).ready(function(){
         }
       }
 
-      // Основная логика
       const config = queryConfig[query] || queryConfig.default;
 
-      // Создание элементов
       createItems(response, config);
            
 

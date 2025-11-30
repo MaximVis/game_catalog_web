@@ -1,20 +1,19 @@
 <?php
 
-// Функция для инициализации сессии с настройками
+// функция для инициализации сессии с настройками
 function initSession() {
-    // Настройка параметров сессии ДО session_start()
-    ini_set('session.gc_maxlifetime', 31536000); // 1 год в секундах
-    ini_set('session.cookie_lifetime', 31536000); // Время жизни cookie
+    ini_set('session.gc_maxlifetime', 31536000); 
+    ini_set('session.cookie_lifetime', 31536000); 
     
-    // Проверяем, не запущена ли уже сессия
+    // запущена ли уже сессия
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
 }
 
-// После успешной аутентификации
+// успешная аутентификации
 function loginUser($login) {
-    // Регенерация ID сессии 
+
     session_regenerate_id(true);
 
     $_SESSION['user_login'] = $login;
@@ -38,12 +37,11 @@ function isUserLoggedIn() {
     && (time() - $_SESSION['login_time']) < 31536000; // 1 год
 }
 
-// Выход
+// выход
 function logoutUser() {
-    // Очищаем все данные сессии
+
     $_SESSION = array();
-    
-    // Удаляем cookie сессии
+
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
         setcookie(session_name(), '', time() - 86400,
