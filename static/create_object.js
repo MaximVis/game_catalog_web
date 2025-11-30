@@ -134,14 +134,14 @@ $(document).ready(function(){
                 }
 
 
-                if(developer != basedAuthor)//проверка существования разработчика
+                if(developer != basedAutor)//проверка существования разработчика
                 {
                     response_dev = await checkDeveloperExists(developer, "developer_search");
                     if (response_dev.autor_name.length === 0) {
                         subMessage.textContent = "Разработчик не найден, сохранение игры не выполнено";
                         return;
                     }
-                    
+
                     formData.append('developer_name', developer);
                 }
 
