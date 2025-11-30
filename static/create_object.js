@@ -108,115 +108,153 @@ $(document).ready(function(){
             const game_id = gameDataElement?.dataset?.gameId || null;
             const Basedgame_name = gameNameInput.dataset.basedName;
 
-            if (basedAutor != developer)//добавление новой игры или смена разработчика у существующей
+            if (basedAutor && basedDescription && Basedgame_name)
             {
+                console.log('update_game');
 
-                response = await checkDeveloperExists(developer, "developer_search");
+                subMessage.textContent = "Не готово";
+                return;
+            }
+            else
+            {
+                console.log('add_game');
+
+                if(!screensaverFile || !developer || !game_description || !game_name)
+                {
+                    subMessage.textContent = "Для создания игры необходимо заполнить все поля, сохранение игры не выполнено";
+                    return;
+                }
                 
-                if (response.autor_name.length === 0) {
-                    subMessage.textContent = "Автор не найден, сохранение игры не выполнено";
+
+                response_game = await checkDeveloperExists(game_name, "game_search");
+                console.log(response_game);
+
+                if (response_game.game_name && response_game.game_name.toString().trim() !== '') {
+                    subMessage.textContent = "Игра уже существует, сохранение не выполнено";
                     return;
                 }
 
-                //если разработчик существует, то добавление информации
-                if (!screensaverFile && !basedAutor)//создание новой игры, нет картинки
-                {
-                    subMessage.textContent = "Загрузите картинку, сохранение игры не выполнено";
-                    return;
-                }
+                bGame_update = false;
 
-                if(game_id)//изменение существующей игры
-                {
-                    console.log('update_author');
-                    formData.append('query', 'update_game');
-                    formData.append('game_id', game_id);
-                    formData.append('developer_name', developer);
-                    console.log('dev', developer);
-                    if(screensaverFile)
-                    {
-                        formData.append('screensaver', screensaverFile);
-                    }
-                    if(game_description != basedDescription)
-                    {
-                        formData.append('game_description', game_description);
-                    }
-                    if(game_name != Basedgame_name)
-                    {
+                console.log('add_game');
+                formData.append('query', 'add_game');
+                formData.append('screensaver', screensaverFile);
+                formData.append('developer_name', developer);
+                formData.append('game_description', game_description);
+                formData.append('game_name', game_name);
 
-                        response_game = await checkDeveloperExists(game_name, "game_search");
-
-                        if (response_game.game_name && response_game.game_name.toString().trim() !== '') {
-                            subMessage.textContent = "Игра уже существует, сохранение не выполнено";
-                            return;
-                        }
-
-                        formData.append('game_name', game_name);
-                    }
-                }
-                else//создание новой игры
-                {
-                    if(!screensaverFile || !developer || !game_description || !game_name)
-                    {
-                        subMessage.textContent = "Для создания игры необходимо заполнить все поля, сохранение игры не выполнено";
-                        return;
-                    }
-
-                    response_game = await checkDeveloperExists(game_name, "game_search");
-                    console.log(response_game);
-
-                    if (response_game.game_name && response_game.game_name.toString().trim() !== '') {
-                        subMessage.textContent = "Игра уже существует, сохранение не выполнено";
-                        return;
-                    }
-
-                    bGame_update = false;
-
-                    console.log('add_game');
-                    formData.append('query', 'add_game');
-                    formData.append('screensaver', screensaverFile);
-                    formData.append('developer_name', developer);
-                    formData.append('game_description', game_description);
-                    formData.append('game_name', game_name);
-
-                }
             }
-            else//уже созданная игра
-            {
 
-                if(!screensaverFile && (basedDescription === game_description) && (basedAutor === developer) && (Basedgame_name === game_name) && JSON.stringify(window.selectedGenres) === JSON.stringify(window.based_selectedGenres) && 
-                    JSON.stringify(window.selectedCategories) === JSON.stringify(window.based_selectedCategories))
-                {
-                    subMessage.textContent = "Поля не изменены, сохранение игры не выполнено";
-                    return;
-                }
 
-                console.log('update_no_author');
-                formData.append('query', 'update_game');
-                formData.append('game_id', game_id);
-                if (developer != basedAutor)
-                {
-                    formData.append('developer_name', developer);
-                }
-                if(screensaverFile)
-                {
-                    formData.append('screensaver', screensaverFile);
-                }
-                if(game_description != basedDescription)
-                {
-                    formData.append('game_description', game_description);
-                }
-                if(game_name != Basedgame_name)
-                {
-                    response_game = await checkDeveloperExists(game_name, "game_search");
+            // if (basedAutor != developer)//добавление новой игры или смена разработчика у существующей
+            // {
 
-                    if (response_game.game_name && response_game.game_name.toString().trim() !== '') {
-                        subMessage.textContent = "Игра уже существует, сохранение не выполнено";
-                        return;
-                    }
+            //     response = await checkDeveloperExists(developer, "developer_search");
+                
+            //     if (response.autor_name.length === 0) {
+            //         subMessage.textContent = "Автор не найден, сохранение игры не выполнено";
+            //         return;
+            //     }
 
-                    formData.append('game_name', game_name);
-                }
-            }
+            //     //если разработчик существует, то добавление информации
+            //     if (!screensaverFile && !basedAutor)//создание новой игры, нет картинки
+            //     {
+            //         subMessage.textContent = "Загрузите картинку, сохранение игры не выполнено";
+            //         return;
+            //     }
+
+            //     if(game_id)//изменение существующей игры
+            //     {
+            //         console.log('update_author');
+            //         formData.append('query', 'update_game');
+            //         formData.append('game_id', game_id);
+            //         formData.append('developer_name', developer);
+            //         console.log('dev', developer);
+            //         if(screensaverFile)
+            //         {
+            //             formData.append('screensaver', screensaverFile);
+            //         }
+            //         if(game_description != basedDescription)
+            //         {
+            //             formData.append('game_description', game_description);
+            //         }
+            //         if(game_name != Basedgame_name)
+            //         {
+
+            //             response_game = await checkDeveloperExists(game_name, "game_search");
+
+            //             if (response_game.game_name && response_game.game_name.toString().trim() !== '') {
+            //                 subMessage.textContent = "Игра уже существует, сохранение не выполнено";
+            //                 return;
+            //             }
+
+            //             formData.append('game_name', game_name);
+            //         }
+            //     }
+            //     else//создание новой игры
+            //     {
+            //         if(!screensaverFile || !developer || !game_description || !game_name)
+            //         {
+            //             subMessage.textContent = "Для создания игры необходимо заполнить все поля, сохранение игры не выполнено";
+            //             return;
+            //         }
+
+            //         response_game = await checkDeveloperExists(game_name, "game_search");
+            //         console.log(response_game);
+
+            //         if (response_game.game_name && response_game.game_name.toString().trim() !== '') {
+            //             subMessage.textContent = "Игра уже существует, сохранение не выполнено";
+            //             return;
+            //         }
+
+            //         bGame_update = false;
+
+            //         console.log('add_game');
+            //         formData.append('query', 'add_game');
+            //         formData.append('screensaver', screensaverFile);
+            //         formData.append('developer_name', developer);
+            //         formData.append('game_description', game_description);
+            //         formData.append('game_name', game_name);
+
+            //     }
+            // }
+            // else//уже созданная игра
+            // {
+
+            //     if(!screensaverFile && (basedDescription === game_description) && (basedAutor === developer) && (Basedgame_name === game_name) && JSON.stringify(window.selectedGenres) === JSON.stringify(window.based_selectedGenres) && 
+            //         JSON.stringify(window.selectedCategories) === JSON.stringify(window.based_selectedCategories))
+            //     {
+            //         subMessage.textContent = "Поля не изменены, сохранение игры не выполнено";
+            //         return;
+            //     }
+
+            //     console.log('update_no_author');
+            //     formData.append('query', 'update_game');
+            //     formData.append('game_id', game_id);
+            //     if (developer != basedAutor)
+            //     {
+            //         formData.append('developer_name', developer);
+            //     }
+            //     if(screensaverFile)
+            //     {
+            //         formData.append('screensaver', screensaverFile);
+            //     }
+            //     if(game_description != basedDescription)
+            //     {
+            //         formData.append('game_description', game_description);
+            //     }
+            //     if(game_name != Basedgame_name)
+            //     {
+            //         response_game = await checkDeveloperExists(game_name, "game_search");
+
+            //         if (response_game.game_name && response_game.game_name.toString().trim() !== '') {
+            //             subMessage.textContent = "Игра уже существует, сохранение не выполнено";
+            //             return;
+            //         }
+
+            //         formData.append('game_name', game_name);
+            //     }
+            // }
 
 
 
