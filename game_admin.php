@@ -27,7 +27,7 @@
         $game_name = urldecode($_GET['game']);
 
         $result = get_query_answer("game", $game_name);
-        $text_dscrpt = str_replace('</br>', "\n", $result['game_description']);
+        $text_dscrpt = str_replace(['<br>', '</br>'], "\n", $result['game_description']);
 
         if (!$result)
         {
@@ -175,7 +175,7 @@
                             }
                         ?>"><?php 
                         if (!$bAdd_game && isset($text_dscrpt)) {
-                            echo $text_dscrpt, $result['game_description'], htmlspecialchars($result['game_description']), htmlspecialchars($text_dscrpt);
+                            echo htmlspecialchars($text_dscrpt);
                         }
                     ?></textarea>
 
