@@ -129,7 +129,7 @@ $(document).ready(function(){
                 response_game = await checkDeveloperExists(game_name, "game_search");
                 console.log(response_game);
 
-                if (response_game.game_name && response_game.game_name.toString().trim() !== '') {
+                if (response_game === false) {
                     subMessage.textContent = "Игра уже существует, сохранение не выполнено";
                     return;
                 }
