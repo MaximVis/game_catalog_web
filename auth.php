@@ -3,7 +3,7 @@
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         http_response_code(403);
         header('Location: /page_403.php');
-        exit('');
+        exit();
     }
 
     $login = $_POST['login'];

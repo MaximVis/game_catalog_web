@@ -75,9 +75,12 @@ $query = $_POST['query'];
 pg_query($dbconn, "BEGIN");//начало транзакции
 $success = true;
 
+$serverPathDevelopers = '/var/www/html/devs_imgs/';
+$serverPathGames = '/var/www/html/game_imgs/';
+
 if ($query == 'add_game' || $query == 'update_game')//страница игр
 {
-    $serverPathDevelopers = '/var/www/html/game_imgs/';
+    //$serverPathDevelopers = '/var/www/html/game_imgs/';
     $array_data = array();
 
     if (isset($_POST['game_id'])) {//обновление данных игры update_game
@@ -167,8 +170,7 @@ elseif($query == "delete_developer" || $query == "delete_game"){//удалени
 
     if ($query == "delete_game")//удаление игры
     {
-        $serverPathGames = '/var/www/html/game_imgs/';
-        
+
         $game_id = $_POST["game_id"];
 
         $array_data = array();
@@ -201,8 +203,6 @@ elseif($query == "delete_developer" || $query == "delete_game"){//удалени
     }
     else//удаление разработчика(и его игр)
     {
-        $serverPathGames = '/var/www/html/game_imgs/';//добавить удаление жанров и категрирй связанных с игрой!!!!!!
-        $serverPathDevelopers = '/var/www/html/devs_imgs/';
         $developerName = $_POST["developer_name"]; // имя автора для удаления
 
         try {
@@ -311,7 +311,6 @@ elseif($query == "delete_genre" || $query == "update_genre" || $query == "create
 }
 else{//страница разрабочтиков
 
-    $serverPathDevelopers = '/var/www/html/devs_imgs/';
     $array_data = array();
 
     if(isset($_POST['developer_name']))
@@ -339,7 +338,15 @@ else{//страница разрабочтиков
 if ($success && isset($_FILES['screensaver']) && $_FILES['screensaver']['error'] === UPLOAD_ERR_OK) {//загрузка картинок
 
     if($query == 'update_game' || $query == 'update_autor'){
-        $pattern = $serverPathDevelopers . $file_id . '.*';
+
+        if ($query == 'update_game'){
+            $servPath = $serverPathGames;
+        }
+        else{
+            $servPath = $serverPathDevelopers;
+        }
+
+        $pattern = $servPath . $file_id . '.*';
         $existingFiles = glob($pattern);
 
         foreach ($existingFiles as $existingFile) {
@@ -348,12 +355,20 @@ if ($success && isset($_FILES['screensaver']) && $_FILES['screensaver']['error']
             }
         }
     }
+
+    if(str_contains($query, 'game')){
+        $PathImg = $serverPathGames;
+    }
+    else
+    {
+        $PathImg = $serverPathDevelopers;
+    }
     
     $originalFileName = $_FILES['screensaver']['name'];
     $fileExtension = pathinfo($originalFileName, PATHINFO_EXTENSION);
     
     $fileName = $file_id . '.' . $fileExtension;
-    $uploadFile = $serverPathDevelopers . $fileName;
+    $uploadFile = $PathImg . $fileName;
     
     if (!move_uploaded_file($_FILES['screensaver']['tmp_name'], $uploadFile)) {
         $success = false;
