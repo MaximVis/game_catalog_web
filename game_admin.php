@@ -115,10 +115,9 @@
         <div class = container_main_page_content><!-- блоки игр -->
 
 
-            <div class = "game_text_description_game">
 
                 <form method="post" class = "game_form_main" id = create_object enctype="multipart/form-data">
-                <div>
+
 
                     <div id="data-container" 
                         data-genres='<?php echo json_encode($genres); ?>'
@@ -404,9 +403,7 @@
                     <div class="sub_message" id="sub_message"></div>
                     <button type="submit" class = "admin_but" name="save">Сохранить игру</button>
 
-                </div>
                 </form>
-            </div>
             
         </div>
     </div>
