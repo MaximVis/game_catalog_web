@@ -117,7 +117,7 @@
 
             <div class = "game_text_description_game">
 
-                <form method="post" id = create_object enctype="multipart/form-data">
+                <form method="post" class = "game_form_main" id = create_object enctype="multipart/form-data">
                 <div>
 
                     <div id="data-container" 
