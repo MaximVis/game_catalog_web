@@ -105,9 +105,11 @@
             <h1 class="head_word">Добавление новой игры</h1>
         <?php else: ?>
             <h1 class="head_word">Изменить данные о игре <?= htmlspecialchars($result['game_name']) ?></h1>
-            <form method="POST" id="deleteForm">
-                <button type="submit" class = "admin_but" id = delete_object name="delete_button">Удалить страницу игры</button>
-            </form>
+            <div class="delete_button_container">
+                <form method="POST" id="deleteForm">
+                    <button type="submit" class = "admin_but" id = delete_object name="delete_button">Удалить страницу игры</button>
+                </form>
+            </div>
         <?php endif; ?>
 
         <div class = container_main_page_content><!-- блоки игр -->

@@ -14,6 +14,7 @@
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
     margin-top: 25px;
+    box-sizing: border-box;
 }
 
 .admin_but:hover {
@@ -73,7 +74,9 @@
 }
 
 
-
+.delete_button_container {
+    width: 100%;
+}
 
 
 
