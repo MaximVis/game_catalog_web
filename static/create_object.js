@@ -110,7 +110,7 @@ $(document).ready(function(){
 
             if (basedAutor && basedDescription && Basedgame_name)
             {
-                console.log('update_game');
+                console.log('update_game___');
 
                 subMessage.textContent = "Не готово";
                 return;
@@ -141,10 +141,22 @@ $(document).ready(function(){
 
                     formData.append('game_name', game_name);
                 }
+
+
+                if(developer != basedAuthor)//проверка существования разработчика
+                {
+                    response = await checkDeveloperExists(developer, "developer_search");
+
+                    console.log("resp,", response);
+                    if (response.autor_name && response.autor_name.toString().trim() !== '') {
+                        subMessage.textContent = "Разработчик уже существует, сохранение не выполнено";
+                        return;
+                    }
+                }
             }
             else
             {
-                console.log('add_game');
+                console.log('add_game____');
 
                 if(!screensaverFile || !developer || !game_description || !game_name)
                 {
