@@ -5,9 +5,6 @@
         header('Location: auth_page.php');
         exit();
     }
-?>
-
-<?php
  
     $bAdd_author = False;
 
