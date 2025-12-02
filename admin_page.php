@@ -59,19 +59,18 @@
         <form action="game_admin.php" method="GET"><button class ="button_menu">Добавить новую игру</button></form>
 
 
-                <!-- Контейнер для табов -->
-        <div class="admin-tabs-container">
+        <div class="admin_tabs_container">
             <!-- Кнопки переключения табов -->
-            <div class="admin-tabs-header">
-                <button class="tab-button active" data-tab="search">Поиск</button>
-                <button class="tab-button" data-tab="genre">Жанры</button>
-                <button class="tab-button" data-tab="category">Категории</button>
+            <div class="admin_tabs_header">
+                <button class="tab_button active" data_tab="search">Поиск</button>
+                <button class="tab_button" data_tab="genre">Жанры</button>
+                <button class="tab_button" data_tab="category">Категории</button>
             </div>
 
             <!-- Содержимое табов -->
-            <div class="admin-tabs-content">
+            <div class="admin_tabs_content">
                 <!-- Таб 1: Поиск -->
-                <div class="tab-content active" id="search-tab">
+                <div class="tab_content active" id="search_tab">
                     <!-- Форма поиска игры -->
                     <form class="admin_form" id="admin_form_game" action="games_search.php" method="GET">
                         <label class="form_word">Поиск игры:</label>
@@ -92,19 +91,19 @@
                 </div>
 
                 <!-- Таб 2: Жанры -->
-                <div class="tab-content" id="genre-tab">
+                <div class="tab_content" id="genre_tab">
                     <!-- Форма изменения жанров -->
                     <form class="admin_form" id="form_change_genre" method="POST">
                         <label class="form_word">Изменить жанр игр:</label>
                         <input class="input_form_search" type="text" id="based_name_genre" name="based_name_genre" placeholder="Введите жанр" required>
                         <div class="sub_message_a_pg" id="genre_message"></div>
                         
-                        <div class="form-actions">
+                        <div class="form_actions">
                             <input type="submit" class="search_value_button catgeory_genre" id="create_genre" value="Добавить жанр">
                             <input type="submit" class="search_value_button catgeory_genre" id="delete_genre" value="Удалить жанр">
                         </div>
                         
-                        <div class="form-update">
+                        <div class="form_update">
                             <input class="input_form_search catgeory_genre_input" type="text" id="new_name_genre" name="new_name_genre" placeholder="Введите новое название жанра">
                             <input type="submit" class="search_value_button catgeory_genre" id="update_genre" value="Изменить жанр">
                         </div>
@@ -112,19 +111,19 @@
                 </div>
 
                 <!-- Таб 3: Категории -->
-                <div class="tab-content" id="category-tab">
+                <div class="tab_content" id="category_tab">
                     <!-- Форма изменения категорий -->
                     <form class="admin_form" id="form_change_category" method="POST">
                         <label class="form_word">Изменить категорию игр:</label>
                         <input class="input_form_search" type="text" id="based_name_category" name="based_name_category" placeholder="Введите категорию" required>
                         <div class="sub_message_a_pg" id="category_message"></div>
                         
-                        <div class="form-actions">
+                        <div class="form_actions">
                             <input type="submit" class="search_value_button catgeory_genre" id="create_category" value="Добавить категорию">
                             <input type="submit" class="search_value_button catgeory_genre" id="delete_category" value="Удалить категорию">
                         </div>
                         
-                        <div class="form-update">
+                        <div class="form_update">
                             <input class="input_form_search catgeory_genre_input" type="text" id="new_name_category" name="new_name_category" placeholder="Введите новое название категории">
                             <input type="submit" class="search_value_button catgeory_genre" id="update_category" value="Изменить категорию">
                         </div>

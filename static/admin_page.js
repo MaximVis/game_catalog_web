@@ -1,29 +1,23 @@
 // Функция для переключения табов
 function switchTab(tabId) {
-    console.log('Переключение на таб:', tabId);
-    
     // Скрыть все табы
-    document.querySelectorAll('.tab-content').forEach(tab => {
+    document.querySelectorAll('.tab_content').forEach(tab => {
         tab.classList.remove('active');
-        console.log('Скрыт таб:', tab.id);
     });
     
     // Удалить активный класс у всех кнопок
-    document.querySelectorAll('.tab-button').forEach(button => {
+    document.querySelectorAll('.tab_button').forEach(button => {
         button.classList.remove('active');
     });
     
     // Показать выбранный таб
-    const selectedTab = document.getElementById(`${tabId}-tab`);
+    const selectedTab = document.getElementById(`${tabId}_tab`);
     if (selectedTab) {
         selectedTab.classList.add('active');
-        console.log('Показан таб:', selectedTab.id);
-    } else {
-        console.error('Таб не найден:', `${tabId}-tab`);
     }
     
     // Активировать соответствующую кнопку
-    const selectedButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+    const selectedButton = document.querySelector(`.tab_button[data_tab="${tabId}"]`);
     if (selectedButton) {
         selectedButton.classList.add('active');
     }
@@ -34,38 +28,24 @@ function switchTab(tabId) {
 
 // Инициализация табов при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM загружен, инициализация табов...');
-    
-    // Проверим, есть ли элементы на странице
-    const tabButtons = document.querySelectorAll('.tab-button');
-    console.log('Найдено кнопок табов:', tabButtons.length);
-    
-    const tabContents = document.querySelectorAll('.tab-content');
-    console.log('Найдено содержимого табов:', tabContents.length);
-    
     // Назначить обработчики на кнопки табов
-    tabButtons.forEach(button => {
+    document.querySelectorAll('.tab_button').forEach(button => {
         button.addEventListener('click', function() {
-            const tabId = this.getAttribute('data-tab');
-            console.log('Клик по табу:', tabId);
+            const tabId = this.getAttribute('data_tab');
             switchTab(tabId);
         });
     });
     
     // Восстановить активный таб из localStorage или установить первый
     const savedTab = localStorage.getItem('adminActiveTab');
-    if (savedTab && document.getElementById(`${savedTab}-tab`)) {
-        console.log('Восстановление сохраненного таба:', savedTab);
+    if (savedTab && document.getElementById(`${savedTab}_tab`)) {
         switchTab(savedTab);
     } else {
         // Активировать первый таб по умолчанию
-        const firstTabButton = document.querySelector('.tab-button');
+        const firstTabButton = document.querySelector('.tab_button');
         if (firstTabButton) {
-            const firstTabId = firstTabButton.getAttribute('data-tab');
-            console.log('Активация первого таба по умолчанию:', firstTabId);
+            const firstTabId = firstTabButton.getAttribute('data_tab');
             switchTab(firstTabId);
-        } else {
-            console.error('Не найдены кнопки табов!');
         }
     }
 });
