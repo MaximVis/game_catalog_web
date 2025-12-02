@@ -4,6 +4,13 @@
         require_once 'config.php';
         require_once 'query_func.php';
         $autor_name = urldecode($_GET['input_items_search']);
+        $author_exists = get_query_answer("author", $autor_name);//Проверка существования разработчика
+        if (empty($author_exists["autor_id"]))
+        {
+            http_response_code(404);
+            require_once 'page_404.php';
+            exit;
+        }
         $games = get_query_answer("developers_games", $autor_name);
 
     }
