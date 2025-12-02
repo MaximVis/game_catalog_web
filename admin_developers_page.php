@@ -21,7 +21,7 @@
         {
             http_response_code(404);
             require_once 'page_404.php';
-            exit;
+            exit();
         }
     }
     else
