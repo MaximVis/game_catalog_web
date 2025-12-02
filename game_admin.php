@@ -23,7 +23,6 @@
         $game_name = urldecode($_GET['game']);
 
         $result = get_query_answer("game", $game_name);
-        $text_dscrpt = str_replace(['<br>', '</br>'], "\n", $result['game_description']);
 
         if (!$result)
         {
@@ -31,6 +30,8 @@
             require_once 'page_404.php';
             exit();
         }
+
+        $text_dscrpt = str_replace(['<br>', '</br>'], "\n", $result['game_description']);
 
         $game_genres = get_query_answer("game_genres", $result['game_id']);
         $game_categories = get_query_answer("game_categories", $result['game_id']);
