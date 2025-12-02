@@ -64,14 +64,14 @@
     <?php 
         if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['input_items_search']))
         {
-            echo '<script src="static/pagination.js" defer data-query="developers_games" data-query_param="' . htmlspecialchars($autor_name, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '"></script>';
+            echo '<script src="static/pagination.js" defer data-query="developers_games" data-query_param=\'' . json_encode($autor_name, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT) . '\'></script>';
         }
     ?>
 
     <?php require_once 'shapka.php';?>
         <div class="container"><!-- основной контент -->
             <?php require_once 'shapka_menu.php';?>
-            <h1 class = "head_word">Игры разработчика <?= $autor_name ?></h1>
+            <h1 class = "head_word">Игры разработчика <?= htmlspecialchars($autor_name) ?></h1>
             <div class = "container_items_content">
             <form class = "item items_select" action="developers.php" method="GET"> <input class = "input_items_search" type="text" id="input_items_search" name="input_items_search" placeholder="Найти разработчика"> </form>
             <div class = "item items_content">
