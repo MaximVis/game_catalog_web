@@ -59,18 +59,20 @@
         <form action="game_admin.php" method="GET"><button class ="button_menu">Добавить новую игру</button></form>
 
 
+         <!-- Контейнер для табов -->
         <div class="admin_tabs_container">
             <!-- Кнопки переключения табов -->
             <div class="admin_tabs_header">
-                <button class="tab_button active" data_tab="search">Поиск</button>
-                <button class="tab_button" data_tab="genre">Жанры</button>
-                <button class="tab_button" data_tab="category">Категории</button>
+                <button class="tab_button active" data_tab="games">Игры</button>
+                <button class="tab_button" data_tab="developers">Разработчики</button>
+                <button class="tab_button" data_tab="categories">Категории</button>
+                <button class="tab_button" data_tab="genres">Жанры</button>
             </div>
 
             <!-- Содержимое табов -->
             <div class="admin_tabs_content">
-                <!-- Таб 1: Поиск -->
-                <div class="tab_content active" id="search_tab">
+                <!-- Таб 1: Игры -->
+                <div class="tab_content active" id="games_tab">
                     <!-- Форма поиска игры -->
                     <form class="admin_form" id="admin_form_game" action="games_search.php" method="GET">
                         <label class="form_word">Поиск игры:</label>
@@ -79,7 +81,10 @@
                         <div id="game_suggestions" class="suggestions"></div>
                         <input type="submit" class="search_value_button" value="Поиск игры">
                     </form>
+                </div>
 
+                <!-- Таб 2: Разработчики -->
+                <div class="tab_content" id="developers_tab">
                     <!-- Форма поиска разработчика -->
                     <form class="admin_form" id="admin_form_dev" action="developers.php" method="GET">
                         <label class="form_word">Поиск разработчика:</label>
@@ -90,31 +95,11 @@
                     </form>
                 </div>
 
-                <!-- Таб 2: Жанры -->
-                <div class="tab_content" id="genre_tab">
-                    <!-- Форма изменения жанров -->
-                    <form class="admin_form" id="form_change_genre" method="POST">
-                        <label class="form_word">Изменить жанр игр:</label>
-                        <input class="input_form_search" type="text" id="based_name_genre" name="based_name_genre" placeholder="Введите жанр" required>
-                        <div class="sub_message_a_pg" id="genre_message"></div>
-                        
-                        <div class="form_actions">
-                            <input type="submit" class="search_value_button catgeory_genre" id="create_genre" value="Добавить жанр">
-                            <input type="submit" class="search_value_button catgeory_genre" id="delete_genre" value="Удалить жанр">
-                        </div>
-                        
-                        <div class="form_update">
-                            <input class="input_form_search catgeory_genre_input" type="text" id="new_name_genre" name="new_name_genre" placeholder="Введите новое название жанра">
-                            <input type="submit" class="search_value_button catgeory_genre" id="update_genre" value="Изменить жанр">
-                        </div>
-                    </form>
-                </div>
-
                 <!-- Таб 3: Категории -->
-                <div class="tab_content" id="category_tab">
+                <div class="tab_content" id="categories_tab">
                     <!-- Форма изменения категорий -->
                     <form class="admin_form" id="form_change_category" method="POST">
-                        <label class="form_word">Изменить категорию игр:</label>
+                        <label class="form_word">Управление категориями игр:</label>
                         <input class="input_form_search" type="text" id="based_name_category" name="based_name_category" placeholder="Введите категорию" required>
                         <div class="sub_message_a_pg" id="category_message"></div>
                         
@@ -126,6 +111,26 @@
                         <div class="form_update">
                             <input class="input_form_search catgeory_genre_input" type="text" id="new_name_category" name="new_name_category" placeholder="Введите новое название категории">
                             <input type="submit" class="search_value_button catgeory_genre" id="update_category" value="Изменить категорию">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Таб 4: Жанры -->
+                <div class="tab_content" id="genres_tab">
+                    <!-- Форма изменения жанров -->
+                    <form class="admin_form" id="form_change_genre" method="POST">
+                        <label class="form_word">Управление жанрами игр:</label>
+                        <input class="input_form_search" type="text" id="based_name_genre" name="based_name_genre" placeholder="Введите жанр" required>
+                        <div class="sub_message_a_pg" id="genre_message"></div>
+                        
+                        <div class="form_actions">
+                            <input type="submit" class="search_value_button catgeory_genre" id="create_genre" value="Добавить жанр">
+                            <input type="submit" class="search_value_button catgeory_genre" id="delete_genre" value="Удалить жанр">
+                        </div>
+                        
+                        <div class="form_update">
+                            <input class="input_form_search catgeory_genre_input" type="text" id="new_name_genre" name="new_name_genre" placeholder="Введите новое название жанра">
+                            <input type="submit" class="search_value_button catgeory_genre" id="update_genre" value="Изменить жанр">
                         </div>
                     </form>
                 </div>

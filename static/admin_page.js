@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (savedTab && document.getElementById(`${savedTab}_tab`)) {
         switchTab(savedTab);
     } else {
-        // Активировать первый таб по умолчанию
+        // Активировать первый таб по умолчанию (Игры)
         const firstTabButton = document.querySelector('.tab_button');
         if (firstTabButton) {
             const firstTabId = firstTabButton.getAttribute('data_tab');
