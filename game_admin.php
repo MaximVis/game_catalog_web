@@ -6,10 +6,6 @@
         header('Location: auth_page.php');
         exit();
     }
-
-?>
-
-<?php
         
     require_once 'query_func.php';
 
@@ -31,7 +27,8 @@
 
         if (!$result)
         {
-            die('Ошибка соединения');
+            http_response_code(404);
+            require_once 'page_404.php';
             exit();
         }
 
