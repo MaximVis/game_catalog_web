@@ -30,6 +30,7 @@
     <?php render_meta($meta); ?>
     <link rel="stylesheet" href="static/base_styles.css">
     <link rel="stylesheet" href="static/admin_styles.css">
+    <link rel="stylesheet" href="static/admin_page_styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="static/CRUD_Genre_Category.js" defer></script>
 </head>
