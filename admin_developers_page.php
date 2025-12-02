@@ -15,12 +15,13 @@
     {
         require_once 'query_func.php';
 
-        $author_name = htmlspecialchars($_GET['input_items_search']);
+        $author_name = urldecode($_GET['input_items_search']);
         $result = get_query_answer("author", $author_name);
         if (!$result)
         {
-            die('Ошибка соединения');
-            exit();
+            http_response_code(404);
+            require_once 'page_404.php';
+            exit;
         }
     }
     else
