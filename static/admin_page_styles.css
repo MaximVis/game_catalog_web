@@ -1,0 +1,149 @@
+/* Контейнер для табов */
+.admin-tabs-container {
+    margin-top: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовок табов */
+.admin-tabs-header {
+    display: flex;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Кнопки табов */
+.tab-button {
+    flex: 1;
+    padding: 15px 20px;
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+    background-color: #e9e9e9;
+    color: #333;
+}
+
+.tab-button.active {
+    background-color: #fff;
+    color: #2c3e50;
+    border-bottom: 3px solid #3498db;
+    font-weight: 600;
+}
+
+/* Контент табов */
+.admin-tabs-content {
+    padding: 30px;
+    background-color: #fff;
+}
+
+/* Содержимое каждого таба */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Быстрые действия */
+.admin-quick-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.admin-quick-actions form {
+    margin: 0;
+}
+
+/* Формы внутри табов */
+.tab-content .admin_form {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    border-left: 4px solid #3498db;
+}
+
+.tab-content .admin_form:last-child {
+    margin-bottom: 0;
+}
+
+/* Действия в формах */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.form-update {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.form-update .catgeory_genre_input {
+    flex: 1;
+    max-width: 300px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .admin-tabs-header {
+        flex-direction: column;
+    }
+    
+    .tab-button {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .tab-button.active {
+        border-bottom: 3px solid #3498db;
+        border-left: none;
+    }
+    
+    .admin-tabs-content {
+        padding: 20px 15px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-update {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .form-update .catgeory_genre_input {
+        max-width: 100%;
+    }
+}
