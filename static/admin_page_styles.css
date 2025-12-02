@@ -1,6 +1,6 @@
 /* Контейнер для табов */
 .admin_tabs_container {
-    margin-top: 30px;
+    margin-top: 15px;
     background-color: #484848;
     border-radius: 4px;
     overflow: hidden;
@@ -38,7 +38,6 @@
 
 /* Контент табов */
 .admin_tabs_content {
-    padding: 25px;
     background-color: #484848;
     color: #ffffff;
     min-height: 400px;
@@ -82,10 +81,8 @@
 /* Стили для форм */
 .form_word {
     display: block;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 500;
     margin-bottom: 12px;
+    margin-top: 0px;
 }
 
 .input_form_search {
@@ -232,10 +229,6 @@
     
     .tab_button.active {
         border-right: none;
-    }
-    
-    .admin_tabs_content {
-        padding: 20px;
     }
     
     .form_actions {
