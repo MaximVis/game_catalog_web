@@ -52,7 +52,7 @@
     display: block;
 }
 
-/* Быстрые действия */
+/* Быстрые действия !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!удалить*/
 .admin_quick_actions {
     display: flex;
     gap: 15px;
@@ -66,10 +66,8 @@
 
 /* Формы внутри табов */
 .tab_content .admin_form {
-    margin-bottom: 25px;
     padding: 0px;
     background-color: #484848;
-    border: 1px solid #747474;
     border-radius: 4px;
     width: 100%;
 }
