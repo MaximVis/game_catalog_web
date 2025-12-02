@@ -74,13 +74,7 @@
                 <!-- Таб 1: Игры -->
                 <div class="tab_content active" id="games_tab">
                     <!-- Форма поиска игры -->
-                    <form class="admin_form" id="admin_form_game" action="games_search.php" method="GET">
-                        <label class="form_word">Поиск игры:</label>
-                        <input class="input_form_search" type="text" id="search_game" name="search_game" placeholder="Введите название игры" required>
-                        <input type="hidden" name="admin_search" value="true">
-                        <div id="game_suggestions" class="suggestions"></div>
-                        <input type="submit" class="search_value_button" value="Поиск игры">
-                    </form>
+                    123
                 </div>
 
                 <!-- Таб 2: Разработчики -->
