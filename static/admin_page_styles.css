@@ -53,6 +53,7 @@
 
 /* Формы внутри табов */
 .tab_content .admin_form {
+    margin-top: 0px;
     padding: 0px;
     background-color: #484848;
     border-radius: 4px;
