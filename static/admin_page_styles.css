@@ -2,7 +2,7 @@
 .admin_tabs_container {
     margin-top: 30px;
     background-color: #484848;
-    border-radius: 8px;
+    border-radius: 4px;
     overflow: hidden;
 }
 
@@ -68,11 +68,11 @@
 /* Формы внутри табов */
 .tab_content .admin_form {
     margin-bottom: 25px;
-    padding: 20px;
+    padding: 0px;
     background-color: #484848;
     border: 1px solid #747474;
-    border-radius: 6px;
-    max-width: 600px;
+    border-radius: 4px;
+    width: 100%;
 }
 
 .tab_content .admin_form:last-child {
@@ -268,7 +268,7 @@
     }
     
     .tab_content .admin_form {
-        padding: 15px;
+        padding: 0px;
     }
     
     .search_value_button {
