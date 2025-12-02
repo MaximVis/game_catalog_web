@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="static/admin_page_styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="static/CRUD_Genre_Category.js" defer></script>
+    <script src="static/admin_page.js" defer></script>
 </head>
 
 <body>
