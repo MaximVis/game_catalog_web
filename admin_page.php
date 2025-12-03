@@ -55,8 +55,6 @@
         </div>
 
         <h1 class = "head_word">Панель администратора</h1>
-        <form action="admin_developers_page.php" method="GET"><button class ="button_menu">Добавить нового разработчика</button></br></form>
-        <form action="game_admin.php" method="GET"><button class ="button_menu">Добавить новую игру</button></form>
 
 
          <!-- Контейнер для табов -->
@@ -74,6 +72,7 @@
                 <!-- Таб 1: Игры -->
                 <div class="tab_content active" id="games_tab">
                     <!-- Форма поиска игры -->
+                    <form action="game_admin.php" method="GET"><button class ="button_menu">Добавить новую игру</button></form>
                     <form class="admin_form" id="admin_form_game" action="games_search.php" method="GET">
                         <label class="form_word">Поиск игры:</label>
                         <input class="input_form_search" type="text" id="search_game" name="search_game" placeholder="Введите название игры" required>
@@ -86,6 +85,7 @@
                 <!-- Таб 2: Разработчики -->
                 <div class="tab_content" id="developers_tab">
                     <!-- Форма поиска разработчика -->
+                     <form action="admin_developers_page.php" method="GET"><button class ="button_menu">Добавить нового разработчика</button></br></form>
                     <form class="admin_form" id="admin_form_dev" action="developers.php" method="GET">
                         <label class="form_word">Поиск разработчика:</label>
                         <input class="input_form_search" type="text" id="input_items_search" name="input_items_search" placeholder="Введите разработчика" required>
