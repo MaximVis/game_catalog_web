@@ -105,7 +105,8 @@
 }
 
 .search_value_button:hover {
-    background-color: #808080;
+    background-color: white;
+    color: #808080;
 }
 
 /* Действия в формах */
