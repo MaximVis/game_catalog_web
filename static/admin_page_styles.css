@@ -28,7 +28,7 @@
 }
 
 .tab_button:hover {
-    background-color: #404040;
+    background-color: #484848;
 }
 
 .tab_button.active {
@@ -67,7 +67,6 @@
 /* Стили для форм */
 .form_word {
     display: block;
-    margin-bottom: 12px;
     margin-top: 0px;
 }
 
@@ -93,7 +92,7 @@
 }
 
 /* Кнопки форм */
-.search_value_button {
+.search_value_button, .button_menu {
     padding: 12px 24px;
     background-color: #747474;
     color: #ffffff;
@@ -104,7 +103,7 @@
     transition: background-color 0.2s;
 }
 
-.search_value_button:hover {
+.search_value_button:hover, .button_menu:hover {
     background-color: white;
     color: #808080;
 }
@@ -150,13 +149,6 @@
     font-size: 14px;
     background-color: #747474;
     color: #ffffff;
-}
-
-/* Подсказки */
-.suggestions {
-    margin-top: 5px;
-    border-radius: 4px;
-    overflow: hidden;
 }
 
 /* Кнопки в шапке */

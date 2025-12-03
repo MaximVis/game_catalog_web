@@ -77,7 +77,6 @@
                         <label class="form_word">Поиск игры:</label>
                         <input class="input_form_search" type="text" id="search_game" name="search_game" placeholder="Введите название игры" required>
                         <input type="hidden" name="admin_search" value="true">
-                        <div id="game_suggestions" class="suggestions"></div>
                         <input type="submit" class="search_value_button" value="Поиск игры">
                     </form>
                 </div>
@@ -90,7 +89,6 @@
                         <label class="form_word">Поиск разработчика:</label>
                         <input class="input_form_search" type="text" id="input_items_search" name="input_items_search" placeholder="Введите разработчика" required>
                         <input type="hidden" name="admin_search" value="true">
-                        <div id="dev_suggestions" class="suggestions"></div>
                         <input type="submit" class="search_value_button" value="Поиск разработчика">
                     </form>
                 </div>
