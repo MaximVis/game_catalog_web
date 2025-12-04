@@ -79,8 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             
-            // Отображаем игры
-            displayGames(gamesArray, 'games-container');
+             if (gamesArray.length > 0) {
+                gamesArray.forEach(game => {
+                    const gameElement = createGameElement(game);
+                    gamesContainer.appendChild(gameElement);
+                });
+            } else {
+                gamesContainer.innerHTML = '<div class="no-games-message">Игры не найдены</div>';
+            }
             
             hideLoadingIndicator();
         });
@@ -165,6 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         return link;
     }
+    
     
     // Функция показа индикатора загрузки
     function showLoadingIndicator() {
