@@ -48,28 +48,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Функция выполнения поиска
     function performSearch(gameName) {
-
         console.log(gameName);
 
-        // Показываем индикатор загрузки
         showLoadingIndicator();
 
-        var array_params = [0, gameName];
+        // Добавляем % для LIKE поиска: ищет вхождение текста в любом месте названия
+        var searchPattern = '%' + gameName + '%';
+        var array_params = [0, searchPattern]; // OFFSET, поисковый шаблон
 
-        $.post("pagination.php", {array_params:array_params, query:"games_search_post"}, function(data) {
+        $.post("pagination.php", {
+            array_params: array_params, 
+            query: "games_search_post"
+        }, function(data) {
             var response = JSON.parse(data);
             console.log(response);
 
             gamesContainer.innerHTML = '';
-    
-            // Проходим по всем играм в response
-            response.forEach(game => {
-                const gameElement = createGameElement(game);
-                gamesContainer.appendChild(gameElement);
-            });
         });
+
+        // $.post("pagination.php", {array_params:array_params, query:"games_search_post"}, function(data) {
+        //     var response = JSON.parse(data);
+        //     console.log(response);
+
+        //     gamesContainer.innerHTML = '';
+    
+        //     // Проходим по всем играм в response
+        //     response.forEach(game => {
+        //         const gameElement = createGameElement(game);
+        //         gamesContainer.appendChild(gameElement);
+        //     });
+        // });
         
     }
     
