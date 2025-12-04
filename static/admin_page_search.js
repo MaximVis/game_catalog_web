@@ -188,37 +188,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     let isLoading = false;
-let hasMore = true;
-let scrollTimeout;
+    let hasMore = true;
+    let scrollTimeout;
 
-function checkScrollBottomOnce() {
-    // Очищаем предыдущий таймаут
-    clearTimeout(scrollTimeout);
-    
-    // Ставим новый таймаут (debounce)
-    scrollTimeout = setTimeout(() => {
-        const scrollHeight = gamesContainer.scrollHeight;
-        const scrollTop = gamesContainer.scrollTop;
-        const clientHeight = gamesContainer.clientHeight;
+    function checkScrollBottomOnce() {
+        // Очищаем предыдущий таймаут
+        clearTimeout(scrollTimeout);
         
-        if (scrollHeight - scrollTop - clientHeight <= 100 && 
-            !isLoading && 
-            hasMore) {
+        // Ставим новый таймаут (debounce)
+        scrollTimeout = setTimeout(() => {
+            const scrollHeight = gamesContainer.scrollHeight;
+            const scrollTop = gamesContainer.scrollTop;
+            const clientHeight = gamesContainer.clientHeight;
             
-            isLoading = true;
-            
-            queryAndDisplay(gameName)
-                .then(() => {
-                    isLoading = false;
-                })
-                .catch(error => {
-                    console.error('Ошибка загрузки:', error);
-                    isLoading = false;
-                });
-        }
-    }, 100);
-}
+            if (scrollHeight - scrollTop - clientHeight <= 100 && 
+                !isLoading && 
+                hasMore) {
+                
+                isLoading = true;
+                
+                queryAndDisplay(searchedGameName)
+                    .then(() => {
+                        isLoading = false;
+                    })
+                    .catch(error => {
+                        console.error('Ошибка загрузки:', error);
+                        isLoading = false;
+                    });
+            }
+        }, 100);
+    }
 
-gamesContainer.addEventListener('scroll', checkScrollBottomOnce);
+    gamesContainer.addEventListener('scroll', checkScrollBottomOnce);
     
 });
