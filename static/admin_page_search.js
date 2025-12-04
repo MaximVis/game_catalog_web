@@ -54,9 +54,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         showLoadingIndicator();
 
-        // Добавляем % для LIKE поиска: ищет вхождение текста в любом месте названия
         var searchPattern = gameName + '%';
-        var array_params = [0, searchPattern]; // OFFSET, поисковый шаблон
+        var array_params = [0, searchPattern];
 
         $.post("pagination.php", {
             array_params: array_params, 
@@ -102,8 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
         removeNoResultsMessage();
     }
     
-    // Функция создания HTML элемента игры
-    // Функция создания HTML элемента игры
+    
     function createGameElement(game) {
         const link = document.createElement('a');
         link.href = `/game_admin.php?game=${encodeURIComponent(game.game_name)}`;
@@ -111,18 +109,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const gameDiv = document.createElement('div');
         gameDiv.className = 'game_rectangle';
         
-        // Проверяем существование изображения (аналогично PHP коду)
-        const imgExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
         let imgSrc = 'game_imgs/0.png'; // изображение по умолчанию
-        let imgFound = false;
         
         // Если в ответе есть extension, используем его
         if (game.extension && game.extension !== '') {
             imgSrc = 'game_imgs/' + game.game_id + game.extension;
-            imgFound = true;
         } else if (game.game_id) {
-            // Иначе пробуем найти файл (асинхронно не получится проверить, 
-            // поэтому полагаемся на данные от сервера или используем дефолтное)
             imgSrc = 'game_imgs/' + game.game_id + '.png';
         }
         
@@ -157,10 +149,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Функция показа индикатора загрузки
     function showLoadingIndicator() {
-        // Удаляем предыдущее сообщение об отсутствии результатов
+
         removeNoResultsMessage();
         
-        // Создаем индикатор загрузки
+        // индикатор загрузки
         const loadingDiv = document.createElement('div');
         loadingDiv.className = 'loading-indicator';
         loadingDiv.id = 'search-loading';
@@ -169,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         gamesContainer.prepend(loadingDiv);
     }
     
-    // Функция скрытия индикатора загрузки
+    // скрытие индикатора загрузки
     function hideLoadingIndicator() {
         const loadingIndicator = document.getElementById('search-loading');
         if (loadingIndicator) {
@@ -178,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     
-    // Функция удаления сообщения "нет результатов"
+    // удаление сообщения "нет результатов"
     function removeNoResultsMessage() {
         const message = document.getElementById('no-results-message');
         if (message) {
