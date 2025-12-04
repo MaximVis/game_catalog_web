@@ -1,5 +1,6 @@
 <?php
     require_once 'auth_func.php';
+    require_once "query_func.php";
 
     if (!isUserLoggedIn()) {
         header('Location: auth_page.php');
