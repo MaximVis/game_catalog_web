@@ -85,7 +85,7 @@
                     <form action="game_admin.php" method="GET"><button class ="button_menu">Добавить новую игру</button></form>
                     <form class="admin_form" id="admin_form_game">
                         <label class="form_word">Поиск игры:</label>
-                        <input class="input_form_search" type="text" id="search_game" name="search_game" placeholder="Введите название игры" required>
+                        <input class="input_form_search" type="text" id="admin_search_game" name="search_game" placeholder="Введите название игры" required>
                         <input type="hidden" name="admin_search" value="true">
                     </form>
 
