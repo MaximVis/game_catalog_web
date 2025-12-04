@@ -116,41 +116,40 @@
                 <!-- Таб 2: Разработчики -->
                 <div class="tab_content" id="developers_tab">
                     <!-- Форма поиска разработчика -->
-                     <form action="admin_developers_page.php" method="GET"><button class ="button_menu">Добавить нового разработчика</button></br></form>
-                    <form class="admin_form" id="admin_form_dev" action="developers.php" method="GET">
+                    <form action="admin_developers_page.php" method="GET"><button class ="button_menu">Добавить нового разработчика</button></br></form>
+                    <form class="admin_form" id="admin_form_dev">
                         <label class="form_word">Поиск разработчика:</label>
-                        <input class="input_form_search" type="text" id="input_items_search" name="input_items_search" placeholder="Введите разработчика" required>
+                        <input class="input_form_search" type="text" id="admin_search_developers" name="input_items_search" placeholder="Введите разработчика" required>
                         <input type="hidden" name="admin_search" value="true">
                         <!-- <input type="submit" class="search_value_button" value="Поиск разработчика"> -->
                     </form>
 
                     <div class="developers_container">
 
-                    <?php foreach ($list_autors as $autor): ?>
-					
-                        <?php 
-                            $image_path = null;
-                            $extensions = ['png', 'jpg', 'jpeg'];
+                        <?php foreach ($list_autors as $autor): ?>
+                        
+                            <?php 
+                                $image_path = null;
+                                $extensions = ['png', 'jpg', 'jpeg'];
 
-                            foreach ($extensions as $ext) {
-                                if (file_exists('devs_imgs/' . $autor['autor_id'] . '.' . $ext)) {
-                                    $image_path = 'devs_imgs/' . $autor['autor_id'] . '.' . $ext;
-                                    break;
+                                foreach ($extensions as $ext) {
+                                    if (file_exists('devs_imgs/' . $autor['autor_id'] . '.' . $ext)) {
+                                        $image_path = 'devs_imgs/' . $autor['autor_id'] . '.' . $ext;
+                                        break;
+                                    }
                                 }
-                            }
 
-                            if (!$image_path) {
-                                $image_path = 'devs_imgs/0.png';
-                            }
-                        ?>
-                        <a href="/admin_developers_page.php?input_items_search=' <?php echo urlencode($autor['autor_name']); ?>'">
-                            <div class="item_rectangle">
-                                <img class="img_game_main" src="<?= $image_path ?>" alt="<?= htmlspecialchars($autor['autor_name']) ?>">
-                                <div class = "game_text_main"><?= htmlspecialchars($autor['autor_name']) ?></div>
-                            </div>
-                        </a>
-                    <?php endforeach; ?>
-
+                                if (!$image_path) {
+                                    $image_path = 'devs_imgs/0.png';
+                                }
+                            ?>
+                            <a href="/admin_developers_page.php?input_items_search=' <?php echo urlencode($autor['autor_name']); ?>'">
+                                <div class="item_rectangle">
+                                    <img class="img_game_main" src="<?= $image_path ?>" alt="<?= htmlspecialchars($autor['autor_name']) ?>">
+                                    <div class = "game_text_main"><?= htmlspecialchars($autor['autor_name']) ?></div>
+                                </div>
+                            </a>
+                        <?php endforeach; ?>
                     </div>
                 </div>
 

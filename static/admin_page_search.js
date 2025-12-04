@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Элементы DOM
     const searchInputGames = document.getElementById('admin_search_game');
     const gamesContainer = document.querySelector('.games_container');
+
+    const searchInputDevelopers = document.getElementById('admin_search_developers');
+    const DevelopersContainer = document.querySelector('.developers_container');
     
     let searchedGameName = '';//  название игры
     const originalGamesHTML = gamesContainer.innerHTML;// Исходный  контейнер с играми
@@ -15,38 +18,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Обработчик ввода в поле поиска
     searchInputGames.addEventListener('input', function() {
 
-        console.log("!!!!STAAAAAAAAAART!!!!");
-        // Сохраняем значение поиска в переменную
         searchedGameName = this.value.trim();
-        
-        // Очищаем предыдущий таймаут
+    
         clearTimeout(searchTimeout);
         
-        // Если поле пустое, показываем все игры
         if (!searchedGameName) {
-            console.log("STAAAAAAAAAART!!!!_ALLL");
             load_games = 0;
             performSearch(searchedGameName, load_games);
         }
         
-        // Дебаунс: выполняем поиск через 300мс после последнего ввода
+        // 300мс после последнего ввода
         searchTimeout = setTimeout(() => {
-            console.log("STAAAAAAAAAART!!!!");
             load_games = 0;
             performSearch(searchedGameName, load_games);
         }, 300);
     });
     
     // Обработчик отправки формы (если нужен стандартный поиск)
-    const searchForm = document.getElementById('admin_form_game');
-    searchForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        searchedGameName = searchInputGames.value.trim();
-        
-        if (searchedGameName) {
-            performSearch(searchedGameName);
-        }
-    });
+    // const searchForm = document.getElementById('admin_form_game');
+    // searchForm.addEventListener('submit', function(e) {
+    //     e.preventDefault();
+    // });
     
     function performSearch(gameName) {
         console.log(gameName);
