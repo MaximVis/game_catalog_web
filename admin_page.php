@@ -94,7 +94,7 @@
                             <a href="/game_admin.php?game=<?php echo urlencode($game['game_name']); ?>">
                                 <div class="game_rectangle">
                                     <?php
-                                        $images = glob('game_imgs/' . $game['game_id'] . '.{png,jpg,jpeg,gif,webp}', GLOB_BRACE);
+                                        $images = glob('game_imgs/' . $game['game_id'] . '.{png,jpg,jpeg}', GLOB_BRACE);
                                         
                                         if (!empty($images)) {
                                             echo '<img class="img_game_main" src="' . $images[0] . '" alt="' . $game['game_name'] . '">';

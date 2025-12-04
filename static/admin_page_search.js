@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showLoadingIndicator();
 
         // Добавляем % для LIKE поиска: ищет вхождение текста в любом месте названия
-        var searchPattern = '%' + gameName + '%';
+        var searchPattern = gameName + '%';
         var array_params = [0, searchPattern]; // OFFSET, поисковый шаблон
 
         $.post("pagination.php", {
@@ -65,21 +65,25 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(response);
 
             gamesContainer.innerHTML = '';
-        });
 
-        // $.post("pagination.php", {array_params:array_params, query:"games_search_post"}, function(data) {
-        //     var response = JSON.parse(data);
-        //     console.log(response);
-
-        //     gamesContainer.innerHTML = '';
-    
-        //     // Проходим по всем играм в response
-        //     response.forEach(game => {
-        //         const gameElement = createGameElement(game);
-        //         gamesContainer.appendChild(gameElement);
-        //     });
-        // });
+            const gamesArray = [];
         
+            if (response.game_id && response.game_id.length > 0) {
+                for (let i = 0; i < response.game_id.length; i++) {
+                    gamesArray.push({
+                        game_id: response.game_id[i],
+                        game_name: response.game_name[i],
+                        genres: response.genres[i],
+                        extension: response.extension[i]
+                    });
+                }
+            }
+            
+            // Отображаем игры
+            displayGames(gamesArray, 'games-container');
+            
+            hideLoadingIndicator();
+        });
     }
     
    
@@ -111,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Функция создания HTML элемента игры
+    // Функция создания HTML элемента игры
     function createGameElement(game) {
         const link = document.createElement('a');
         link.href = `/game_admin.php?game=${encodeURIComponent(game.game_name)}`;
@@ -118,11 +123,31 @@ document.addEventListener('DOMContentLoaded', function() {
         const gameDiv = document.createElement('div');
         gameDiv.className = 'game_rectangle';
         
+        // Проверяем существование изображения (аналогично PHP коду)
+        const imgExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
+        let imgSrc = 'game_imgs/0.png'; // изображение по умолчанию
+        let imgFound = false;
+        
+        // Если в ответе есть extension, используем его
+        if (game.extension && game.extension !== '') {
+            imgSrc = 'game_imgs/' + game.game_id + game.extension;
+            imgFound = true;
+        } else if (game.game_id) {
+            // Иначе пробуем найти файл (асинхронно не получится проверить, 
+            // поэтому полагаемся на данные от сервера или используем дефолтное)
+            imgSrc = 'game_imgs/' + game.game_id + '.png';
+        }
+        
         // Изображение игры
         const img = document.createElement('img');
         img.className = 'img_game_main';
-        img.src = game.image_url || 'game_imgs/0.png';
+        img.src = imgSrc;
         img.alt = game.game_name;
+        
+        // Добавляем обработчик ошибок загрузки изображения
+        img.onerror = function() {
+            this.src = 'game_imgs/0.png'; // Запасное изображение при ошибке
+        };
         
         // Текст игры
         const textDiv = document.createElement('div');
