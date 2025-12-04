@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Дебаунс: выполняем поиск через 300мс после последнего ввода
         searchTimeout = setTimeout(() => {
             console.log("STAAAAAAAAAART!!!!");
+            load_items = 0;
             performSearch(searchedGameName, load_items);
         }, 300);
     });
@@ -79,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (!pagination)
             {
-                gamesContainer.innerHTML = '';
+                //gamesContainer.innerHTML = '';
             }
 
             const gamesArray = [];
@@ -199,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const clientHeight = gamesContainer.clientHeight;
         
         // Проверяем условия: дошли до низа, не загружаем уже, есть еще данные
-        if (scrollHeight - scrollTop - clientHeight <= 100 && 
+        if (scrollHeight - scrollTop - clientHeight <= 50 && 
             !isLoading && 
             hasMore) {
             
