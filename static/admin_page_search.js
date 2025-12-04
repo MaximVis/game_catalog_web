@@ -194,29 +194,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    let isLoading = false; // Флаг загрузки
-    let hasMore = true; // Есть ли еще данные для загрузки
+    let isLoading = false;
+    let hasMore = true;
+    let scrollTimeout;
 
-    async function checkScrollBottomOnce() {
-        const scrollHeight = gamesContainer.scrollHeight;
-        const scrollTop = gamesContainer.scrollTop;
-        const clientHeight = gamesContainer.clientHeight;
+    function checkScrollBottomOnce() {
+        // Очищаем предыдущий таймаут
+        clearTimeout(scrollTimeout);
         
-        // Проверяем условия: дошли до низа, не загружаем уже, есть еще данные
-        if (Math.abs(scrollHeight - scrollTop - clientHeight) <= 1 && 
-            !isLoading && 
-            hasMore) {
+        // Ставим новый (debounce)
+        scrollTimeout = setTimeout(() => {
+            const scrollHeight = gamesContainer.scrollHeight;
+            const scrollTop = gamesContainer.scrollTop;
+            const clientHeight = gamesContainer.clientHeight;
             
-            try {
-                isLoading = true; 
-                await queryAndDisplay(searchedGameName, true); 
+            if (Math.abs(scrollHeight - scrollTop - clientHeight) <= 1 && 
+                !isLoading && 
+                hasMore) {
                 
-            } catch (error) {
-                console.error('ошибка загрузки', error);
-            } finally {
-                isLoading = false; // Разблокируем
+                isLoading = true;
+                
+                queryAndDisplay(searchedGameName, true)
+                    .then(() => {
+                        isLoading = false;
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                        isLoading = false;
+                    });
             }
-        }
+        }, 100); // Задержка 100мс
     }
 
     gamesContainer.addEventListener('scroll', checkScrollBottomOnce);
