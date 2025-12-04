@@ -24,7 +24,7 @@
 
 
     $games = get_query_answer("main_games", 0);
-    $list_autors = get_query_answer("search_autors", $autor_name);
+    $list_autors = get_query_answer("autors", 0);
 
 
 ?>
