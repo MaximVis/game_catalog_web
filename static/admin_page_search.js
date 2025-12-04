@@ -2,17 +2,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Элементы DOM
     const searchInput = document.getElementById('admin_search_game');
     const gamesContainer = document.querySelector('.games_container');
-    const gamesTab = document.getElementById('games_tab');
     
-    // Переменная для хранения названия игры
-    let searchedGameName = '';
+    let searchedGameName = '';//  название игры
+    const originalGamesHTML = gamesContainer.innerHTML;// Исходный  контейнер с играми
+    let searchTimeout;// Дебаунс для оптимизации запросов
     
-    // Исходный HTML контейнера с играми (для сброса поиска)
-    const originalGamesHTML = gamesContainer.innerHTML;
-    
-    // Дебаунс для оптимизации запросов
-    let searchTimeout;
-    
+    var load_items = 0;
     
     // Обработчик ввода в поле поиска
     searchInput.addEventListener('input', function() {
@@ -27,14 +22,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Если поле пустое, показываем все игры
         if (!searchedGameName) {
             console.log("STAAAAAAAAAART!!!!_ALLL");
-            resetSearch();
-            return;
+            load_items = 0;
+            performSearch(searchedGameName, load_items);
         }
         
         // Дебаунс: выполняем поиск через 300мс после последнего ввода
         searchTimeout = setTimeout(() => {
             console.log("STAAAAAAAAAART!!!!");
-            performSearch(searchedGameName);
+            performSearch(searchedGameName, load_items);
         }, 300);
     });
     
@@ -49,17 +44,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    function performSearch(gameName) {
+    function performSearch(gameName, load_items) {
         console.log(gameName);
 
         showLoadingIndicator();
 
         var searchPattern = gameName + '%';
-        var array_params = [0, searchPattern];
+
+        if (load_items === 0)
+        {
+            query_bd = "games_search_get";
+            var array_params = [load_items];
+        }
+        else
+        {
+            query_bd = "games_search_post";
+            var array_params = [load_items, searchPattern];
+        }
 
         $.post("pagination.php", {
             array_params: array_params, 
-            query: "games_search_post"
+            query: query_bd
         }, function(data) {
             var response = JSON.parse(data);
             console.log(response);
@@ -90,9 +95,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             hideLoadingIndicator();
         });
+
+        load_items += 10;
     }
-    
-   
     
     // Функция сброса поиска
     function resetSearch() {
