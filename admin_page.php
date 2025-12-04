@@ -19,6 +19,13 @@
         'Панель администратора, редактирование/удаление/создание новых игр, разработчиков, жанров и категорий',
         'Панель администратора, удаление, добавление, редактирование, игр, игры, жанры, категории, разработчики'
     );
+
+
+
+    $games = get_query_answer("main_games", 0);
+		
+
+
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +84,27 @@
                         <label class="form_word">Поиск игры:</label>
                         <input class="input_form_search" type="text" id="search_game" name="search_game" placeholder="Введите название игры" required>
                         <input type="hidden" name="admin_search" value="true">
-                        <!-- <input type="submit" class="search_value_button" value="Поиск игры"> -->
+                        
+                        <?php foreach ($games as $game): ?>
+                            <a href="/game_admin.php?game=<?php echo urlencode($game['game_name']); ?>">
+                            <div class="game_rectangle">
+                                <?php
+                                    $images = glob('game_imgs/' . $game['game_id'] . '.{png,jpg,jpeg,gif,webp}', GLOB_BRACE);
+                                    
+                                    if (!empty($images)) {
+                                        echo '<img class="img_game_main" src="' . $images[0] . '" alt="' . $game['game_name'] . '">';
+                                    } else {
+                                        echo '<img class="img_game_main" src="game_imgs/0.png" alt="' . $game['game_name'] . '">';
+                                    }   
+                                ?>
+                                <div class="game_text_main"><?= htmlspecialchars($game['game_name']) ?>
+                                    <div class="text_game_main_description"><?= $game['genres'] ?></div>
+                                </div>
+                            </div>
+                        </a>
+                        <?php endforeach; ?>
+
+
                     </form>
                 </div>
 
