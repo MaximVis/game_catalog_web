@@ -196,36 +196,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let isLoading = false;
     let hasMore = true;
-    let scrollTimeout;
+    let lastLoadTime = 0;
+    const MIN_LOAD_INTERVAL = 500; // Минимум 500мс между запросами
 
     function checkScrollBottomOnce() {
-        // Очищаем предыдущий таймаут
-        clearTimeout(scrollTimeout);
+        // Если уже загружаем - выходим сразу
+        if (isLoading) return;
         
-        // Ставим новый (debounce)
-        scrollTimeout = setTimeout(() => {
-            const scrollHeight = gamesContainer.scrollHeight;
-            const scrollTop = gamesContainer.scrollTop;
-            const clientHeight = gamesContainer.clientHeight;
+        const now = Date.now();
+        // Проверяем, прошло ли достаточно времени с последней загрузки
+        if (now - lastLoadTime < MIN_LOAD_INTERVAL) return;
+        
+        const scrollHeight = gamesContainer.scrollHeight;
+        const scrollTop = gamesContainer.scrollTop;
+        const clientHeight = gamesContainer.clientHeight;
+        
+        // Увеличиваем допуск для более стабильной работы
+        if (Math.abs(scrollHeight - scrollTop - clientHeight) <= 10 && 
+            !isLoading && 
+            hasMore) {
             
-            if (Math.abs(scrollHeight - scrollTop - clientHeight) <= 1 && 
-                !isLoading && 
-                hasMore) {
-                
-                isLoading = true;
-                
-                queryAndDisplay(searchedGameName, true)
-                    .then(() => {
-                        isLoading = false;
-                    })
-                    .catch(error => {
-                        console.error('Ошибка:', error);
-                        isLoading = false;
-                    });
-            }
-        }, 100); // Задержка 100мс
+            isLoading = true;
+            lastLoadTime = now;
+            
+            queryAndDisplay(searchedGameName, true)
+                .then(() => {
+                    isLoading = false;
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    isLoading = false;
+                });
+        }
     }
 
-    gamesContainer.addEventListener('scroll', checkScrollBottomOnce);
-    
+    // Добавляем throttle для производительности
+    function throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+
+    const throttledCheck = throttle(checkScrollBottomOnce, 50);
+    gamesContainer.addEventListener('scroll', throttledCheck);
 });

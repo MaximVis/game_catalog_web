@@ -24,7 +24,7 @@
 
 
     $games = get_query_answer("main_games", 0);
-		
+    $list_autors = get_query_answer("search_autors", $autor_name);
 
 
 ?>
@@ -122,6 +122,35 @@
                         <input type="hidden" name="admin_search" value="true">
                         <!-- <input type="submit" class="search_value_button" value="Поиск разработчика"> -->
                     </form>
+
+                    <div class="developers_container">
+
+                    <?php foreach ($list_autors as $autor): ?>
+					
+                        <?php 
+                            $image_path = null;
+                            $extensions = ['png', 'jpg', 'jpeg'];
+
+                            foreach ($extensions as $ext) {
+                                if (file_exists('devs_imgs/' . $autor['autor_id'] . '.' . $ext)) {
+                                    $image_path = 'devs_imgs/' . $autor['autor_id'] . '.' . $ext;
+                                    break;
+                                }
+                            }
+
+                            if (!$image_path) {
+                                $image_path = 'devs_imgs/0.png';
+                            }
+                        ?>
+                        <a href="/admin_developers_page.php?input_items_search=' <?php echo urlencode($autor['autor_name']); ?>'">
+                            <div class="item_rectangle">
+                                <img class="img_game_main" src="<?= $image_path ?>" alt="<?= htmlspecialchars($autor['autor_name']) ?>">
+                                <div class = "game_text_main"><?= htmlspecialchars($autor['autor_name']) ?></div>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
+
+                    </div>
                 </div>
 
                 <!-- Таб 3: Категории -->
