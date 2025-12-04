@@ -36,6 +36,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php render_meta($meta); ?>
+    <link rel="stylesheet" href="static/game_page_styles.css">
     <link rel="stylesheet" href="static/base_styles.css">
     <link rel="stylesheet" href="static/admin_styles.css">
     <link rel="stylesheet" href="static/admin_page_styles.css">
@@ -85,28 +86,29 @@
                         <label class="form_word">Поиск игры:</label>
                         <input class="input_form_search" type="text" id="search_game" name="search_game" placeholder="Введите название игры" required>
                         <input type="hidden" name="admin_search" value="true">
-                        
+                    </form>
+
+                    <div class="games_container">
                         <?php foreach ($games as $game): ?>
                             <a href="/game_admin.php?game=<?php echo urlencode($game['game_name']); ?>">
-                            <div class="game_rectangle">
-                                <?php
-                                    $images = glob('game_imgs/' . $game['game_id'] . '.{png,jpg,jpeg,gif,webp}', GLOB_BRACE);
-                                    
-                                    if (!empty($images)) {
-                                        echo '<img class="img_game_main" src="' . $images[0] . '" alt="' . $game['game_name'] . '">';
-                                    } else {
-                                        echo '<img class="img_game_main" src="game_imgs/0.png" alt="' . $game['game_name'] . '">';
-                                    }   
-                                ?>
-                                <div class="game_text_main"><?= htmlspecialchars($game['game_name']) ?>
-                                    <div class="text_game_main_description"><?= $game['genres'] ?></div>
+                                <div class="game_rectangle">
+                                    <?php
+                                        $images = glob('game_imgs/' . $game['game_id'] . '.{png,jpg,jpeg,gif,webp}', GLOB_BRACE);
+                                        
+                                        if (!empty($images)) {
+                                            echo '<img class="img_game_main" src="' . $images[0] . '" alt="' . $game['game_name'] . '">';
+                                        } else {
+                                            echo '<img class="img_game_main" src="game_imgs/0.png" alt="' . $game['game_name'] . '">';
+                                        }   
+                                    ?>
+                                    <div class="game_text_main">
+                                        <?= htmlspecialchars($game['game_name']) ?>
+                                        <div class="text_game_main_description"><?= $game['genres'] ?></div>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
                         <?php endforeach; ?>
-
-
-                    </form>
+                    </div>
                 </div>
 
                 <!-- Таб 2: Разработчики -->

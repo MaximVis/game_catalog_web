@@ -84,6 +84,39 @@
 }
 
 
+
+.games-container {
+    max-height: 500px; /* Максимальная высота блока */
+    overflow-y: auto; /* Вертикальный скролл */
+    overflow-x: hidden; /* Горизонтальный скролл скрыт */
+    border: 1px solid #ddd; /* Необязательная рамка */
+    border-radius: 8px; /* Скругление углов */
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #f9f9f9; /* Фон контейнера */
+}
+
+/* Стили для скроллбара */
+.games-container::-webkit-scrollbar {
+    width: 8px; /* Ширина скроллбара */
+}
+
+.games-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Цвет трека */
+    border-radius: 4px;
+}
+
+.games-container::-webkit-scrollbar-thumb {
+    background: #888; /* Цвет ползунка */
+    border-radius: 4px;
+}
+
+.games-container::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Цвет ползунка при наведении */
+}
+
+
+
 @media (max-width: 992px) {
     .admin_tabs_header {
         flex-wrap: wrap;
@@ -116,9 +149,7 @@
     .tab_button.active {
         border-right: none;
     }
-    
 }
-
 @media (max-width: 480px) {
     .admin_tabs_content {
         padding: 15px;
