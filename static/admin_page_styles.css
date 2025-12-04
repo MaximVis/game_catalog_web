@@ -108,14 +108,6 @@
     color: #808080;
 }
 
-/* Действия в формах */
-.form_actions {
-    display: flex;
-    gap: 10px;
-    margin: 15px 0;
-    flex-wrap: wrap;
-}
-
 .form_update {
     display: flex;
     gap: 10px;
@@ -200,10 +192,6 @@
         border-right: none;
     }
     
-    .form_actions {
-        flex-direction: column;
-    }
-    
     .form_update {
         flex-direction: column;
         align-items: stretch;
@@ -234,7 +222,7 @@
         width: 100%;
     }
     
-    .form_actions .search_value_button {
+    .search_value_button {
         width: auto;
     }
 }
