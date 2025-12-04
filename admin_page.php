@@ -41,6 +41,7 @@
     <link rel="stylesheet" href="static/admin_styles.css">
     <link rel="stylesheet" href="static/admin_page_styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="static/pagination.js" defer data-query="games_search_admin" data-query_param="' . htmlspecialchars($game_name, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '%"></script>
     <script src="static/CRUD_Genre_Category.js" defer></script>
     <script src="static/admin_page.js" defer></script>
 </head>
@@ -82,7 +83,7 @@
                 <div class="tab_content active" id="games_tab">
                     <!-- Форма поиска игры -->
                     <form action="game_admin.php" method="GET"><button class ="button_menu">Добавить новую игру</button></form>
-                    <form class="admin_form" id="admin_form_game" action="games_search.php" method="GET">
+                    <form class="admin_form" id="admin_form_game">
                         <label class="form_word">Поиск игры:</label>
                         <input class="input_form_search" type="text" id="search_game" name="search_game" placeholder="Введите название игры" required>
                         <input type="hidden" name="admin_search" value="true">
