@@ -206,54 +206,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let isLoading = false;
     let hasMore = true;
-    let lastLoadTime = 0;
-    const MIN_LOAD_INTERVAL = 500; // Минимум 500мс между запросами
+    let scrollTimeout;
 
     function checkScrollBottomOnce() {
-        // Если уже загружаем - выходим сразу
-        if (isLoading) return;
+        // Очищаем предыдущий таймаут
+        clearTimeout(scrollTimeout);
         
-        const now = Date.now();
-        // Проверяем, прошло ли достаточно времени с последней загрузки
-        if (now - lastLoadTime < MIN_LOAD_INTERVAL) return;
-        
-        const scrollHeight = gamesContainer.scrollHeight;
-        const scrollTop = gamesContainer.scrollTop;
-        const clientHeight = gamesContainer.clientHeight;
-        
-        // Увеличиваем допуск для более стабильной работы
-        if (Math.abs(scrollHeight - scrollTop - clientHeight) <= 10 && 
-            !isLoading && 
-            hasMore) {
+        // Ставим новый (debounce)
+        scrollTimeout = setTimeout(() => {
+            const scrollHeight = gamesContainer.scrollHeight;
+            const scrollTop = gamesContainer.scrollTop;
+            const clientHeight = gamesContainer.clientHeight;
             
-            isLoading = true;
-            lastLoadTime = now;
-            
-            queryAndDisplay(searchedGameName, true)
-                .then(() => {
-                    isLoading = false;
-                })
-                .catch(error => {
-                    console.error('Ошибка:', error);
-                    isLoading = false;
-                });
-        }
-    }
-
-    // Добавляем throttle для производительности
-    function throttle(func, limit) {
-        let inThrottle;
-        return function() {
-            const args = arguments;
-            const context = this;
-            if (!inThrottle) {
-                func.apply(context, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
+            if (Math.abs(scrollHeight - scrollTop - clientHeight) <= 1 && 
+                !isLoading && 
+                hasMore) {
+                
+                isLoading = true;
+                
+                queryAndDisplay(searchedGameName, true)
+                    .then(() => {
+                        isLoading = false;
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                        isLoading = false;
+                    });
             }
-        };
+        }, 100); // Задержка 100мс
     }
 
-    const throttledCheck = throttle(checkScrollBottomOnce, 50);
-    gamesContainer.addEventListener('scroll', throttledCheck);
+    gamesContainer.addEventListener('scroll', checkScrollBottomOnce);
 });
