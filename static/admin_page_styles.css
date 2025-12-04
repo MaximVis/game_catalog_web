@@ -141,16 +141,6 @@
     border-color: #ffffff;
 }
 
-/* Стили для сообщений */
-.sub_message_a_pg {
-    margin: 10px 0;
-    padding: 10px 15px;
-    border-radius: 4px;
-    font-size: 14px;
-    background-color: #747474;
-    color: #ffffff;
-}
-
 /* Кнопки в шапке */
 .button_menu {
     padding: 14px 28px;
