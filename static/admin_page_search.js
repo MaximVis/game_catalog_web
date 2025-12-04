@@ -170,4 +170,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Функция удаления сообщения "нет результатов"
+    function removeNoResultsMessage() {
+        const message = document.getElementById('no-results-message');
+        if (message) {
+            message.remove();
+        }
+    }
+    
 });
