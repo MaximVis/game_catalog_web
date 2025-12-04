@@ -78,9 +78,9 @@ document.addEventListener('DOMContentLoaded', function() {
             var response = JSON.parse(data);
             console.log(response);
 
-            if (!pagination)
+            if (pagination)
             {
-                //gamesContainer.innerHTML = '';
+                gamesContainer.innerHTML = '';
             }
 
             const gamesArray = [];
