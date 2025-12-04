@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Дебаунс для оптимизации запросов
     let searchTimeout;
     
+    
     // Обработчик ввода в поле поиска
     searchInput.addEventListener('input', function() {
 
@@ -165,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
         loadingDiv.id = 'search-loading';
         loadingDiv.innerHTML = 'Поиск игр...';
         
-        gamesContainer.appendChild(loadingDiv);
+        gamesContainer.prepend(loadingDiv);
     }
     
     // Функция скрытия индикатора загрузки
