@@ -56,17 +56,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    function queryAndDisplay(gameName, pagination = false){
+    function queryAndDisplay(gameName, pagination = false, onSuccess = null, onError = null) {
+        if (isLoading) return; // Дополнительная защита
+        
+        showLoadingIndicator();
 
         var searchPattern = gameName + '%';
 
-        if (load_items === 0)
-        {
+        if (load_items === 0) {
             query_bd = "games_search_get";
             var array_params = [load_items];
-        }
-        else
-        {
+        } else {
             query_bd = "games_search_post";
             var array_params = [load_items, searchPattern];
         }
@@ -78,8 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var response = JSON.parse(data);
             console.log(response);
 
-            if (!pagination)
-            {
+            if (!pagination) {
                 gamesContainer.innerHTML = '';
             }
 
@@ -96,22 +95,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             
-             if (gamesArray.length > 0) {
+            if (gamesArray.length > 0) {
                 gamesArray.forEach(game => {
                     const gameElement = createGameElement(game);
                     gamesContainer.appendChild(gameElement);
                 });
+                
+                hasMore = gamesArray.length >= 10;
+                
             } else {
-                if (!pagination)
-                {
+                if (load_items === 0) {
                     gamesContainer.innerHTML = '<div class="no-games-message">Игры не найдены</div>';
                 }
-            } 
+                hasMore = false; 
+            }
             
+            hideLoadingIndicator();
+            
+            if (onSuccess) onSuccess();
+            
+        }).fail(function(error) {
+            console.error('Ошибка AJAX:', error);
+            hideLoadingIndicator();
+            
+            if (onError) onError(error);
         });
 
         load_items += 10;
-
     }
     
     
