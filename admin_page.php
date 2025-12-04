@@ -128,6 +128,7 @@
                         </div>
                         
                         <div class="form_update">
+                            <input class="input_form_search catgeory_genre_input" type="text" id="new_name_genre" name="new_name_genre" placeholder="Введите старое название жанра">
                             <input class="input_form_search catgeory_genre_input" type="text" id="new_name_genre" name="new_name_genre" placeholder="Введите новое название жанра">
                             <input type="submit" class="search_value_button catgeory_genre" id="update_genre" value="Изменить жанр">
                         </div>

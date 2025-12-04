@@ -70,23 +70,6 @@
     margin-top: 25px;
 }
 
-/* Кнопки форм */
-.button_menu {
-    padding: 12px 24px;
-    background-color: #747474;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s;
-}
-
-.button_menu:hover {
-    background-color: white;
-    color: #808080;
-}
-
 .form_update {
     display: flex;
     gap: 10px;
@@ -112,22 +95,6 @@
     border-color: #ffffff;
 }
 
-/* Кнопки в шапке */
-.button_menu {
-    padding: 14px 28px;
-    background-color: #747474;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
-    transition: background-color 0.2s;
-}
-
-.button_menu:hover {
-    background-color: #808080;
-}
 
 /* Стиль для заголовка */
 .head_word {
@@ -179,11 +146,6 @@
     .form_update .catgeory_genre_input {
         max-width: 100%;
         min-width: auto;
-    }
-    
-    .button_menu {
-        width: 100%;
-        padding: 14px 20px;
     }
 }
 
