@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Показываем индикатор загрузки
         showLoadingIndicator();
 
-        var array_params = [10, gameName];
+        var array_params = [0, gameName];
 
         $.post("pagination.php", {array_params:array_params, query:"games_search_post"}, function(data) {
             var response = JSON.parse(data);
