@@ -51,16 +51,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Функция выполнения поиска
     function performSearch(gameName) {
 
-        console.log("ABBBBBBAAADASDA");
+        console.log(GameName);
 
         // Показываем индикатор загрузки
         showLoadingIndicator();
 
-        array_params[10, gameName];
+        var array_params = [10, gameName];
 
         $.post("pagination.php", {array_params:array_params, query:"games_search_post"}, function(data) {
             var response = JSON.parse(data);
             console.log(response);
+
+            gamesContainer.innerHTML = '';
+    
+            // Проходим по всем играм в response
+            response.forEach(game => {
+                const gameElement = createGameElement(game);
+                gamesContainer.appendChild(gameElement);
+            });
         });
         
     }
