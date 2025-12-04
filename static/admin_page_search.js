@@ -23,12 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
         clearTimeout(searchTimeout);
         
         if (!searchedGameName) {
+            console.log('clr');
             load_games = 0;
             performSearch(searchedGameName);
         }
         
         // 300мс после последнего ввода
         searchTimeout = setTimeout(() => {
+            console.log('notclr');
             load_games = 0;
             performSearch(searchedGameName);
         }, 300);
