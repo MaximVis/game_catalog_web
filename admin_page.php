@@ -77,7 +77,7 @@
                         <label class="form_word">Поиск игры:</label>
                         <input class="input_form_search" type="text" id="search_game" name="search_game" placeholder="Введите название игры" required>
                         <input type="hidden" name="admin_search" value="true">
-                        <input type="submit" class="search_value_button" value="Поиск игры">
+                        <!-- <input type="submit" class="search_value_button" value="Поиск игры"> -->
                     </form>
                 </div>
 
@@ -89,7 +89,7 @@
                         <label class="form_word">Поиск разработчика:</label>
                         <input class="input_form_search" type="text" id="input_items_search" name="input_items_search" placeholder="Введите разработчика" required>
                         <input type="hidden" name="admin_search" value="true">
-                        <input type="submit" class="search_value_button" value="Поиск разработчика">
+                        <!-- <input type="submit" class="search_value_button" value="Поиск разработчика"> -->
                     </form>
                 </div>
 
@@ -98,7 +98,7 @@
                     <!-- Форма изменения категорий -->
                     <form class="admin_form" id="form_change_category" method="POST">
                         <label class="form_word">Управление категориями игр:</label>
-                        <input class="input_form_search" type="text" id="based_name_category" name="based_name_category" placeholder="Введите категорию" required>
+                        <input class="input_form_search" type="text" id="based_name_category" name="based_name_category" placeholder="Введите категорию для добавления/удаления" required>
                         <div class="sub_message_a_pg" id="category_message"></div>
                         
                         <div class="form_actions">
@@ -107,6 +107,7 @@
                         </div>
                         
                         <div class="form_update">
+                            <input class="input_form_search catgeory_genre_input" type="text" id="new_name_category" name="new_name_category" placeholder="Введите старое название категории">
                             <input class="input_form_search catgeory_genre_input" type="text" id="new_name_category" name="new_name_category" placeholder="Введите новое название категории">
                             <input type="submit" class="search_value_button catgeory_genre" id="update_category" value="Изменить категорию">
                         </div>
@@ -118,7 +119,7 @@
                     <!-- Форма изменения жанров -->
                     <form class="admin_form" id="form_change_genre" method="POST">
                         <label class="form_word">Управление жанрами игр:</label>
-                        <input class="input_form_search" type="text" id="based_name_genre" name="based_name_genre" placeholder="Введите жанр" required>
+                        <input class="input_form_search" type="text" id="based_name_genre" name="based_name_genre" placeholder="Введите жанр для добавления/удаления" required>
                         <div class="sub_message_a_pg" id="genre_message"></div>
                         
                         <div class="form_actions">
