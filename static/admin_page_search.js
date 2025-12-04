@@ -187,36 +187,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    let isLoading = false;
-    let hasMore = true;
-    let scrollTimeout;
+    let isLoading = false; // Флаг загрузки
+    let hasMore = true; // Есть ли еще данные для загрузки
 
-    function checkScrollBottomOnce() {
-        // Очищаем предыдущий таймаут
-        clearTimeout(scrollTimeout);
+    async function checkScrollBottomOnce() {
+        const scrollHeight = gamesContainer.scrollHeight;
+        const scrollTop = gamesContainer.scrollTop;
+        const clientHeight = gamesContainer.clientHeight;
         
-        // Ставим новый таймаут (debounce)
-        scrollTimeout = setTimeout(() => {
-            const scrollHeight = gamesContainer.scrollHeight;
-            const scrollTop = gamesContainer.scrollTop;
-            const clientHeight = gamesContainer.clientHeight;
+        // Проверяем условия: дошли до низа, не загружаем уже, есть еще данные
+        if (scrollHeight - scrollTop - clientHeight <= 100 && 
+            !isLoading && 
+            hasMore) {
             
-            if (scrollHeight - scrollTop - clientHeight <= 100 && 
-                !isLoading && 
-                hasMore) {
+            try {
+                isLoading = true; // Блокируем новые запросы
+                await queryAndDisplay(searchedGameName); // Ожидаем завершения
                 
-                isLoading = true;
-                
-                queryAndDisplay(searchedGameName)
-                    .then(() => {
-                        isLoading = false;
-                    })
-                    .catch(error => {
-                        console.error('Ошибка загрузки:', error);
-                        isLoading = false;
-                    });
+            } catch (error) {
+                console.error('Ошибка загрузки:', error);
+            } finally {
+                isLoading = false; // Разблокируем
             }
-        }, 100);
+        }
     }
 
     gamesContainer.addEventListener('scroll', checkScrollBottomOnce);
