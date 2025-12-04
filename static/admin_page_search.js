@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var response = JSON.parse(data);
             console.log(response);
 
-            if (pagination)
+            if (!pagination)
             {
                 gamesContainer.innerHTML = '';
             }
@@ -102,7 +102,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     gamesContainer.appendChild(gameElement);
                 });
             } else {
-                gamesContainer.innerHTML = '<div class="no-games-message">Игры не найдены</div>';
+                if (!pagination)
+                {
+                    gamesContainer.innerHTML = '<div class="no-games-message">Игры не найдены</div>';
+                }
             } 
             
         });
@@ -200,16 +203,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const clientHeight = gamesContainer.clientHeight;
         
         // Проверяем условия: дошли до низа, не загружаем уже, есть еще данные
-        if (scrollHeight - scrollTop - clientHeight <= 50 && 
+        if (Math.abs(scrollHeight - scrollTop - clientHeight) <= 1 && 
             !isLoading && 
             hasMore) {
             
             try {
-                isLoading = true; // Блокируем новые запросы
-                await queryAndDisplay(searchedGameName, true); // Ожидаем завершения
+                isLoading = true; 
+                await queryAndDisplay(searchedGameName, true); 
                 
             } catch (error) {
-                console.error('Ошибка загрузки:', error);
+                console.error('ошибка загрузки', error);
             } finally {
                 isLoading = false; // Разблокируем
             }
