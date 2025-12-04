@@ -3,6 +3,8 @@ let searchTimeout;
 let searchGameValue = ''; // Переменная для хранения названия игры
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("start_search");
+
     const searchInput = document.getElementById('search_game');
     const gamesContainer = document.querySelector('.games_container');
     const adminForm = document.getElementById('admin_form_game');
@@ -24,12 +26,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Если поле пустое, показываем все игры
             if (searchTerm === '') {
+                console.log("ALL_GAMES!")
                 loadAllGames();
                 return;
             }
             
             // Задержка перед поиском (300ms)
             searchTimeout = setTimeout(() => {
+                console.log("NOT! ALL_GAMES!")
                 performSearch(searchTerm);
             }, 300);
         });
