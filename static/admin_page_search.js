@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Функция выполнения поиска
     function performSearch(gameName) {
 
-        console.log(GameName);
+        console.log(gameName);
 
         // Показываем индикатор загрузки
         showLoadingIndicator();
