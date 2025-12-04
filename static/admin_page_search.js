@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!searchedGameName) {
             load_games = 0;
-            performSearch(searchedGameName, load_games);
+            performSearch(searchedGameName);
         }
         
         // 300мс после последнего ввода
         searchTimeout = setTimeout(() => {
             load_games = 0;
-            performSearch(searchedGameName, load_games);
+            performSearch(searchedGameName);
         }, 300);
     });
     
@@ -52,6 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function queryAndDisplay(gameName, pagination = false){
+
+        console.log("qad");
 
         var searchPattern = gameName + '%';
 
