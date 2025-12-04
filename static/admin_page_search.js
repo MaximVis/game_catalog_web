@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    function performSearch(gameName, load_items) {
+    function performSearch(gameName) {
         console.log(gameName);
 
         showLoadingIndicator();
