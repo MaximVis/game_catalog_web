@@ -99,13 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
         load_items += 10;
     }
     
-    // Функция сброса поиска
-    function resetSearch() {
-        gamesContainer.innerHTML = originalGamesHTML;
-        hideLoadingIndicator();
-        removeNoResultsMessage();
-    }
-    
     
     function createGameElement(game) {
         const link = document.createElement('a');
@@ -182,5 +175,24 @@ document.addEventListener('DOMContentLoaded', function() {
             message.remove();
         }
     }
+
+
+
+
+    let hasReachedBottom = false;
+
+    function checkScrollBottomOnce() {
+    const scrollHeight = gamesContainer.scrollHeight;
+    const scrollTop = gamesContainer.scrollTop;
+    const clientHeight = gamesContainer.clientHeight;
+    
+    if (scrollHeight - scrollTop - clientHeight <= 1 && !hasReachedBottom) {
+
+        performSearch(searchedGameName, load_items);
+        //hasReachedBottom = true;
+    }
+    }
+
+    gamesContainer.addEventListener('scroll', checkScrollBottomOnce);
     
 });
