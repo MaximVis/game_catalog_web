@@ -85,7 +85,7 @@
 
 
 
-.games-container {
+.games_container {
     max-height: 500px; /* Максимальная высота блока */
     overflow-y: auto; /* Вертикальный скролл */
     overflow-x: hidden; /* Горизонтальный скролл скрыт */
@@ -97,21 +97,21 @@
 }
 
 /* Стили для скроллбара */
-.games-container::-webkit-scrollbar {
+.games_container::-webkit-scrollbar {
     width: 8px; /* Ширина скроллбара */
 }
 
-.games-container::-webkit-scrollbar-track {
+.games_container::-webkit-scrollbar-track {
     background: #f1f1f1; /* Цвет трека */
     border-radius: 4px;
 }
 
-.games-container::-webkit-scrollbar-thumb {
+.games_container::-webkit-scrollbar-thumb {
     background: #888; /* Цвет ползунка */
     border-radius: 4px;
 }
 
-.games-container::-webkit-scrollbar-thumb:hover {
+.games_container::-webkit-scrollbar-thumb:hover {
     background: #555; /* Цвет ползунка при наведении */
 }
 
