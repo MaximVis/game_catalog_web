@@ -94,31 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
    
     
-    // Функция сброса поиска
-    function resetSearch() {
-        gamesContainer.innerHTML = originalGamesHTML;
-        hideLoadingIndicator();
-        removeNoResultsMessage();
-    }
-    
-    // Функция обновления списка игр (для использования с AJAX)
-    function updateGamesList(games) {
-        if (!games || games.length === 0) {
-            showNoResultsMessage(searchedGameName);
-            return;
-        }
-        
-        // Очищаем контейнер
-        gamesContainer.innerHTML = '';
-        
-        // Добавляем новые игры
-        games.forEach(game => {
-            const gameElement = createGameElement(game);
-            gamesContainer.appendChild(gameElement);
-        });
-        
-        hideLoadingIndicator();
-    }
     
     // Функция создания HTML элемента игры
     // Функция создания HTML элемента игры
@@ -192,26 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const loadingIndicator = document.getElementById('search-loading');
         if (loadingIndicator) {
             loadingIndicator.remove();
-        }
-    }
-    
-    // Функция показа сообщения "нет результатов"
-    function showNoResultsMessage(searchTerm) {
-        removeNoResultsMessage();
-        
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'no-results-message';
-        messageDiv.id = 'no-results-message';
-        messageDiv.innerHTML = `Игры по запросу "<strong>${searchTerm}</strong>" не найдены`;
-        
-        gamesContainer.appendChild(messageDiv);
-    }
-    
-    // Функция удаления сообщения "нет результатов"
-    function removeNoResultsMessage() {
-        const message = document.getElementById('no-results-message');
-        if (message) {
-            message.remove();
         }
     }
     
