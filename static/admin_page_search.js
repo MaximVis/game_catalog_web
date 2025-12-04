@@ -55,9 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    function queryAndDisplay(gameName){
+    function queryAndDisplay(gameName, pagination = false){
 
-                var searchPattern = gameName + '%';
+        var searchPattern = gameName + '%';
 
         if (load_items === 0)
         {
@@ -77,7 +77,10 @@ document.addEventListener('DOMContentLoaded', function() {
             var response = JSON.parse(data);
             console.log(response);
 
-            gamesContainer.innerHTML = '';
+            if (!pagination)
+            {
+                gamesContainer.innerHTML = '';
+            }
 
             const gamesArray = [];
         
@@ -202,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             try {
                 isLoading = true; // Блокируем новые запросы
-                await queryAndDisplay(searchedGameName); // Ожидаем завершения
+                await queryAndDisplay(searchedGameName, true); // Ожидаем завершения
                 
             } catch (error) {
                 console.error('Ошибка загрузки:', error);
