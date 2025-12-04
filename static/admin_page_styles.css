@@ -70,27 +70,6 @@
     margin-top: 25px;
 }
 
-.input_form_search {
-    width: 100%;
-    padding: 12px 15px;
-    margin-bottom: 15px;
-    border: 1px solid #747474;
-    border-radius: 4px;
-    background-color: #747474;
-    color: #ffffff;
-    font-size: 15px;
-    box-sizing: border-box;
-}
-
-.input_form_search:focus {
-    outline: none;
-    border-color: #ffffff;
-}
-
-.input_form_search::placeholder {
-    color: #d0d0d0;
-}
-
 /* Кнопки форм */
 .button_menu {
     padding: 12px 24px;
