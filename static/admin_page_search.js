@@ -1,16 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Элементы DOM
-    const searchInput = document.getElementById('admin_search_game');
+    const searchInputGames = document.getElementById('admin_search_game');
     const gamesContainer = document.querySelector('.games_container');
     
     let searchedGameName = '';//  название игры
     const originalGamesHTML = gamesContainer.innerHTML;// Исходный  контейнер с играми
     let searchTimeout;// Дебаунс для оптимизации запросов
     
-    var load_items = 0;
+    var load_games = 0;
+
+
+
     
     // Обработчик ввода в поле поиска
-    searchInput.addEventListener('input', function() {
+    searchInputGames.addEventListener('input', function() {
 
         console.log("!!!!STAAAAAAAAAART!!!!");
         // Сохраняем значение поиска в переменную
@@ -22,15 +25,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Если поле пустое, показываем все игры
         if (!searchedGameName) {
             console.log("STAAAAAAAAAART!!!!_ALLL");
-            load_items = 0;
-            performSearch(searchedGameName, load_items);
+            load_games = 0;
+            performSearch(searchedGameName, load_games);
         }
         
         // Дебаунс: выполняем поиск через 300мс после последнего ввода
         searchTimeout = setTimeout(() => {
             console.log("STAAAAAAAAAART!!!!");
-            load_items = 0;
-            performSearch(searchedGameName, load_items);
+            load_games = 0;
+            performSearch(searchedGameName, load_games);
         }, 300);
     });
     
@@ -38,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchForm = document.getElementById('admin_form_game');
     searchForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        searchedGameName = searchInput.value.trim();
+        searchedGameName = searchInputGames.value.trim();
         
         if (searchedGameName) {
             performSearch(searchedGameName);
@@ -60,15 +63,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var searchPattern = gameName + '%';
 
-        if (load_items === 0)
+        if (load_games === 0)
         {
             query_bd = "games_search_get";
-            var array_params = [load_items];
+            var array_params = [load_games];
         }
         else
         {
             query_bd = "games_search_post";
-            var array_params = [load_items, searchPattern];
+            var array_params = [load_games, searchPattern];
         }
 
         $.post("pagination.php", {
@@ -110,8 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
         });
 
-        load_items += 10;
-
+        load_games += 10;
     }
     
     
