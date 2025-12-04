@@ -49,7 +49,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         showLoadingIndicator();
 
-        var searchPattern = gameName + '%';
+        queryAndDisplay(gameName);
+
+        hideLoadingIndicator();
+
+    }
+
+    function queryAndDisplay(gameName){
+
+                var searchPattern = gameName + '%';
 
         if (load_items === 0)
         {
@@ -91,12 +99,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             } else {
                 gamesContainer.innerHTML = '<div class="no-games-message">Игры не найдены</div>';
-            }
+            } 
             
-            hideLoadingIndicator();
         });
 
         load_items += 10;
+
     }
     
     
@@ -179,20 +187,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    let hasReachedBottom = false;
+    let isLoading = false;
+let hasMore = true;
+let scrollTimeout;
 
-    function checkScrollBottomOnce() {
-    const scrollHeight = gamesContainer.scrollHeight;
-    const scrollTop = gamesContainer.scrollTop;
-    const clientHeight = gamesContainer.clientHeight;
+function checkScrollBottomOnce() {
+    // Очищаем предыдущий таймаут
+    clearTimeout(scrollTimeout);
     
-    if (scrollHeight - scrollTop - clientHeight <= 1 && !hasReachedBottom) {
+    // Ставим новый таймаут (debounce)
+    scrollTimeout = setTimeout(() => {
+        const scrollHeight = gamesContainer.scrollHeight;
+        const scrollTop = gamesContainer.scrollTop;
+        const clientHeight = gamesContainer.clientHeight;
+        
+        if (scrollHeight - scrollTop - clientHeight <= 100 && 
+            !isLoading && 
+            hasMore) {
+            
+            isLoading = true;
+            
+            queryAndDisplay(gameName)
+                .then(() => {
+                    isLoading = false;
+                })
+                .catch(error => {
+                    console.error('Ошибка загрузки:', error);
+                    isLoading = false;
+                });
+        }
+    }, 100);
+}
 
-        performSearch(searchedGameName, load_items);
-        //hasReachedBottom = true;
-    }
-    }
-
-    gamesContainer.addEventListener('scroll', checkScrollBottomOnce);
+gamesContainer.addEventListener('scroll', checkScrollBottomOnce);
     
 });
