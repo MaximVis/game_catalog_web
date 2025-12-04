@@ -94,6 +94,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
    
     
+    // Функция сброса поиска
+    function resetSearch() {
+        gamesContainer.innerHTML = originalGamesHTML;
+        hideLoadingIndicator();
+        removeNoResultsMessage();
+    }
     
     // Функция создания HTML элемента игры
     // Функция создания HTML элемента игры
@@ -169,6 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
             loadingIndicator.remove();
         }
     }
+    
     
     // Функция удаления сообщения "нет результатов"
     function removeNoResultsMessage() {
