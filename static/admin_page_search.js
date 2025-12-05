@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
     searchInputDevelopers.addEventListener('input', handleSearchInput);
     searchInputGames.addEventListener('input', handleSearchInput);
 
+    const inputTypeMap = new Map();
+    inputTypeMap.set(searchInputDevelopers, 'developers');
+    inputTypeMap.set(searchInputGames, 'games');
+
 
 
     function handleSearchInput(event) {
@@ -22,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(searchInputDevelopers, "||||", searchInputGames);
 
         const input = event.target;
-        const searchType = input.dataset.type; //"developers" или "games"
+        const searchType = inputTypeMap.get(input);
 
         console.log("search_type:", searchType);
 
