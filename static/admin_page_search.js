@@ -136,11 +136,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             extension: response.extension[i] 
                         });
                     }
-                    //autor_id: Array(2), autor_name: Array(2), extension: Array(2)}
                 }
             }
             
              if (itemArray.length > 0) {
+                console.log("ARRAYY!", itemArray);
                 itemArray.forEach(game => {
                     const gameElement = createItemElement(game, searchType);
                     container.appendChild(gameElement);
@@ -159,82 +159,66 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
     function createItemElement(item, type) {
-    // type: 'game' или 'developer'
-    
-        const config = {
-            game: {
-                urlPrefix: '/game_admin.php?game=',
-                nameField: 'game_name',
-                idField: 'game_id',
-                divClass: 'game_rectangle',
-                imgClass: 'img_game_main',
-                textClass: 'game_text_main',
-                imgPath: 'game_imgs/',
-                defaultImg: 'game_imgs/0.png',
-                hasDescription: true,
-                descriptionField: 'genres',
-                descriptionClass: 'text_game_main_description'
-            },
-            developer: {
-                urlPrefix: '/admin_developers_page.php?input_items_search=',
-                nameField: 'autor_name',
-                idField: 'autor_id',
-                divClass: 'item_rectangle',
-                imgClass: 'img_developer',
-                textClass: 'developer_text_main',
-                imgPath: 'admin_developers_imgs/',
-                defaultImg: 'admin_developers_imgs/0.png',
-                hasDescription: false
-            }
-        };
+        // Определяем параметры в зависимости от типа
+        let url, divClass, imgClass, textClass, imgPath, defaultImg, name, id;
         
-        const cfg = config[type];
-        if (!cfg) {
-            console.error('Неизвестный тип элемента:', type);
+        if (type === 'game') {
+            url = `/game_admin.php?game=${encodeURIComponent(item.game_name)}`;
+            divClass = 'game_rectangle';
+            imgClass = 'img_game_main';
+            textClass = 'game_text_main';
+            imgPath = 'game_imgs/';
+            defaultImg = 'game_imgs/0.png';
+            name = item.game_name;
+            id = item.game_id;
+        } else if (type === 'developer') {
+            url = `/admin_developers_page.php?input_items_search=${encodeURIComponent(item.autor_name)}`;
+            divClass = 'item_rectangle';
+            imgClass = 'img_developer';
+            textClass = 'developer_text_main';
+            imgPath = 'admin_developers_imgs/';
+            defaultImg = 'admin_developers_imgs/0.png';
+            name = item.autor_name;
+            id = item.autor_id;
+        } else {
             return null;
         }
         
-        // Создаем ссылку
+        // Создаем элементы
         const link = document.createElement('a');
-        link.href = `${cfg.urlPrefix}${encodeURIComponent(item[cfg.nameField])}`;
+        link.href = url;
         
-        // Создаем основной контейнер
         const itemDiv = document.createElement('div');
-        itemDiv.className = cfg.divClass;
+        itemDiv.className = divClass;
         
-        // Определяем путь к изображению
-        let imgSrc = cfg.defaultImg;
-        if (item.extension && item.extension !== '' && item[cfg.idField]) {
-            imgSrc = cfg.imgPath + item[cfg.idField] + item.extension;
-        } else if (item[cfg.idField]) {
-            imgSrc = cfg.imgPath + item[cfg.idField] + '.png';
+        // Изображение
+        let imgSrc = defaultImg;
+        if (item.extension && item.extension !== '' && id) {
+            imgSrc = imgPath + id + item.extension;
+        } else if (id) {
+            imgSrc = imgPath + id + '.png';
         }
         
-        // Создаем изображение
         const img = document.createElement('img');
-        img.className = cfg.imgClass;
+        img.className = imgClass;
         img.src = imgSrc;
-        img.alt = item[cfg.nameField];
+        img.alt = name;
+        img.onerror = () => { img.src = defaultImg; };
         
-        // Обработчик ошибки загрузки изображения
-        img.onerror = function() {
-            this.src = cfg.defaultImg;
-        };
-        
-        // Создаем текстовый блок
+        // Текст
         const textDiv = document.createElement('div');
-        textDiv.className = cfg.textClass;
-        textDiv.textContent = item[cfg.nameField];
+        textDiv.className = textClass;
+        textDiv.textContent = name;
         
-        // Добавляем описание если нужно
-        if (cfg.hasDescription && item[cfg.descriptionField]) {
-            const descriptionDiv = document.createElement('div');
-            descriptionDiv.className = cfg.descriptionClass;
-            descriptionDiv.textContent = item[cfg.descriptionField];
-            textDiv.appendChild(descriptionDiv);
+        // Описание для игр
+        if (type === 'game' && item.genres) {
+            const descDiv = document.createElement('div');
+            descDiv.className = 'text_game_main_description';
+            descDiv.textContent = item.genres;
+            textDiv.appendChild(descDiv);
         }
         
-        // Собираем все вместе
+        // Собираем
         itemDiv.appendChild(img);
         itemDiv.appendChild(textDiv);
         link.appendChild(itemDiv);
