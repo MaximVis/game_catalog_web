@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Автоматически сбрасываем isLoading через время
                 setTimeout(() => {
                     isLoading = false;
-                }, 1000); // На всякий случай
+                }, 1000);
             }
         }, 100);
     }
