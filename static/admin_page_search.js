@@ -67,11 +67,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function queryAndDisplay(searchType, gameName, container, pagination = false){
 
-        console.log("qad");
+        console.log("qad", searchType);
 
         if (!pagination)
         {
-            showLoadingIndicator(searchType);
+            showLoadingIndicator(container);
         }
 
         if(searchType === 'games')
@@ -121,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
             if (arrayKeys.length > 0) {
                 for (let i = 0; i < response[arrayKeys[0]].length; i++) {
+                    console.log("i", i);
                     if (searchType === 'games')
                     {
                         itemArray.push({
@@ -137,11 +138,13 @@ document.addEventListener('DOMContentLoaded', function() {
                             autor_name: response.autor_name[i],
                             extension: response.extension[i] 
                         });
+                        console.log("i2", i);
                     }
                 }
             }
+            console.log("MASSIVE<", itemArray);
             
-             if (itemArray.length > 0) {
+            if (itemArray.length > 0) {
                 console.log("ARRAYY!", itemArray);
                 itemArray.forEach(item => {
                     let element;
@@ -293,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
     // Функция показа индикатора загрузки
-    function showLoadingIndicator(searchType) {
+    function showLoadingIndicator(container) {
 
         removeNoResultsMessage();
         
@@ -303,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
         loadingDiv.id = 'search-loading';
         loadingDiv.innerHTML = 'Поиск игр...';
         
-        gamesContainer.prepend(loadingDiv);
+        container.prepend(loadingDiv);
     }
     
     // скрытие индикатора загрузки
