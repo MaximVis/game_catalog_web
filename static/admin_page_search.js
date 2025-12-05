@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const itemArray = [];
         
-            if (response.game_id && response.game_id.length > 0) {
+            if (response) {
                 for (let i = 0; i < response.game_id.length; i++) {
                     if (searchType === 'games')
                     {
