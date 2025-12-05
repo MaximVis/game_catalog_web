@@ -142,7 +142,14 @@ document.addEventListener('DOMContentLoaded', function() {
              if (itemArray.length > 0) {
                 console.log("ARRAYY!", itemArray);
                 itemArray.forEach(game => {
-                    const gameElement = createItemElement(game, searchType);
+                    if (searchType === 'games')
+                    {
+                        const gameElement = createGameElement(game);
+                    }
+                    else
+                    {
+                        const gameElement = createDeveloperElement(game);
+                    }
                     container.appendChild(gameElement);
                 });
             } else {
@@ -156,72 +163,127 @@ document.addEventListener('DOMContentLoaded', function() {
 
         load_games += 10;
     }
+
+    function createDeveloperElement(developer) {
     
-    
-    function createItemElement(item, type) {
-        // Определяем параметры в зависимости от типа
-        let url, divClass, imgClass, textClass, imgPath, defaultImg, name, id;
-        
-        if (type === 'game') {
-            url = `/game_admin.php?game=${encodeURIComponent(item.game_name)}`;
-            divClass = 'game_rectangle';
-            imgClass = 'img_game_main';
-            textClass = 'game_text_main';
-            imgPath = 'game_imgs/';
-            defaultImg = 'game_imgs/0.png';
-            name = item.game_name;
-            id = item.game_id;
-        } else if (type === 'developer') {
-            url = `/admin_developers_page.php?input_items_search=${encodeURIComponent(item.autor_name)}`;
-            divClass = 'item_rectangle';
-            imgClass = 'img_developer';
-            textClass = 'developer_text_main';
-            imgPath = 'admin_developers_imgs/';
-            defaultImg = 'admin_developers_imgs/0.png';
-            name = item.autor_name;
-            id = item.autor_id;
-        } else {
-            return null;
-        }
-        
-        // Создаем элементы
         const link = document.createElement('a');
-        link.href = url;
-        
-        const itemDiv = document.createElement('div');
-        itemDiv.className = divClass;
-        
-        // Изображение
-        let imgSrc = defaultImg;
-        if (item.extension && item.extension !== '' && id) {
-            imgSrc = imgPath + id + item.extension;
-        } else if (id) {
-            imgSrc = imgPath + id + '.png';
+        // Если у разработчика есть ID, можно добавить его в URL
+        if (developer.autor_id) {
+            link.href = `/admin_developers_page.php?developer_id=${developer.autor_id}&input_items_search=${encodeURIComponent(developer.autor_name)}`;
+        } else {
+            link.href = `/admin_developers_page.php?input_items_search=${encodeURIComponent(developer.autor_name)}`;
         }
         
+        const developerDiv = document.createElement('div');
+        developerDiv.className = 'item_rectangle';
+        
+        // Функция для получения пути к изображению
+        const getImagePath = (developer) => {
+            // Путь по умолчанию
+            let defaultPath = 'admin_developers_imgs/0.png';
+            
+            // Если есть и ID, и расширение
+            if (developer.autor_id && developer.extension) {
+                return `admin_developers_imgs/${developer.autor_id}${developer.extension}`;
+            }
+            
+            // Если есть только ID
+            if (developer.autor_id) {
+                return `admin_developers_imgs/${developer.autor_id}.png`;
+            }
+            
+            return defaultPath;
+        };
+        
+        // Изображение разработчика
         const img = document.createElement('img');
-        img.className = imgClass;
-        img.src = imgSrc;
-        img.alt = name;
-        img.onerror = () => { img.src = defaultImg; };
+        img.className = 'img_developer';
+        img.src = getImagePath(developer);
+        img.alt = developer.autor_name || 'Разработчик';
         
-        // Текст
+        // Добавляем обработчик ошибок загрузки изображения
+        img.onerror = function() {
+            this.src = 'admin_developers_imgs/0.png';
+            console.warn(`Не удалось загрузить изображение для разработчика: ${developer.autor_name}`);
+        };
+        
+        // Основной текст разработчика
         const textDiv = document.createElement('div');
-        textDiv.className = textClass;
-        textDiv.textContent = name;
+        textDiv.className = 'developer_text_main';
+        textDiv.textContent = developer.autor_name || 'Неизвестный разработчик';
         
-        // Описание для игр
-        if (type === 'game' && item.genres) {
-            const descDiv = document.createElement('div');
-            descDiv.className = 'text_game_main_description';
-            descDiv.textContent = item.genres;
-            textDiv.appendChild(descDiv);
+        // Если есть дополнительная информация (опционально)
+        if (developer.games_count || developer.description) {
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'developer_additional_info';
+            
+            if (developer.games_count) {
+                const gamesCount = document.createElement('span');
+                gamesCount.className = 'games_count';
+                gamesCount.textContent = `Игр: ${developer.games_count}`;
+                infoDiv.appendChild(gamesCount);
+            }
+            
+            if (developer.description) {
+                const description = document.createElement('p');
+                description.className = 'developer_description';
+                description.textContent = developer.description.substring(0, 100) + '...';
+                infoDiv.appendChild(description);
+            }
+            
+            textDiv.appendChild(infoDiv);
         }
         
-        // Собираем
-        itemDiv.appendChild(img);
-        itemDiv.appendChild(textDiv);
-        link.appendChild(itemDiv);
+        // Собираем структуру
+        developerDiv.appendChild(img);
+        developerDiv.appendChild(textDiv);
+        link.appendChild(developerDiv);
+        
+        return link;
+    }
+    
+    
+    function createGameElement(game) {
+        
+        const link = document.createElement('a');
+        link.href = `/game_admin.php?game=${encodeURIComponent(game.game_name)}`;
+        
+        const gameDiv = document.createElement('div');
+        gameDiv.className = 'game_rectangle';
+        
+        let imgSrc = 'game_imgs/0.png'; // изображение по умолчанию
+        
+        // Если в ответе есть extension, используем его
+        if (game.extension && game.extension !== '') {
+            imgSrc = 'game_imgs/' + game.game_id + game.extension;
+        } else if (game.game_id) {
+            imgSrc = 'game_imgs/' + game.game_id + '.png';
+        }
+        
+        // Изображение игры
+        const img = document.createElement('img');
+        img.className = 'img_game_main';
+        img.src = imgSrc;
+        img.alt = game.game_name;
+        
+        // Добавляем обработчик ошибок загрузки изображения
+        img.onerror = function() {
+            this.src = 'game_imgs/0.png'; // Запасное изображение при ошибке
+        };
+        
+        // Текст игры
+        const textDiv = document.createElement('div');
+        textDiv.className = 'game_text_main';
+        textDiv.textContent = game.game_name;
+        
+        const descriptionDiv = document.createElement('div');
+        descriptionDiv.className = 'text_game_main_description';
+        descriptionDiv.textContent = game.genres || '';
+        
+        textDiv.appendChild(descriptionDiv);
+        gameDiv.appendChild(img);
+        gameDiv.appendChild(textDiv);
+        link.appendChild(gameDiv);
         
         return link;
     }
