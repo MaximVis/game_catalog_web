@@ -36,6 +36,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php render_meta($meta); ?>
+    <link rel="stylesheet" href="static/developers_styles.css">
     <link rel="stylesheet" href="static/game_page_styles.css">
     <link rel="stylesheet" href="static/base_styles.css">
     <link rel="stylesheet" href="static/admin_styles.css">
@@ -144,8 +145,8 @@
                             ?>
                             <a href="/admin_developers_page.php?input_items_search=' <?php echo urlencode($autor['autor_name']); ?>'">
                                 <div class="item_rectangle">
-                                    <img class="img_game_main" src="<?= $image_path ?>" alt="<?= htmlspecialchars($autor['autor_name']) ?>">
-                                    <div class = "game_text_main"><?= htmlspecialchars($autor['autor_name']) ?></div>
+                                    <img class="img_developer" src="<?= $image_path ?>" alt="<?= htmlspecialchars($autor['autor_name']) ?>">
+                                    <div class = "developer_text_main"><?= htmlspecialchars($autor['autor_name']) ?></div>
                                 </div>
                             </a>
                         <?php endforeach; ?>

@@ -33,14 +33,14 @@
     align-items: center;
 }
 
-.img_game_main{
+.img_game_main, .img_developer{
   object-fit: cover;
   width: 60px;
   height: 60px;
   margin: 10px;
 }
 
-.game_text_main {
+.game_text_main, .developer_text_main {
     width: 100%;
     font-family: 'Roboto', sans-serif;
     letter-spacing: 1px;
@@ -86,7 +86,7 @@ a {
     }
 
 
-    .game_text_main {
+    .game_text_main, .developer_text_main {
         font-size: 20px;
     }
 }
@@ -126,11 +126,11 @@ a {
         height: 65px;
     }
 
-    .game_text_main {
+    .game_text_main, .developer_text_main {
         font-size: 18px;
     }
 
-    .img_game_main{
+    .img_game_main, .img_developer{
         width: 50px;
         height: 50px;
     }

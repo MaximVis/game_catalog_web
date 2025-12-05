@@ -91,6 +91,7 @@
     overflow-y: auto; 
     overflow-x: hidden; 
     margin-top: 15px;
+    gap: 10px;
 }
 
 .games_container::-webkit-scrollbar, .developers_container::-webkit-scrollbar {
