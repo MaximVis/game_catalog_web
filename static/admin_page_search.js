@@ -186,16 +186,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // Функция для получения пути к изображению
         const getImagePath = (developer) => {
             // Путь по умолчанию
-            let defaultPath = 'admin_developers_imgs/0.png';
+            let defaultPath = 'devs_imgs/0.png';
             
             // Если есть и ID, и расширение
             if (developer.autor_id && developer.extension) {
-                return `admin_developers_imgs/${developer.autor_id}${developer.extension}`;
+                return `devs_imgs/${developer.autor_id}${developer.extension}`;
             }
             
             // Если есть только ID
             if (developer.autor_id) {
-                return `admin_developers_imgs/${developer.autor_id}.png`;
+                return `devs_imgs/${developer.autor_id}.png`;
             }
             
             return defaultPath;
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Добавляем обработчик ошибок загрузки изображения
         img.onerror = function() {
-            this.src = 'admin_developers_imgs/0.png';
+            this.src = 'devs_imgs/0.png';
             console.warn(`Не удалось загрузить изображение для разработчика: ${developer.autor_name}`);
         };
         
