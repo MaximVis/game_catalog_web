@@ -45,17 +45,22 @@ document.addEventListener('DOMContentLoaded', function() {
     function performSearch(gameName) {
         console.log(gameName);
 
-        showLoadingIndicator();
+        //showLoadingIndicator();
 
         queryAndDisplay(gameName);
 
-        hideLoadingIndicator();
+        //hideLoadingIndicator();
 
     }
 
     function queryAndDisplay(gameName, pagination = false){
 
         console.log("qad");
+
+        if (!pagination)
+        {
+            showLoadingIndicator();
+        }
 
         if (gameName === '')
         {
