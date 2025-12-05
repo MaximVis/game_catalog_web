@@ -28,59 +28,79 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("search_type:", searchType);
 
         if (searchType === 'games'){
-
-            searchedGameName = event.target.value.trim();
-
-            clearTimeout(searchTimeout);
-            
-            if (!searchedGameName) {
-                console.log("clr");
-                load_games = 0;
-                performSearch(searchType, searchedGameName);
-                return;
-            }
-            
-            // 500мс после последнего ввода
-            searchTimeout = setTimeout(() => {
-                console.log("notclr");
-                load_games = 0;
-                performSearch(searchType, searchedGameName);
-            }, 500);
+            container = gamesContainer;
         }
+        else if(searchType === 'developers')
+        {
+            container = DevelopersContainer;
+        }
+
+        searchedGameName = event.target.value.trim();
+
+        clearTimeout(searchTimeout);
+        
+        if (!searchedGameName) {
+            console.log("clr");
+            load_games = 0;
+            performSearch(searchType, searchedGameName);
+            return;
+        }
+        
+        // 500мс после последнего ввода
+        searchTimeout = setTimeout(() => {
+            console.log("notclr");
+            load_games = 0;
+            performSearch(searchType, searchedGameName);
+        }, 500);
     }
 
     
-    function performSearch(itemName) {
+    function performSearch(search_type, itemName, container) {
 
         console.log(itemName);
 
-        //showLoadingIndicator();
-
-        queryAndDisplay(itemName);
+        queryAndDisplay(search_type, itemName, container);
 
         //hideLoadingIndicator();
 
     }
 
-    function queryAndDisplay(searchType, gameName, pagination = false){
+    function queryAndDisplay(searchType, gameName, container, pagination = false){
 
         console.log("qad");
 
         if (!pagination)
         {
-            showLoadingIndicator();
+            showLoadingIndicator(searchType);
         }
 
-        if (gameName === '')
+        if(searchType === 'games')
         {
-            query_bd = "games_search_get";
-            var array_params = [load_games];
+            if (gameName === '')
+            {
+                query_bd = "games_search_get";
+                var array_params = [load_games];
+            }
+            else
+            {
+                query_bd = "games_search_post";
+                var searchPattern = gameName + '%';
+                var array_params = [load_games, searchPattern];
+            }
         }
-        else
+        else if(searchType === 'developers')
         {
-            query_bd = "games_search_post";
-            var searchPattern = gameName + '%';
-            var array_params = [load_games, searchPattern];
+            if (gameName === '')
+            {
+                query_bd = "developers_get";
+                var array_params = [load_games];
+            }
+            else
+            {
+                query_bd = "developers_post";
+                var searchPattern = gameName + '%';
+                var array_params = [load_games, searchPattern];
+            }
         }
 
         $.post("pagination.php", {
@@ -92,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (!pagination)
             {
-                gamesContainer.innerHTML = '';
+                container.innerHTML = '';
             }
 
             const gamesArray = [];
@@ -111,12 +131,12 @@ document.addEventListener('DOMContentLoaded', function() {
              if (gamesArray.length > 0) {
                 gamesArray.forEach(game => {
                     const gameElement = createGameElement(game);
-                    gamesContainer.appendChild(gameElement);
+                    container.appendChild(gameElement);
                 });
             } else {
                 if (!pagination)
                 {
-                    gamesContainer.innerHTML = '<div class="no-games-message">Игры не найдены</div>';
+                    container.innerHTML = '<div class="no-games-message">Игры не найдены</div>';
                 }
             } 
             
@@ -172,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
     // Функция показа индикатора загрузки
-    function showLoadingIndicator() {
+    function showLoadingIndicator(searchType) {
 
         removeNoResultsMessage();
         
