@@ -12,37 +12,78 @@ document.addEventListener('DOMContentLoaded', function() {
     
     var load_games = 0;
 
+    searchInputDevelopers.addEventListener('input', handleSearchInput);
+    searchInputGames.addEventListener('input', handleSearchInput);
 
 
-    
-    // Обработчик ввода в поле поиска
-    searchInputGames.addEventListener('input', function() {
 
-        searchedGameName = this.value.trim();
-    
+    function handleSearchInput(event) {
+
+        console.log(searchInputDevelopers, "||||", searchInputGames);
+
+        searchedGameName = event.target.value.trim();
+
         clearTimeout(searchTimeout);
         
         if (!searchedGameName) {
             console.log("clr");
             load_games = 0;
             performSearch(searchedGameName);
+            return;
         }
         
-        // 300мс после последнего ввода
+        // 500мс после последнего ввода
         searchTimeout = setTimeout(() => {
             console.log("notclr");
             load_games = 0;
             performSearch(searchedGameName);
         }, 500);
-    });
+    }
+
+
+    // searchInputDevelopers.addEventListener('input', function() {// Обработчик ввода в поле поиска разработчика
+
+    //     searchedGameName = this.value.trim();
     
-    // Обработчик отправки формы (если нужен стандартный поиск)
-    // const searchForm = document.getElementById('admin_form_game');
-    // searchForm.addEventListener('submit', function(e) {
-    //     e.preventDefault();
+    //     clearTimeout(searchTimeout);
+        
+    //     if (!searchedGameName) {
+    //         console.log("clr");
+    //         load_games = 0;
+    //         performSearch(searchedGameName);
+    //     }
+        
+    //     // 300мс после последнего ввода
+    //     searchTimeout = setTimeout(() => {
+    //         console.log("notclr");
+    //         load_games = 0;
+    //         performSearch(searchedGameName);
+    //     }, 500);
+    // });
+    
+    
+    // searchInputGames.addEventListener('input', function() {// Обработчик ввода в поле поиска игры
+
+    //     searchedGameName = this.value.trim();
+    
+    //     clearTimeout(searchTimeout);
+        
+    //     if (!searchedGameName) {
+    //         console.log("clr");
+    //         load_games = 0;
+    //         performSearch(searchedGameName);
+    //     }
+        
+    //     // 300мс после последнего ввода
+    //     searchTimeout = setTimeout(() => {
+    //         console.log("notclr");
+    //         load_games = 0;
+    //         performSearch(searchedGameName);
+    //     }, 500);
     // });
     
     function performSearch(gameName) {
+
         console.log(gameName);
 
         //showLoadingIndicator();
