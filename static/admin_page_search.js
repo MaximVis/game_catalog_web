@@ -116,9 +116,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const itemArray = [];
+
+            const arrayKeys = Object.keys(response).filter(key => Array.isArray(response[key]));
         
-            if (response) {
-                for (let i = 0; i < response.game_id.length; i++) {
+            if (arrayKeys.length > 0) {
+                for (let i = 0; i < response[arrayKeys[0]].length; i++) {
                     if (searchType === 'games')
                     {
                         itemArray.push({
