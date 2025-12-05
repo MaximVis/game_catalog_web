@@ -141,16 +141,17 @@ document.addEventListener('DOMContentLoaded', function() {
             
              if (itemArray.length > 0) {
                 console.log("ARRAYY!", itemArray);
-                itemArray.forEach(game => {
-                    if (searchType === 'games')
-                    {
-                        const gameElement = createGameElement(game);
+                itemArray.forEach(item => {
+                    let element;
+                    if (searchType === 'games') {
+                        element = createGameElement(item);
+                    } else if (searchType === 'developers') {
+                        element = createDeveloperElement(item);
                     }
-                    else
-                    {
-                        const gameElement = createDeveloperElement(game);
+                    
+                    if (element) {
+                        container.appendChild(element);
                     }
-                    container.appendChild(gameElement);
                 });
             } else {
                 if (!pagination)
