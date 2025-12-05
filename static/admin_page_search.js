@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const DevelopersContainer = document.querySelector('.developers_container');
     
     let searchedGameName = '';//  название игры
-    const originalGamesHTML = gamesContainer.innerHTML;// Исходный  контейнер с играми
-    let searchTimeout;// Дебаунс для оптимизации запросов
+    let searchTimeout;
     
     var load_games = 0;
 
@@ -23,87 +22,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleSearchInput(event) {
 
-        console.log(searchInputDevelopers, "||||", searchInputGames);
-
         const input = event.target;
         const searchType = inputTypeMap.get(input);
 
         console.log("search_type:", searchType);
 
-        searchedGameName = event.target.value.trim();
+        if (searchType === 'games'){
 
-        clearTimeout(searchTimeout);
-        
-        if (!searchedGameName) {
-            console.log("clr");
-            load_games = 0;
-            performSearch(searchedGameName);
-            return;
+            searchedGameName = event.target.value.trim();
+
+            clearTimeout(searchTimeout);
+            
+            if (!searchedGameName) {
+                console.log("clr");
+                load_games = 0;
+                performSearch(searchType, searchedGameName);
+                return;
+            }
+            
+            // 500мс после последнего ввода
+            searchTimeout = setTimeout(() => {
+                console.log("notclr");
+                load_games = 0;
+                performSearch(searchType, searchedGameName);
+            }, 500);
         }
-        
-        // 500мс после последнего ввода
-        searchTimeout = setTimeout(() => {
-            console.log("notclr");
-            load_games = 0;
-            performSearch(searchedGameName);
-        }, 500);
     }
 
+    
+    function performSearch(itemName) {
 
-    // searchInputDevelopers.addEventListener('input', function() {// Обработчик ввода в поле поиска разработчика
-
-    //     searchedGameName = this.value.trim();
-    
-    //     clearTimeout(searchTimeout);
-        
-    //     if (!searchedGameName) {
-    //         console.log("clr");
-    //         load_games = 0;
-    //         performSearch(searchedGameName);
-    //     }
-        
-    //     // 300мс после последнего ввода
-    //     searchTimeout = setTimeout(() => {
-    //         console.log("notclr");
-    //         load_games = 0;
-    //         performSearch(searchedGameName);
-    //     }, 500);
-    // });
-    
-    
-    // searchInputGames.addEventListener('input', function() {// Обработчик ввода в поле поиска игры
-
-    //     searchedGameName = this.value.trim();
-    
-    //     clearTimeout(searchTimeout);
-        
-    //     if (!searchedGameName) {
-    //         console.log("clr");
-    //         load_games = 0;
-    //         performSearch(searchedGameName);
-    //     }
-        
-    //     // 300мс после последнего ввода
-    //     searchTimeout = setTimeout(() => {
-    //         console.log("notclr");
-    //         load_games = 0;
-    //         performSearch(searchedGameName);
-    //     }, 500);
-    // });
-    
-    function performSearch(gameName) {
-
-        console.log(gameName);
+        console.log(itemName);
 
         //showLoadingIndicator();
 
-        queryAndDisplay(gameName);
+        queryAndDisplay(itemName);
 
         //hideLoadingIndicator();
 
     }
 
-    function queryAndDisplay(gameName, pagination = false){
+    function queryAndDisplay(searchType, gameName, pagination = false){
 
         console.log("qad");
 
