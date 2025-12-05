@@ -115,22 +115,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 container.innerHTML = '';
             }
 
-            const gamesArray = [];
+            const itemArray = [];
         
             if (response.game_id && response.game_id.length > 0) {
                 for (let i = 0; i < response.game_id.length; i++) {
-                    gamesArray.push({
-                        game_id: response.game_id[i],
-                        game_name: response.game_name[i],
-                        genres: response.genres[i],
-                        extension: response.extension[i]
-                    });
+                    if (searchType === 'games')
+                    {
+                        itemArray.push({
+                            game_id: response.game_id[i],
+                            game_name: response.game_name[i],
+                            genres: response.genres[i],
+                            extension: response.extension[i]
+                        });
+                    }
+                    else if (searchType === 'developers')
+                    {
+                        itemArray.push({
+                            autor_id: response.autor_id[i],
+                            autor_name: response.autor_name[i],
+                            extension: response.extension[i] 
+                        });
+                    }
+                    //autor_id: Array(2), autor_name: Array(2), extension: Array(2)}
                 }
             }
             
-             if (gamesArray.length > 0) {
-                gamesArray.forEach(game => {
-                    const gameElement = createGameElement(game);
+             if (itemArray.length > 0) {
+                itemArray.forEach(game => {
+                    const gameElement = createItemElement(game, searchType);
                     container.appendChild(gameElement);
                 });
             } else {
@@ -146,46 +158,86 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     
-    function createGameElement(game) {
-        const link = document.createElement('a');
-        link.href = `/game_admin.php?game=${encodeURIComponent(game.game_name)}`;
-        
-        const gameDiv = document.createElement('div');
-        gameDiv.className = 'game_rectangle';
-        
-        let imgSrc = 'game_imgs/0.png'; // изображение по умолчанию
-        
-        // Если в ответе есть extension, используем его
-        if (game.extension && game.extension !== '') {
-            imgSrc = 'game_imgs/' + game.game_id + game.extension;
-        } else if (game.game_id) {
-            imgSrc = 'game_imgs/' + game.game_id + '.png';
-        }
-        
-        // Изображение игры
-        const img = document.createElement('img');
-        img.className = 'img_game_main';
-        img.src = imgSrc;
-        img.alt = game.game_name;
-        
-        // Добавляем обработчик ошибок загрузки изображения
-        img.onerror = function() {
-            this.src = 'game_imgs/0.png'; // Запасное изображение при ошибке
+    function createItemElement(item, type) {
+    // type: 'game' или 'developer'
+    
+        const config = {
+            game: {
+                urlPrefix: '/game_admin.php?game=',
+                nameField: 'game_name',
+                idField: 'game_id',
+                divClass: 'game_rectangle',
+                imgClass: 'img_game_main',
+                textClass: 'game_text_main',
+                imgPath: 'game_imgs/',
+                defaultImg: 'game_imgs/0.png',
+                hasDescription: true,
+                descriptionField: 'genres',
+                descriptionClass: 'text_game_main_description'
+            },
+            developer: {
+                urlPrefix: '/admin_developers_page.php?input_items_search=',
+                nameField: 'autor_name',
+                idField: 'autor_id',
+                divClass: 'item_rectangle',
+                imgClass: 'img_developer',
+                textClass: 'developer_text_main',
+                imgPath: 'admin_developers_imgs/',
+                defaultImg: 'admin_developers_imgs/0.png',
+                hasDescription: false
+            }
         };
         
-        // Текст игры
+        const cfg = config[type];
+        if (!cfg) {
+            console.error('Неизвестный тип элемента:', type);
+            return null;
+        }
+        
+        // Создаем ссылку
+        const link = document.createElement('a');
+        link.href = `${cfg.urlPrefix}${encodeURIComponent(item[cfg.nameField])}`;
+        
+        // Создаем основной контейнер
+        const itemDiv = document.createElement('div');
+        itemDiv.className = cfg.divClass;
+        
+        // Определяем путь к изображению
+        let imgSrc = cfg.defaultImg;
+        if (item.extension && item.extension !== '' && item[cfg.idField]) {
+            imgSrc = cfg.imgPath + item[cfg.idField] + item.extension;
+        } else if (item[cfg.idField]) {
+            imgSrc = cfg.imgPath + item[cfg.idField] + '.png';
+        }
+        
+        // Создаем изображение
+        const img = document.createElement('img');
+        img.className = cfg.imgClass;
+        img.src = imgSrc;
+        img.alt = item[cfg.nameField];
+        
+        // Обработчик ошибки загрузки изображения
+        img.onerror = function() {
+            this.src = cfg.defaultImg;
+        };
+        
+        // Создаем текстовый блок
         const textDiv = document.createElement('div');
-        textDiv.className = 'game_text_main';
-        textDiv.textContent = game.game_name;
+        textDiv.className = cfg.textClass;
+        textDiv.textContent = item[cfg.nameField];
         
-        const descriptionDiv = document.createElement('div');
-        descriptionDiv.className = 'text_game_main_description';
-        descriptionDiv.textContent = game.genres || '';
+        // Добавляем описание если нужно
+        if (cfg.hasDescription && item[cfg.descriptionField]) {
+            const descriptionDiv = document.createElement('div');
+            descriptionDiv.className = cfg.descriptionClass;
+            descriptionDiv.textContent = item[cfg.descriptionField];
+            textDiv.appendChild(descriptionDiv);
+        }
         
-        textDiv.appendChild(descriptionDiv);
-        gameDiv.appendChild(img);
-        gameDiv.appendChild(textDiv);
-        link.appendChild(gameDiv);
+        // Собираем все вместе
+        itemDiv.appendChild(img);
+        itemDiv.appendChild(textDiv);
+        link.appendChild(itemDiv);
         
         return link;
     }
