@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("notclr");
             load_games = 0;
             performSearch(searchedGameName);
-        }, 300);
+        }, 500);
     });
     
     // Обработчик отправки формы (если нужен стандартный поиск)
