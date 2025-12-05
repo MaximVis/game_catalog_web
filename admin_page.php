@@ -37,7 +37,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php render_meta($meta); ?>
     <link rel="stylesheet" href="static/game_page_styles.css">
-    <link rel="stylesheet" href="static/developers_styles.css">
     <link rel="stylesheet" href="static/base_styles.css">
     <link rel="stylesheet" href="static/admin_styles.css">
     <link rel="stylesheet" href="static/admin_page_styles.css">

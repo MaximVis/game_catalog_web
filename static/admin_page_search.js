@@ -57,9 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log("qad");
 
-        var searchPattern = gameName + '%';
-
-        if (load_games === 0)
+        if (gameName === '')
         {
             query_bd = "games_search_get";
             var array_params = [load_games];
@@ -67,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else
         {
             query_bd = "games_search_post";
+            var searchPattern = gameName + '%';
             var array_params = [load_games, searchPattern];
         }
 
