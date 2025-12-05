@@ -21,6 +21,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log(searchInputDevelopers, "||||", searchInputGames);
 
+        const input = event.target;
+        const searchType = input.dataset.type; //"developers" или "games"
+
+        console.log("search_type:", searchType);
+
         searchedGameName = event.target.value.trim();
 
         clearTimeout(searchTimeout);
