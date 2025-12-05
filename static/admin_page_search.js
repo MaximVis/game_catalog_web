@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!searchedGameName) {
             console.log("clr");
             load_games = 0;
-            performSearch(searchType, searchedGameName);
+            performSearch(searchType, searchedGameName, container);
             return;
         }
         
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         searchTimeout = setTimeout(() => {
             console.log("notclr");
             load_games = 0;
-            performSearch(searchType, searchedGameName);
+            performSearch(searchType, searchedGameName, container);
         }, 500);
     }
 
