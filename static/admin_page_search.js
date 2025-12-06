@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     var load_games = 0;
 
+    let searchedDevelopersName = '';
+
     searchInputDevelopers.addEventListener('input', handleSearchInput);
     searchInputGames.addEventListener('input', handleSearchInput);
 
@@ -24,25 +26,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const input = event.target;
         const searchType = inputTypeMap.get(input);
+        searchedName = event.target.value.trim();
 
         console.log("search_type:", searchType);
 
         if (searchType === 'games'){
             container = gamesContainer;
+            searchedGameName= searchedName;
         }
         else if(searchType === 'developers')
         {
             container = DevelopersContainer;
+            searchedDevelopersName = searchedName;
         }
 
-        searchedGameName = event.target.value.trim();
+
 
         clearTimeout(searchTimeout);
         
-        if (!searchedGameName) {
+        if (!searchedName) {
             console.log("clr");
             load_games = 0;
-            performSearch(searchType, searchedGameName, container);
+            performSearch(searchType, searchedName, container);
             return;
         }
         
@@ -50,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         searchTimeout = setTimeout(() => {
             console.log("notclr");
             load_games = 0;
-            performSearch(searchType, searchedGameName, container);
+            performSearch(searchType, searchedName, container);
         }, 500);
     }
 
@@ -335,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const MIN_LOAD_INTERVAL = 500;
     let scrollTimeout;
 
-    function checkScrollBottomOnce() {
+    function checkScrollBottomOnce(searchType, itemName, container) {
         clearTimeout(scrollTimeout);
         
         scrollTimeout = setTimeout(() => {
@@ -345,9 +350,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const now = Date.now();
             if (now - lastLoadTime < MIN_LOAD_INTERVAL) return;
             
-            const scrollHeight = gamesContainer.scrollHeight;
-            const scrollTop = gamesContainer.scrollTop;
-            const clientHeight = gamesContainer.clientHeight;
+            const scrollHeight = container.scrollHeight;
+            const scrollTop = container.scrollTop;
+            const clientHeight = container.clientHeight;
             
             // Увеличиваем порог до 100px
             if (Math.abs(scrollHeight - scrollTop - clientHeight) <= 100) {
@@ -355,7 +360,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 lastLoadTime = now;
                 
                 // Вызываем без await
-                queryAndDisplay(searchedGameName, true);
+                queryAndDisplay(searchType, itemName, container, true);//queryAndDisplay(searchType, gameName, container, pagination = false)
                 
                 // Автоматически сбрасываем isLoading через время
                 setTimeout(() => {
@@ -365,6 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     }
 
-    gamesContainer.addEventListener('scroll', checkScrollBottomOnce);
+    gamesContainer.addEventListener('scroll', checkScrollBottomOnce('games', searchedGameName, gamesContainer));
+    DevelopersContainer.addEventListener('scroll', checkScrollBottomOnce('developers', searchedGameName, DevelopersContainer));
     
 });
