@@ -164,7 +164,7 @@
                            
                         <div class="categories_container">
                             <?php foreach ($list_categories as $category): ?>
-                                <div class="item_rectangle" data-category-id="<?= $category['id'] ?>">
+                                <div class="item_rectangle" data-category-id="<?= $category['category_id'] ?>">
                                     <div class="developer_text_main"><?= htmlspecialchars($category['category_name']) ?></div>
                                     <div class="category-actions">
                                         <button type="button" class="action-btn edit-btn" title="Редактировать категорию">✏️</button>
