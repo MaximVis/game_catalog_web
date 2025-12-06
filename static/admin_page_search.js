@@ -350,4 +350,131 @@ document.addEventListener('DOMContentLoaded', function() {
     DevelopersContainer.addEventListener('scroll', () => {
         checkScrollBottomOnce('developers', searchedGameName, DevelopersContainer);
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Обработчик для крестика (удаление)
+    document.querySelectorAll('.delete-icon').forEach(function(icon) {
+        icon.addEventListener('click', function(e) {
+            e.preventDefault();
+            const item = this.closest('.item_rectangle');
+            const id = item.dataset.id;
+            const name = item.querySelector('.category-name').textContent.trim();
+            
+            console.log('Удаление:', {
+                name: name,
+                id: id,
+                action: 'delete'
+            });
+            
+            // Здесь можно добавить подтверждение
+            if (confirm(`Вы уверены, что хотите удалить категорию "${name}"?`)) {
+                // Отправка AJAX-запроса на сервер для удаления
+                // sendDeleteRequest(id, name);
+            }
+        });
+    });
+    
+    // Обработчик для карандаша (редактирование)
+    document.querySelectorAll('.edit-icon').forEach(function(icon) {
+        icon.addEventListener('click', function(e) {
+            e.preventDefault();
+            const item = this.closest('.item_rectangle');
+            const id = item.dataset.id;
+            const name = item.querySelector('.category-name').textContent.trim();
+            
+            console.log('Редактирование:', {
+                name: name,
+                id: id,
+                action: 'edit'
+            });
+
+            showEditForm(id, name);
+            
+            // Здесь можно показать форму редактирования
+            // showEditForm(id, name);
+            
+            // Или перейти на страницу редактирования
+            // window.location.href = `/edit-category/${id}`;
+        });
+    });
+    
+    // Функция для отправки AJAX-запроса на удаление
+    function sendDeleteRequest(id, name) {
+        const formData = new FormData();
+        formData.append('category_id', id);
+        formData.append('action', 'delete');
+        
+        fetch('/api/categories/delete', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log(`Категория "${name}" успешно удалена`);
+                // Удаляем элемент из DOM
+                const item = document.querySelector(`.item_rectangle[data-id="${id}"]`);
+                if (item) item.remove();
+            } else {
+                console.error('Ошибка при удалении:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+        });
+    }
+    
+    // Функция для показа формы редактирования (опционально)
+    function showEditForm(id, currentName) {
+        const item = document.querySelector(`.item_rectangle[data-id="${id}"]`);
+        const nameElement = item.querySelector('.category-name');
+        
+        // Создаем поле ввода
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = currentName;
+        input.className = 'edit-input';
+        
+        // Заменяем текст на поле ввода
+        nameElement.style.display = 'none';
+        nameElement.parentNode.insertBefore(input, nameElement.nextSibling);
+        
+        // Фокус на поле ввода
+        input.focus();
+        
+        // Обработка сохранения при нажатии Enter
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                saveEdit(id, input.value);
+            }
+        });
+        
+        // Обработка отмены при потере фокуса
+        input.addEventListener('blur', function() {
+            cancelEdit(id);
+        });
+    }
 });
