@@ -84,6 +84,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!pagination) {
             showLoadingIndicator(container);
         }
+        else{
+            if(searchType === 'games'){
+                load_games += 10;
+            } else if(searchType === 'developers'){
+                load_developers +=10;
+            } else if(searchType === 'categories'){
+                load_categories +=10;
+            }
+
+        }
 
         if (searchType === 'games') {
             if (gameName === '') {
@@ -106,11 +116,11 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (searchType === 'categories') {
             if (gameName === '') {
                 query_bd = "categories_no_name";
-                var array_params = [load_developers];
+                var array_params = [load_categories];
             } else {
                 query_bd = "categories_name";
                 var searchPattern = gameName + '%';
-                var array_params = [load_developers, searchPattern];
+                var array_params = [load_categories, searchPattern];
             }
         }
 
@@ -190,7 +200,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 load_games += 10;
             } else if (searchType === 'developers') {
                 load_developers += 10;
+            } else if (searchType === 'categories') {
+                load_categories += 10;
             }
+            
             
             isLoading = false; 
         }).fail(function() {
