@@ -87,11 +87,11 @@ $query_list =
 
     "game_search" => "SELECT game_id, game_name FROM game WHERE lower(game.game_name) = lower($1)",
 
-    'categories_no_name' => 'SELECT * 
+    'categories_no_name' => 'SELECT category.category_id, category.category_name 
                         FROM category 
                         LIMIT 10 OFFSET $1;',
 
-    'categories_name' => 'SELECT * 
+    'categories_name' => 'SELECT category.category_id, category.category_name 
                         FROM category 
                         WHERE lower(category.category_name) LIKE lower($2) 
                         LIMIT 10 OFFSET $1;',
