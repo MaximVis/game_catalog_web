@@ -30,9 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isLoading) {
             isLoading = true;
         }
-        else{
-            return;
-        }
 
         const input = event.target;
         const searchType = inputTypeMap.get(input);
