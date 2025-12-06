@@ -70,45 +70,33 @@ document.addEventListener('DOMContentLoaded', function() {
     //     queryAndDisplay(search_type, itemName, container);
     // }
 
-    function queryAndDisplay(searchType, gameName, container, pagination = false){
+    function queryAndDisplay(searchType, gameName, container, pagination = false) {
 
-        if (isLoading)
-        {
+        if (isLoading) {
             return;
         }
 
         isLoading = true;
-
         console.log("qad", searchType);
 
-        if (!pagination)
-        {
+        if (!pagination) {
             showLoadingIndicator(container);
         }
 
-        if(searchType === 'games')
-        {
-            if (gameName === '')
-            {
+        if (searchType === 'games') {
+            if (gameName === '') {
                 query_bd = "games_search_get";
                 var array_params = [load_games];
-            }
-            else
-            {
+            } else {
                 query_bd = "games_search_post";
                 var searchPattern = gameName + '%';
                 var array_params = [load_games, searchPattern];
             }
-        }
-        else if(searchType === 'developers')
-        {
-            if (gameName === '')
-            {
+        } else if (searchType === 'developers') {
+            if (gameName === '') {
                 query_bd = "developers_get";
                 var array_params = [load_developers];
-            }
-            else
-            {
+            } else {
                 query_bd = "developers_post";
                 var searchPattern = gameName + '%';
                 var array_params = [load_developers, searchPattern];
@@ -116,46 +104,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         $.post("pagination.php", {
-            array_params: array_params, 
+            array_params: array_params,
             query: query_bd
         }, function(data) {
             var response = JSON.parse(data);
             console.log(response);
 
-            if (!pagination)
-            {
+            if (!pagination) {
                 container.innerHTML = '';
             }
 
             const itemArray = [];
 
             const arrayKeys = Object.keys(response).filter(key => Array.isArray(response[key]));
-        
+
             if (arrayKeys.length > 0) {
                 for (let i = 0; i < response[arrayKeys[0]].length; i++) {
                     console.log("i", i);
-                    if (searchType === 'games')
-                    {
+                    if (searchType === 'games') {
                         itemArray.push({
                             game_id: response.game_id[i],
                             game_name: response.game_name[i],
                             genres: response.genres[i],
                             extension: response.extension[i]
                         });
-                    }
-                    else if (searchType === 'developers')
-                    {
+                    } else if (searchType === 'developers') {
                         itemArray.push({
                             autor_id: response.autor_id[i],
                             autor_name: response.autor_name[i],
-                            extension: response.extension[i] 
+                            extension: response.extension[i]
                         });
                         console.log("i2", i);
                     }
                 }
             }
             console.log("MASSIVE<", itemArray);
-            
+
             if (itemArray.length > 0) {
                 console.log("ARRAYY!", itemArray);
                 itemArray.forEach(item => {
@@ -165,30 +149,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else if (searchType === 'developers') {
                         element = createDeveloperElement(item);
                     }
-                    
+
                     if (element) {
                         container.appendChild(element);
                     }
                 });
             } else {
-                if (!pagination)
-                {
+                if (!pagination) {
                     container.innerHTML = '<div class="no-games-message">Игры не найдены</div>';
                 }
-            } 
-            
-        });
+            }
 
-        if(searchType === 'games')
-        {
-            load_games += 10;
-        }
-        else if(searchType === 'developers')
-        {
-            load_developers += 10;
-        }
-        
-        isLoading = false;
+            if (searchType === 'games') {
+                load_games += 10;
+            } else if (searchType === 'developers') {
+                load_developers += 10;
+            }
+            
+            isLoading = false; 
+        }).fail(function() {
+            console.error("Ошибка при выполнении запроса");
+            isLoading = false; 
+        });
     }
 
     function createDeveloperElement(developer) {
