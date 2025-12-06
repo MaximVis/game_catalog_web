@@ -379,6 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Обработчик для добавления новой категории (если используется AJAX)
     const createCategoryBtn = document.getElementById('create_category');
+
     if (createCategoryBtn) {
         createCategoryBtn.addEventListener('click', function(e) {
             // Если форма отправляется без перезагрузки страницы,
@@ -387,237 +388,237 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-function initCategoryItems() {
-    const categoryItems = document.querySelectorAll('.item_rectangle');
-    
-    categoryItems.forEach(item => {
-        const textElement = item.querySelector('.developer_text_main');
-        const categoryName = textElement.textContent.trim();
+    function initCategoryItems() {
+        const categoryItems = document.querySelectorAll('.item_rectangle');
         
-        // Создаем контейнер для иконок
+        categoryItems.forEach(item => {
+            const textElement = item.querySelector('.developer_text_main');
+            const categoryName = textElement.textContent.trim();
+            
+            // Создаем контейнер для иконок
+            const actionsContainer = document.createElement('div');
+            actionsContainer.className = 'category-actions';
+            
+            // Создаем иконку карандаша (редактирование)
+            const editBtn = document.createElement('button');
+            editBtn.className = 'action-btn edit-btn';
+            editBtn.innerHTML = '✏️';
+            editBtn.title = 'Редактировать категорию';
+            
+            // Создаем иконку крестика (удаление)
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'action-btn delete-btn';
+            deleteBtn.innerHTML = '❌';
+            deleteBtn.title = 'Удалить категорию';
+            
+            // Добавляем иконки в контейнер
+            actionsContainer.appendChild(editBtn);
+            actionsContainer.appendChild(deleteBtn);
+            
+            // Добавляем контейнер иконок в элемент категории
+            item.appendChild(actionsContainer);
+            
+            // Обработчик для кнопки редактирования
+            editBtn.addEventListener('click', function() {
+                enableCategoryEditing(item, textElement, categoryName);
+            });
+            
+            // Обработчик для кнопки удаления
+            deleteBtn.addEventListener('click', function() {
+                // Выводим приветствие в консоль
+                console.log('Привет! Категория: ' + categoryName);
+                
+                // Здесь можно добавить логику удаления категории
+                // Например, отправку AJAX-запроса на сервер
+                // deleteCategory(categoryName);
+            });
+        });
+    }
+
+    function enableCategoryEditing(item, textElement, originalName) {
+        // Сохраняем оригинальное название
+        const originalText = textElement.textContent;
+        
+        // Создаем поле ввода
+        const inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.className = 'edit-input fade-in';
+        inputField.value = originalText;
+        
+        // Создаем кнопку сохранения
+        const saveBtn = document.createElement('button');
+        saveBtn.className = 'action-btn save-btn';
+        saveBtn.innerHTML = '✅'; // или можно использовать '💾' для сохранения
+        saveBtn.title = 'Сохранить изменения';
+        
+        // Заменяем текстовый элемент на поле ввода
+        textElement.replaceWith(inputField);
+        
+        // Находим контейнер с иконками и заменяем его
+        const actionsContainer = item.querySelector('.category-actions');
+        const newActionsContainer = document.createElement('div');
+        newActionsContainer.className = 'category-actions';
+        newActionsContainer.appendChild(saveBtn);
+        
+        actionsContainer.replaceWith(newActionsContainer);
+        
+        // Фокус на поле ввода
+        inputField.focus();
+        inputField.select();
+        
+        // Обработчик для кнопки сохранения
+        saveBtn.addEventListener('click', function() {
+            saveCategoryChanges(item, inputField, originalName);
+        });
+        
+        // Сохранение при нажатии Enter
+        inputField.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                saveCategoryChanges(item, inputField, originalName);
+            }
+        });
+        
+        // Отмена редактирования при нажатии Escape
+        inputField.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                cancelCategoryEditing(item, inputField, originalText);
+            }
+        });
+    }
+
+    function saveCategoryChanges(item, inputField, originalName) {
+        const newName = inputField.value.trim();
+        
+        if (!newName) {
+            alert('Название категории не может быть пустым!');
+            inputField.focus();
+            return;
+        }
+        
+        if (newName === originalName) {
+            // Если название не изменилось, просто возвращаемся к обычному виду
+            cancelCategoryEditing(item, inputField, originalName);
+            return;
+        }
+        
+        // Здесь можно добавить отправку данных на сервер через AJAX
+        // Например:
+        /*
+        fetch('update_category.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                old_name: originalName,
+                new_name: newName
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateCategoryUI(item, newName);
+            } else {
+                alert('Ошибка при обновлении категории: ' + data.message);
+                cancelCategoryEditing(item, inputField, originalName);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Произошла ошибка при обновлении категории');
+            cancelCategoryEditing(item, inputField, originalName);
+        });
+        */
+        
+        // Временная заглушка - просто обновляем интерфейс
+        updateCategoryUI(item, newName);
+    }
+
+    function cancelCategoryEditing(item, inputField, originalName) {
+        // Возвращаем текстовый элемент
+        const textElement = document.createElement('div');
+        textElement.className = 'developer_text_main';
+        textElement.textContent = originalName;
+        
+        inputField.replaceWith(textElement);
+        
+        // Восстанавливаем кнопки редактирования и удаления
+        initCategoryItem(item, textElement);
+    }
+
+    function updateCategoryUI(item, newName) {
+        // Создаем новый текстовый элемент
+        const textElement = document.createElement('div');
+        textElement.className = 'developer_text_main fade-in';
+        textElement.textContent = newName;
+        
+        // Заменяем поле ввода на текстовый элемент
+        const inputField = item.querySelector('.edit-input');
+        inputField.replaceWith(textElement);
+        
+        // Инициализируем кнопки для обновленного элемента
+        initCategoryItem(item, textElement);
+        
+        // Можно добавить уведомление об успешном сохранении
+        console.log('Категория обновлена на: ' + newName);
+    }
+
+    function initCategoryItem(item, textElement) {
+        // Удаляем старые кнопки
+        const oldActions = item.querySelector('.category-actions');
+        if (oldActions) {
+            oldActions.remove();
+        }
+        
+        // Создаем новые кнопки
+        const categoryName = textElement.textContent.trim();
         const actionsContainer = document.createElement('div');
         actionsContainer.className = 'category-actions';
         
-        // Создаем иконку карандаша (редактирование)
+        // Кнопка редактирования
         const editBtn = document.createElement('button');
         editBtn.className = 'action-btn edit-btn';
         editBtn.innerHTML = '✏️';
         editBtn.title = 'Редактировать категорию';
         
-        // Создаем иконку крестика (удаление)
+        // Кнопка удаления
         const deleteBtn = document.createElement('button');
         deleteBtn.className = 'action-btn delete-btn';
         deleteBtn.innerHTML = '❌';
         deleteBtn.title = 'Удалить категорию';
         
-        // Добавляем иконки в контейнер
         actionsContainer.appendChild(editBtn);
         actionsContainer.appendChild(deleteBtn);
         
-        // Добавляем контейнер иконок в элемент категории
         item.appendChild(actionsContainer);
         
-        // Обработчик для кнопки редактирования
+        // Назначаем обработчики
         editBtn.addEventListener('click', function() {
             enableCategoryEditing(item, textElement, categoryName);
         });
         
-        // Обработчик для кнопки удаления
         deleteBtn.addEventListener('click', function() {
-            // Выводим приветствие в консоль
             console.log('Привет! Категория: ' + categoryName);
-            
-            // Здесь можно добавить логику удаления категории
-            // Например, отправку AJAX-запроса на сервер
-            // deleteCategory(categoryName);
         });
-    });
-}
-
-function enableCategoryEditing(item, textElement, originalName) {
-    // Сохраняем оригинальное название
-    const originalText = textElement.textContent;
-    
-    // Создаем поле ввода
-    const inputField = document.createElement('input');
-    inputField.type = 'text';
-    inputField.className = 'edit-input fade-in';
-    inputField.value = originalText;
-    
-    // Создаем кнопку сохранения
-    const saveBtn = document.createElement('button');
-    saveBtn.className = 'action-btn save-btn';
-    saveBtn.innerHTML = '✅'; // или можно использовать '💾' для сохранения
-    saveBtn.title = 'Сохранить изменения';
-    
-    // Заменяем текстовый элемент на поле ввода
-    textElement.replaceWith(inputField);
-    
-    // Находим контейнер с иконками и заменяем его
-    const actionsContainer = item.querySelector('.category-actions');
-    const newActionsContainer = document.createElement('div');
-    newActionsContainer.className = 'category-actions';
-    newActionsContainer.appendChild(saveBtn);
-    
-    actionsContainer.replaceWith(newActionsContainer);
-    
-    // Фокус на поле ввода
-    inputField.focus();
-    inputField.select();
-    
-    // Обработчик для кнопки сохранения
-    saveBtn.addEventListener('click', function() {
-        saveCategoryChanges(item, inputField, originalName);
-    });
-    
-    // Сохранение при нажатии Enter
-    inputField.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            saveCategoryChanges(item, inputField, originalName);
-        }
-    });
-    
-    // Отмена редактирования при нажатии Escape
-    inputField.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            cancelCategoryEditing(item, inputField, originalText);
-        }
-    });
-}
-
-function saveCategoryChanges(item, inputField, originalName) {
-    const newName = inputField.value.trim();
-    
-    if (!newName) {
-        alert('Название категории не может быть пустым!');
-        inputField.focus();
-        return;
     }
-    
-    if (newName === originalName) {
-        // Если название не изменилось, просто возвращаемся к обычному виду
-        cancelCategoryEditing(item, inputField, originalName);
-        return;
+
+    // Функция для динамического добавления новой категории
+    function addNewCategory(categoryName) {
+        const container = document.querySelector('.categories_container');
+        
+        const newItem = document.createElement('div');
+        newItem.className = 'item_rectangle fade-in';
+        
+        const textElement = document.createElement('div');
+        textElement.className = 'developer_text_main';
+        textElement.textContent = categoryName;
+        
+        newItem.appendChild(textElement);
+        container.appendChild(newItem);
+        
+        // Инициализируем обработчики для новой категории
+        initCategoryItem(newItem, textElement);
     }
-    
-    // Здесь можно добавить отправку данных на сервер через AJAX
-    // Например:
-    /*
-    fetch('update_category.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            old_name: originalName,
-            new_name: newName
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            updateCategoryUI(item, newName);
-        } else {
-            alert('Ошибка при обновлении категории: ' + data.message);
-            cancelCategoryEditing(item, inputField, originalName);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Произошла ошибка при обновлении категории');
-        cancelCategoryEditing(item, inputField, originalName);
-    });
-    */
-    
-    // Временная заглушка - просто обновляем интерфейс
-    updateCategoryUI(item, newName);
-}
-
-function cancelCategoryEditing(item, inputField, originalName) {
-    // Возвращаем текстовый элемент
-    const textElement = document.createElement('div');
-    textElement.className = 'developer_text_main';
-    textElement.textContent = originalName;
-    
-    inputField.replaceWith(textElement);
-    
-    // Восстанавливаем кнопки редактирования и удаления
-    initCategoryItem(item, textElement);
-}
-
-function updateCategoryUI(item, newName) {
-    // Создаем новый текстовый элемент
-    const textElement = document.createElement('div');
-    textElement.className = 'developer_text_main fade-in';
-    textElement.textContent = newName;
-    
-    // Заменяем поле ввода на текстовый элемент
-    const inputField = item.querySelector('.edit-input');
-    inputField.replaceWith(textElement);
-    
-    // Инициализируем кнопки для обновленного элемента
-    initCategoryItem(item, textElement);
-    
-    // Можно добавить уведомление об успешном сохранении
-    console.log('Категория обновлена на: ' + newName);
-}
-
-function initCategoryItem(item, textElement) {
-    // Удаляем старые кнопки
-    const oldActions = item.querySelector('.category-actions');
-    if (oldActions) {
-        oldActions.remove();
-    }
-    
-    // Создаем новые кнопки
-    const categoryName = textElement.textContent.trim();
-    const actionsContainer = document.createElement('div');
-    actionsContainer.className = 'category-actions';
-    
-    // Кнопка редактирования
-    const editBtn = document.createElement('button');
-    editBtn.className = 'action-btn edit-btn';
-    editBtn.innerHTML = '✏️';
-    editBtn.title = 'Редактировать категорию';
-    
-    // Кнопка удаления
-    const deleteBtn = document.createElement('button');
-    deleteBtn.className = 'action-btn delete-btn';
-    deleteBtn.innerHTML = '❌';
-    deleteBtn.title = 'Удалить категорию';
-    
-    actionsContainer.appendChild(editBtn);
-    actionsContainer.appendChild(deleteBtn);
-    
-    item.appendChild(actionsContainer);
-    
-    // Назначаем обработчики
-    editBtn.addEventListener('click', function() {
-        enableCategoryEditing(item, textElement, categoryName);
-    });
-    
-    deleteBtn.addEventListener('click', function() {
-        console.log('Привет! Категория: ' + categoryName);
-    });
-}
-
-// Функция для динамического добавления новой категории
-function addNewCategory(categoryName) {
-    const container = document.querySelector('.categories_container');
-    
-    const newItem = document.createElement('div');
-    newItem.className = 'item_rectangle fade-in';
-    
-    const textElement = document.createElement('div');
-    textElement.className = 'developer_text_main';
-    textElement.textContent = categoryName;
-    
-    newItem.appendChild(textElement);
-    container.appendChild(newItem);
-    
-    // Инициализируем обработчики для новой категории
-    initCategoryItem(newItem, textElement);
-}
 
 
 });
