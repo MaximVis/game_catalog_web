@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const searchInputDevelopers = document.getElementById('admin_search_developers');
     const DevelopersContainer = document.querySelector('.developers_container');
+
+    let isLoading = false;
     
     let searchedGameName = '';//  название игры
     let searchTimeout;
@@ -69,6 +71,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // }
 
     function queryAndDisplay(searchType, gameName, container, pagination = false){
+
+        if (isLoading)
+        {
+            return;
+        }
+
+        isLoading = true;
 
         console.log("qad", searchType);
 
@@ -179,6 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
             load_developers += 10;
         }
         
+        isLoading = false;
     }
 
     function createDeveloperElement(developer) {
@@ -341,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    let isLoading = false;
+
     let hasMore = true;
     let lastLoadTime = 0;
     const MIN_LOAD_INTERVAL = 500;
@@ -362,14 +372,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const clientHeight = container.clientHeight;
             
             if (Math.abs(scrollHeight - scrollTop - clientHeight) <= 100) {
-                isLoading = true;
+                //isLoading = true;
                 lastLoadTime = now;
                 
                 console.log("CALL_Func");
                 queryAndDisplay(searchType, itemName, container, true);//queryAndDisplay(searchType, gameName, container, pagination = false)
                 
                 setTimeout(() => {
-                    isLoading = false;
+                    //isLoading = false;
                 }, 1000);
             }
         }, 100);
