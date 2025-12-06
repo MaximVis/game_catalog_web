@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputTypeMap = new Map();
     inputTypeMap.set(searchInputDevelopers, 'developers');
     inputTypeMap.set(searchInputGames, 'games');
-    inputTypeMap.set(searchInputGames, 'categories');
+    inputTypeMap.set(searchInputCategories, 'categories');
 
 
     function handleSearchInput(event) {
@@ -113,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 var array_params = [load_developers, searchPattern];
             }
         }
+
+        console.log("search_param:", query_bd, array_params);
 
 
         $.post("pagination.php", {
