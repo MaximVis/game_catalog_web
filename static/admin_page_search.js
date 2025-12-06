@@ -436,13 +436,6 @@ function enableCategoryEditing(item, textElement, originalName) {
     cancelBtn.innerHTML = '❌';
     cancelBtn.title = 'Отменить изменения';
     
-    // Находим контейнер с кнопками
-    const actionsContainer = item.querySelector('.category-actions');
-    if (!actionsContainer) {
-        console.error('Контейнер с кнопками не найден');
-        return;
-    }
-    
     // Заменяем текстовый элемент на поле ввода
     textElement.replaceWith(inputField);
     
@@ -496,35 +489,8 @@ function saveCategoryChanges(item, inputField, originalName) {
     }
     
     // Здесь можно добавить отправку данных на сервер через AJAX
-    // Например:
-    /*
-    fetch('update_category.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            old_name: originalName,
-            new_name: newName
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            updateCategoryUI(item, newName);
-        } else {
-            alert('Ошибка при обновлении категории: ' + data.message);
-            cancelCategoryEditing(item, inputField, originalName);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Произошла ошибка при обновлении категории');
-        cancelCategoryEditing(item, inputField, originalName);
-    });
-    */
     
-    // Временная заглушка - просто обновляем интерфейс
+    
     updateCategoryUI(item, newName);
 }
 
