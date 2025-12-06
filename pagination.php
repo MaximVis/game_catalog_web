@@ -162,25 +162,26 @@ elseif($query == 'genre_exists' || $query == 'category_exists' || $query == 'cat
     }
     else
     {
-        $rows = pg_fetch_all($result);
-    
-        if ($rows) {
+        $gen_cat_name_arr = [];
+        $gen_cat_id_arr = [];
 
+        while ($gen_cat = pg_fetch_assoc($result))
+        {
             if ($query == 'categories_no_name' || $query == 'categories_name')
             {
-                $response['gen_cat_id'] = array_column($rows, 'category_id');
-                $response['gen_cat_id'] = array_column($rows, 'category_name');
+                $gen_cat_name_arr[] = $gen_cat['category_name'];
+                $gen_cat_id_arr[] = $gen_cat['category_id'];
             }
             else{
-                $response['gen_cat_id'] = array_column($rows, 'genre_id');
-                $response['gen_cat_id'] = array_column($rows, 'genre_name');
+                $gen_cat_name_arr[] = $gen_cat['genre_name'];
+                $gen_cat_id_arr[] = $gen_cat['genre_id'];
             }
-        } else {
-            // Если нет результатов
-            $response['category_id'] = [];
-            $response['category_name'] = [];
         }
-        
+
+        $data = array(
+            'gen_cat_id' => $gen_cat_id_arr,
+            'gen_cat_name' => $gen_cat_name_arr,
+        );
     }
 
 }
