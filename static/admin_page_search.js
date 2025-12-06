@@ -128,37 +128,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 container.innerHTML = '';
             }
 
-            const itemArray = [];
+             if (response.gen_cat_name && response.gen_cat_id) {
+                // Это единичный результат
+                itemArray.push({
+                    category_id: response.gen_cat_id,
+                    category_name: response.gen_cat_name
+                });
+            } else {
+                const itemArray = [];
 
-            const arrayKeys = Object.keys(response).filter(key => Array.isArray(response[key]));
+                const arrayKeys = Object.keys(response).filter(key => Array.isArray(response[key]));
 
-            if (arrayKeys.length > 0) {
-                for (let i = 0; i < response[arrayKeys[0]].length; i++) {
-                    console.log("for");
-                    if (searchType === 'games') {
-                        itemArray.push({
-                            game_id: response.game_id[i],
-                            game_name: response.game_name[i],
-                            genres: response.genres[i],
-                            extension: response.extension[i]
-                        });
-                    } else if (searchType === 'developers') {
-                        itemArray.push({
-                            autor_id: response.autor_id[i],
-                            autor_name: response.autor_name[i],
-                            extension: response.extension[i]
-                        });
-                    }else if (searchType === 'categories') {
-                        console.log("ADD_");
-                        itemArray.push({
-                            category_id: response.gen_cat_id[i],
-                            category_name: response.gen_cat_name[i]
-                        });
+                if (arrayKeys.length > 0) {
+                    for (let i = 0; i < response[arrayKeys[0]].length; i++) {
+                        console.log("for");
+                        if (searchType === 'games') {
+                            itemArray.push({
+                                game_id: response.game_id[i],
+                                game_name: response.game_name[i],
+                                genres: response.genres[i],
+                                extension: response.extension[i]
+                            });
+                        } else if (searchType === 'developers') {
+                            itemArray.push({
+                                autor_id: response.autor_id[i],
+                                autor_name: response.autor_name[i],
+                                extension: response.extension[i]
+                            });
+                        }else if (searchType === 'categories') {
+                            console.log("ADD_");
+                            itemArray.push({
+                                category_id: response.gen_cat_id[i],
+                                category_name: response.gen_cat_name[i]
+                            });
+                        }
+
                     }
-
                 }
             }
-
+            
             console.log(itemArray);
 
             if (itemArray.length > 0) {
