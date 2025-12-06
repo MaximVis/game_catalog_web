@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const developerDiv = document.createElement('div');
-        developerDiv.className = 'item_rectangle';
+        developerDiv.className = 'categy_rectangle';
         
         // Функция для получения пути к изображению
         const getImagePath = (developer) => {
@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     // Находим все элементы категорий
-    const categoryItems = document.querySelectorAll('.item_rectangle');
+    const categoryItems = document.querySelectorAll('.categy_rectangle');
     
     categoryItems.forEach(item => {
         const textElement = item.querySelector('.developer_text_main');
@@ -496,35 +496,8 @@ function saveCategoryChanges(item, inputField, originalName) {
     }
     
     // Здесь можно добавить отправку данных на сервер через AJAX
-    // Например:
-    /*
-    fetch('update_category.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            old_name: originalName,
-            new_name: newName
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            updateCategoryUI(item, newName);
-        } else {
-            alert('Ошибка при обновлении категории: ' + data.message);
-            cancelCategoryEditing(item, inputField, originalName);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Произошла ошибка при обновлении категории');
-        cancelCategoryEditing(item, inputField, originalName);
-    });
-    */
     
-    // Временная заглушка - просто обновляем интерфейс
+
     updateCategoryUI(item, newName);
 }
 
@@ -593,7 +566,7 @@ function addNewCategory(categoryName) {
     const container = document.querySelector('.categories_container');
     
     const newItem = document.createElement('div');
-    newItem.className = 'item_rectangle fade-in';
+    newItem.className = 'categy_rectangle fade-in';
     newItem.innerHTML = `
         <div class="developer_text_main">${categoryName}</div>
         <div class="category-actions">
