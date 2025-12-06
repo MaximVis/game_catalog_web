@@ -157,6 +157,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
 
+            console.log(itemArray);
+
             if (itemArray.length > 0) {
                 console.log("ARRAYY!", itemArray);
                 itemArray.forEach(item => {
@@ -166,11 +168,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else if (searchType === 'developers') {
                         element = createDeveloperElement(item);
                     } else if (searchType === 'categories') {
+                        console.log("ELEMENT_CREATES");
                         element =  createCategoryElement(item);
                     }
 
                     if (element) {
                         container.appendChild(element);
+                        console.log("ELEMT_ADD");
                     }
 
                 });
