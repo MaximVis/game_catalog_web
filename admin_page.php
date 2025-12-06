@@ -161,22 +161,24 @@
                         <input class="input_form_search" type="text" id="based_name_category" name="based_name_category" placeholder="Введите категорию для добавления/удаления" required>
                         <div class="sub_message_a_pg" id="category_message"></div>
                         <input type="submit" class="search_value_button catgeory_genre" id="create_category" value="Добавить категорию">
-                           
-                        <div class="categories_container">
-                            <?php foreach ($list_categories as $category): ?>
-                                <div class="categy_rectangle" data-category-id="<?= $category['category_id'] ?>">
-                                    <div class="developer_text_main"><?= htmlspecialchars($category['category_name']) ?></div>
-
-                                    <div class="category-actions">
-                                        <button type="button" class="action-btn edit-btn" title="Редактировать категорию">✏️</button>
-                                        <button type="button" class="action-btn delete-btn" title="Удалить категорию">🗑️</button>
-                                    </div>
-
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-
+                        <input class="input_form_search" type="text" id="admin_search_categories" name="input_items_search" placeholder="Введите категорию" required>
                     </form>
+
+                    <div class="categories_container">
+                        <?php foreach ($list_categories as $category): ?>
+                            <div class="categy_rectangle" data-category-id="<?= $category['category_id'] ?>">
+                                <div class="developer_text_main"><?= htmlspecialchars($category['category_name']) ?></div>
+
+                                <div class="category-actions">
+                                    <button type="button" class="action-btn edit-btn" title="Редактировать категорию">✏️</button>
+                                    <button type="button" class="action-btn delete-btn" title="Удалить категорию">🗑️</button>
+                                </div>
+
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    
                 </div>
 
                 <!-- Таб 4: Жанры -->

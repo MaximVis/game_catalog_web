@@ -6,23 +6,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInputDevelopers = document.getElementById('admin_search_developers');
     const DevelopersContainer = document.querySelector('.developers_container');
 
+    const searchInputCategories = document.getElementById('admin_search_developers');
+    const CategoriesContainer = document.querySelector('.categories_container');
+
     let isLoading = false; 
     
     let searchedGameName = '';//  название игры
+    let searchedDevelopersName = '';
+    let searchedCategoriesName = '';
+
     let searchTimeout;
     
     var load_games = 0;
     var load_developers = 0;
-
-    let searchedDevelopersName = '';
+    var load_categories = 0;
 
     searchInputDevelopers.addEventListener('input', handleSearchInput);
     searchInputGames.addEventListener('input', handleSearchInput);
+    searchInputCategories.addEventListener('input', handleSearchInput);
 
     const inputTypeMap = new Map();
     inputTypeMap.set(searchInputDevelopers, 'developers');
     inputTypeMap.set(searchInputGames, 'games');
-
+    inputTypeMap.set(searchInputGames, 'categories');
 
 
     function handleSearchInput(event) {
@@ -48,6 +54,12 @@ document.addEventListener('DOMContentLoaded', function() {
             searchedDevelopersName = searchedName;
             load_developers = 0;
         }
+        else if(searchType === 'categories')
+        {
+            container = CategoriesContainer;
+            searchedCategoriesName = searchedName;
+            load_categories = 0;
+        }
 
 
 
@@ -66,11 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function queryAndDisplay(searchType, gameName, container, pagination = false) {
-
-        // if (isLoading) {
-        //     return;
-        // }
-        // isLoading = true;
 
         console.log("qad", searchType);
 
@@ -96,7 +103,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 var searchPattern = gameName + '%';
                 var array_params = [load_developers, searchPattern];
             }
+        } else if (searchType === 'categories') {
+            if (gameName === '') {
+                query_bd = "categories_no_name";
+                var array_params = [load_developers];
+            } else {
+                query_bd = "categories_name";
+                var searchPattern = gameName + '%';
+                var array_params = [load_developers, searchPattern];
+            }
         }
+
 
         $.post("pagination.php", {
             array_params: array_params,
@@ -115,7 +132,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (arrayKeys.length > 0) {
                 for (let i = 0; i < response[arrayKeys[0]].length; i++) {
-                    console.log("i", i);
                     if (searchType === 'games') {
                         itemArray.push({
                             game_id: response.game_id[i],
@@ -129,11 +145,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             autor_name: response.autor_name[i],
                             extension: response.extension[i]
                         });
-                        console.log("i2", i);
+                    }else if (searchType === 'categories') {
+                        itemArray.push({
+                            category_id: response.category_id[i],
+                            category_name: response.category_name[i]
+                        });
                     }
+
                 }
             }
-            console.log("MASSIVE<", itemArray);
 
             if (itemArray.length > 0) {
                 console.log("ARRAYY!", itemArray);
@@ -143,11 +163,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         element = createGameElement(item);
                     } else if (searchType === 'developers') {
                         element = createDeveloperElement(item);
+                    } else if (searchType === 'categories') {
+                        element =  createCategoryElement(item);
                     }
 
                     if (element) {
                         container.appendChild(element);
                     }
+
                 });
             } else {
                 if (!pagination) {
@@ -291,6 +314,44 @@ document.addEventListener('DOMContentLoaded', function() {
         
         return link;
     }
+
+    function createCategoryElement(category) {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'categy_rectangle';
+        categoryDiv.dataset.categoryId = category.category_id;
+        
+        // Текст категории
+        const textDiv = document.createElement('div');
+        textDiv.className = 'developer_text_main';
+        textDiv.textContent = category.category_name || '';
+        
+        // Контейнер для кнопок действий
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'category-actions';
+        
+        // Кнопка редактирования
+        const editBtn = document.createElement('button');
+        editBtn.type = 'button';
+        editBtn.className = 'action-btn edit-btn';
+        editBtn.title = 'Редактировать категорию';
+        editBtn.textContent = '✏️';
+        
+        // Кнопка удаления
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'action-btn delete-btn';
+        deleteBtn.title = 'Удалить категорию';
+        deleteBtn.textContent = '🗑️';
+        
+        // Добавляем элементы в структуру
+        actionsDiv.appendChild(editBtn);
+        actionsDiv.appendChild(deleteBtn);
+        
+        categoryDiv.appendChild(textDiv);
+        categoryDiv.appendChild(actionsDiv);
+        
+        return categoryDiv;
+    }
     
     
     // показ индикатора загрузки
@@ -348,8 +409,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     DevelopersContainer.addEventListener('scroll', () => {
-        checkScrollBottomOnce('developers', searchedGameName, DevelopersContainer);
+        checkScrollBottomOnce('developers', searchedDevelopersName, DevelopersContainer);
     });
+
+    // CategoriesContainer.addEventListener('scroll', () => {
+    //     checkScrollBottomOnce('categories', searchedCategoriesName, CategoriesContainer);
+    // });
 
 
 

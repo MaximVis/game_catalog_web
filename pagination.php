@@ -86,6 +86,15 @@ $query_list =
     "category_exists" => "SELECT category_name from category WHERE lower(category_name) = lower($1)",
 
     "game_search" => "SELECT game_id, game_name FROM game WHERE lower(game.game_name) = lower($1)",
+
+    'categories_no_name' => 'SELECT * 
+                        FROM category 
+                        LIMIT 10 OFFSET $1;',
+
+    'categories_name' => 'SELECT * 
+                        FROM category 
+                        WHERE lower(category.category_name) LIKE lower($2) 
+                        LIMIT 10 OFFSET $1;',
 ];
 
 require_once 'config.php';
