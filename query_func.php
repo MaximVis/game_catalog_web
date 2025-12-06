@@ -75,6 +75,10 @@
                 FROM game_category
                 LEFT JOIN category ON gc_category_id = category_id 
                 WHERE gc_game_id = $1;",
+
+            "main_genres_list" => "select * from genre limit 10 offset 0;",
+
+            "main_categories_list" => "select * from category limit 10 offset 0;",
         ];
 
         return $queries[$query_name];

@@ -25,8 +25,8 @@
 
     $games = get_query_answer("main_games", 0);
     $list_autors = get_query_answer("autors", 0);
-
-
+    $list_categories = get_query_answer("main_categories_list", 0);
+    $list_genres = get_query_answer("main_genres_list", 0);
 ?>
 
 <!DOCTYPE html>
@@ -160,17 +160,19 @@
                         <label class="form_word">Управление категориями игр:</label>
                         <input class="input_form_search" type="text" id="based_name_category" name="based_name_category" placeholder="Введите категорию для добавления/удаления" required>
                         <div class="sub_message_a_pg" id="category_message"></div>
-                        
-                        <div class="form_actions">
-                            <input type="submit" class="search_value_button catgeory_genre" id="create_category" value="Добавить категорию">
-                            <input type="submit" class="search_value_button catgeory_genre" id="delete_category" value="Удалить категорию">
+                        <input type="submit" class="search_value_button catgeory_genre" id="create_category" value="Добавить категорию">
+                           
+                        <div class="categories_container">
+
+                            <?php foreach ($list_categories as $category): ?>
+
+                                <div class="item_rectangle">
+                                    <div class = "developer_text_main"><?= htmlspecialchars($category['category_name']) ?></div>
+                                </div>
+
+                            <?php endforeach; ?>
                         </div>
-                        
-                        <div class="form_update">
-                            <input class="input_form_search catgeory_genre_input" type="text" id="new_name_category" name="new_name_category" placeholder="Введите старое название категории">
-                            <input class="input_form_search catgeory_genre_input" type="text" id="new_name_category" name="new_name_category" placeholder="Введите новое название категории">
-                            <input type="submit" class="search_value_button catgeory_genre" id="update_category" value="Изменить категорию">
-                        </div>
+
                     </form>
                 </div>
 
