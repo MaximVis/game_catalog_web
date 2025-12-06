@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInputDevelopers = document.getElementById('admin_search_developers');
     const DevelopersContainer = document.querySelector('.developers_container');
 
-    let isLoading = false;
+    let isLoading = false; 
     
     let searchedGameName = '';//  название игры
     let searchTimeout;
