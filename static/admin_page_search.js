@@ -85,14 +85,13 @@ document.addEventListener('DOMContentLoaded', function() {
             showLoadingIndicator(container);
         }
         else{
-            if(searchType === 'games'){
+            if (searchType === 'games') {
                 load_games += 10;
-            } else if(searchType === 'developers'){
-                load_developers +=10;
-            } else if(searchType === 'categories'){
-                load_categories +=10;
+            } else if (searchType === 'developers') {
+                load_developers += 10;
+            } else if (searchType === 'categories') {
+                load_categories += 10;
             }
-
         }
 
         if (searchType === 'games') {
