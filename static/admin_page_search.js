@@ -354,15 +354,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const scrollTop = container.scrollTop;
             const clientHeight = container.clientHeight;
             
-            // Увеличиваем порог до 100px
             if (Math.abs(scrollHeight - scrollTop - clientHeight) <= 100) {
                 isLoading = true;
                 lastLoadTime = now;
                 
-                // Вызываем без await
+                console.log("CALL_Func");
                 queryAndDisplay(searchType, itemName, container, true);//queryAndDisplay(searchType, gameName, container, pagination = false)
                 
-                // Автоматически сбрасываем isLoading через время
                 setTimeout(() => {
                     isLoading = false;
                 }, 1000);
@@ -370,7 +368,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     }
 
-    gamesContainer.addEventListener('scroll', checkScrollBottomOnce('games', searchedGameName, gamesContainer));
-    DevelopersContainer.addEventListener('scroll', checkScrollBottomOnce('developers', searchedGameName, DevelopersContainer));
-    
+    gamesContainer.addEventListener('scroll', () => {
+        checkScrollBottomOnce('games', searchedGameName, gamesContainer);
+    });
+
+    DevelopersContainer.addEventListener('scroll', () => {
+        checkScrollBottomOnce('developers', searchedGameName, DevelopersContainer);
+    });
 });
