@@ -378,15 +378,15 @@ document.addEventListener('DOMContentLoaded', function() {
     initCategoryItems();
     
     // Обработчик для добавления новой категории (если используется AJAX)
-    const createCategoryBtn = document.getElementById('create_category');
+    // const createCategoryBtn = document.getElementById('create_category');
 
-    if (createCategoryBtn) {
-        createCategoryBtn.addEventListener('click', function(e) {
-            // Если форма отправляется без перезагрузки страницы,
-            // нужно будет добавить новую категорию динамически
-            // и переинициализировать обработчики событий
-        });
-    }
+    // if (createCategoryBtn) {
+    //     createCategoryBtn.addEventListener('click', function(e) {
+    //         // Если форма отправляется без перезагрузки страницы,
+    //         // нужно будет добавить новую категорию динамически
+    //         // и переинициализировать обработчики событий
+    //     });
+    // }
 
     function initCategoryItems() {
         const categoryItems = document.querySelectorAll('.item_rectangle');
