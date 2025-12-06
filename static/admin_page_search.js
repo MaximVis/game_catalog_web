@@ -129,9 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const itemArray = [];
-            
+
             if (response.gen_cat_name && response.gen_cat_id) {
-                // Это единичный результат
                 itemArray.push({
                     category_id: response.gen_cat_id,
                     category_name: response.gen_cat_name

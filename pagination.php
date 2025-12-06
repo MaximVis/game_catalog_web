@@ -162,7 +162,7 @@ elseif($query == 'genre_exists' || $query == 'category_exists' || $query == 'cat
     }
     else
     {
-        $row = pg_fetch_assoc($result);
+        $rows = pg_fetch_all($result);
 
         if ($row) {
             
