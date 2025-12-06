@@ -412,9 +412,9 @@ document.addEventListener('DOMContentLoaded', function() {
         checkScrollBottomOnce('developers', searchedDevelopersName, DevelopersContainer);
     });
 
-    // CategoriesContainer.addEventListener('scroll', () => {
-    //     checkScrollBottomOnce('categories', searchedCategoriesName, CategoriesContainer);
-    // });
+    CategoriesContainer.addEventListener('scroll', () => {
+        checkScrollBottomOnce('categories', searchedCategoriesName, CategoriesContainer);
+    });
 
 
 
