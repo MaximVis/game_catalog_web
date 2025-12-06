@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let searchTimeout;
     
     var load_games = 0;
+    var load_developers = 0;
 
     let searchedDevelopersName = '';
 
@@ -33,11 +34,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (searchType === 'games'){
             container = gamesContainer;
             searchedGameName= searchedName;
+            load_games = 0;
         }
         else if(searchType === 'developers')
         {
             container = DevelopersContainer;
             searchedDevelopersName = searchedName;
+            load_developers = 0;
         }
 
 
@@ -46,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!searchedName) {
             console.log("clr");
-            load_games = 0;
             performSearch(searchType, searchedName, container);
             return;
         }
@@ -54,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // 500мс после последнего ввода
         searchTimeout = setTimeout(() => {
             console.log("notclr");
-            load_games = 0;
             performSearch(searchType, searchedName, container);
         }, 500);
     }
@@ -98,13 +99,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (gameName === '')
             {
                 query_bd = "developers_get";
-                var array_params = [load_games];
+                var array_params = [load_developers];
             }
             else
             {
                 query_bd = "developers_post";
                 var searchPattern = gameName + '%';
-                var array_params = [load_games, searchPattern];
+                var array_params = [load_developers, searchPattern];
             }
         }
 
@@ -172,7 +173,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
         });
 
-        load_games += 10;
+        if(searchType === 'games')
+        {
+            load_games += 10;
+        }
+        else if(searchType === 'developers')
+        {
+            load_developers += 10;
+        }
+        
     }
 
     function createDeveloperElement(developer) {
