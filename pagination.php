@@ -163,30 +163,24 @@ elseif($query == 'genre_exists' || $query == 'category_exists' || $query == 'cat
     else
     {
         $rows = pg_fetch_all($result);
+    
+        if ($rows) {
 
-        if ($row) {
-            
             if ($query == 'categories_no_name' || $query == 'categories_name')
             {
-                $data = array(
-                    'gen_cat_name' => $row['category_name'],
-                    'gen_cat_id' => $row['category_id'] 
-                );
+                $response['gen_cat_id'] = array_column($rows, 'category_id');
+                $response['gen_cat_id'] = array_column($rows, 'category_name');
             }
-            else
-            {
-                $data = array(
-                    'gen_cat_name' => $row['genre_name'], 
-                    'gen_cat_id' => $row['genre_id']    
-                );
+            else{
+                $response['gen_cat_id'] = array_column($rows, 'genre_id');
+                $response['gen_cat_id'] = array_column($rows, 'genre_name');
             }
-
         } else {
-            $data = array(
-                'gen_cat_name' => '',
-                'gen_cat_id' => null
-            );
+            // Если нет результатов
+            $response['category_id'] = [];
+            $response['category_name'] = [];
         }
+        
     }
 
 }
