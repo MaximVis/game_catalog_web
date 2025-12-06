@@ -405,12 +405,67 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Опционально: подтверждение удаления
             if (confirm('Вы уверены, что хотите удалить категорию "' + categoryName + '"?')) {
-                // Здесь можно добавить логику удаления категории
-                // Например, отправку AJAX-запроса на сервер
-                // deleteCategory(categoryName, item);
+
+                const formData = new FormData();
+                formData.append('query', 'delete_category');
+                formData.append('based_input', categoryName); 
+
+                $.ajax({
+                    url: 'uploader.php',
+                    type: 'POST',
+                    data: formData, 
+                    processData: false, 
+                    contentType: false, 
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === true) {
+                            deleteCategory(item, categoryName)
+                        } else {
+                            messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
+                    }
+                });
+
             }
         });
     });
+
+    function deleteCategory(item, categoryName) {
+        // Показываем анимацию удаления
+        item.style.opacity = '0.5';
+        item.style.transform = 'translateX(-20px)';
+        
+        // Через короткую задержку удаляем элемент
+        setTimeout(() => {
+            item.style.transition = 'all 0.3s ease';
+            item.style.height = '0';
+            item.style.padding = '0';
+            item.style.margin = '0';
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(100px)';
+            item.style.overflow = 'hidden';
+            
+            // Полное удаление из DOM
+            setTimeout(() => {
+                item.remove();
+                
+                // Проверяем, есть ли еще категории
+                const container = document.querySelector('.categories_container');
+                const remainingItems = container.querySelectorAll('.item_rectangle');
+                
+                if (remainingItems.length === 0) {
+                    // Если категорий не осталось, показываем сообщение
+                    container.innerHTML = '<div class="empty-message">Нет категорий</div>';
+                }
+                
+            }, 300);
+            
+        }, 100);
+    }
+
 
 
 function enableCategoryEditing(item, textElement, originalName) {
@@ -494,11 +549,33 @@ function saveCategoryChanges(item, inputField, originalName) {
         cancelCategoryEditing(item, inputField, originalName);
         return;
     }
-    
-    // Здесь можно добавить отправку данных на сервер через AJAX
+
+    const formData = new FormData();
+    formData.append('query', 'update_category');
+    formData.append('based_input', originalName); 
+    formData.append('new_input', newName); 
+
+    $.ajax({
+        url: 'uploader.php',
+        type: 'POST',
+        data: formData, 
+        processData: false, 
+        contentType: false, 
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === true) {
+                updateCategoryUI(item, newName);
+            } else {
+                messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
+            }
+        },
+        error: function(xhr, status, error) {
+            messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
+        }
+    });
     
 
-    updateCategoryUI(item, newName);
+    
 }
 
 function cancelCategoryEditing(item, inputField, originalName) {

@@ -236,4 +236,5 @@
     align-items: center;
     overflow: hidden; /* Предотвращает выход содержимого за границы */
     box-sizing: border-box;
+    padding-left: 10px;
 }
