@@ -169,9 +169,9 @@
 
                                     <div class="category-actions">
                                         <button type="button" class="action-btn edit-btn" title="Редактировать категорию">✏️</button>
-                                        <button type="button" class="action-btn delete-btn" title="Удалить категорию">❌</button>
+                                        <button type="button" class="action-btn delete-btn" title="Удалить категорию">🗑️</button>
                                     </div>
-                                    
+
                                 </div>
                             <?php endforeach; ?>
                         </div>

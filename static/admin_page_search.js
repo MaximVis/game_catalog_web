@@ -429,6 +429,12 @@ function enableCategoryEditing(item, textElement, originalName) {
     saveBtn.className = 'action-btn save-btn';
     saveBtn.innerHTML = '✅';
     saveBtn.title = 'Сохранить изменения';
+
+    const cancelBtn = document.createElement('button');
+    cancelBtn.type = 'button';
+    cancelBtn.className = 'action-btn cancel-btn';
+    cancelBtn.innerHTML = '❌';
+    cancelBtn.title = 'Отменить изменения';
     
     // Находим контейнер с кнопками
     const actionsContainer = item.querySelector('.category-actions');
@@ -443,6 +449,7 @@ function enableCategoryEditing(item, textElement, originalName) {
     // Очищаем контейнер и добавляем кнопку сохранения
     actionsContainer.innerHTML = '';
     actionsContainer.appendChild(saveBtn);
+    actionsContainer.appendChild(cancelBtn);
     
     // Фокус на поле ввода
     inputField.focus();
@@ -451,6 +458,11 @@ function enableCategoryEditing(item, textElement, originalName) {
     // Обработчик для кнопки сохранения
     saveBtn.addEventListener('click', function() {
         saveCategoryChanges(item, inputField, originalName);
+    });
+
+    // Обработчик для кнопки отмены
+    cancelBtn.addEventListener('click', function() {
+        cancelCategoryEditing(item, inputField, originalText);
     });
     
     // Сохранение при нажатии Enter
@@ -528,7 +540,7 @@ function cancelCategoryEditing(item, inputField, originalName) {
     const actionsContainer = item.querySelector('.category-actions');
     actionsContainer.innerHTML = `
         <button type="button" class="action-btn edit-btn" title="Редактировать категорию">✏️</button>
-        <button type="button" class="action-btn delete-btn" title="Удалить категорию">❌</button>
+        <button type="button" class="action-btn delete-btn" title="Удалить категорию">🗑️</button>
     `;
     
     // Повторно инициализируем обработчики для этой категории
@@ -549,7 +561,7 @@ function updateCategoryUI(item, newName) {
     const actionsContainer = item.querySelector('.category-actions');
     actionsContainer.innerHTML = `
         <button type="button" class="action-btn edit-btn" title="Редактировать категорию">✏️</button>
-        <button type="button" class="action-btn delete-btn" title="Удалить категорию">❌</button>
+        <button type="button" class="action-btn delete-btn" title="Удалить категорию">🗑️</button>
     `;
     
     // Повторно инициализируем обработчики для обновленного элемента
@@ -586,7 +598,7 @@ function addNewCategory(categoryName) {
         <div class="developer_text_main">${categoryName}</div>
         <div class="category-actions">
             <button type="button" class="action-btn edit-btn" title="Редактировать категорию">✏️</button>
-            <button type="button" class="action-btn delete-btn" title="Удалить категорию">❌</button>
+            <button type="button" class="action-btn delete-btn" title="Удалить категорию">🗑️</button>
         </div>
     `;
     
