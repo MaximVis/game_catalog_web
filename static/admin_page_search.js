@@ -27,6 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleSearchInput(event) {
 
+        if (!isLoading) {
+            isLoading = true;
+        }
+        else{
+            return;
+        }
+
         const input = event.target;
         const searchType = inputTypeMap.get(input);
         searchedName = event.target.value.trim();
@@ -55,28 +62,19 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // 500мс после последнего ввода
         searchTimeout = setTimeout(() => {
             console.log("notclr");
             queryAndDisplay(searchType, searchedName, container);
         }, 500);
     }
 
-    
-    // function performSearch(search_type, itemName, container) {
-
-    //     console.log(itemName);
-
-    //     queryAndDisplay(search_type, itemName, container);
-    // }
-
     function queryAndDisplay(searchType, gameName, container, pagination = false) {
 
-        if (isLoading) {
-            return;
-        }
+        // if (isLoading) {
+        //     return;
+        // }
+        // isLoading = true;
 
-        isLoading = true;
         console.log("qad", searchType);
 
         if (!pagination) {
@@ -298,12 +296,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     
-    // Функция показа индикатора загрузки
+    // показ индикатора загрузки
     function showLoadingIndicator(container) {
 
         container.innerHTML = '';
-        //removeNoResultsMessage();
-        
+    
         // индикатор загрузки
         const loadingDiv = document.createElement('div');
         loadingDiv.className = 'loading-indicator';
@@ -312,26 +309,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         container.prepend(loadingDiv);
     }
-    
-    // скрытие индикатора загрузки
-    // function hideLoadingIndicator() {
-    //     const loadingIndicator = document.getElementById('search-loading');
-    //     if (loadingIndicator) {
-    //         loadingIndicator.remove();
-    //     }
-    // }
-    
-    
-    // удаление сообщения "нет результатов"
-    function removeNoResultsMessage() {
-        const message = document.getElementById('no-results-message');
-        if (message) {
-            message.remove();
-        }
-    }
 
-
-
+    
 
 
     let hasMore = true;
