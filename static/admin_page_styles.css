@@ -228,44 +228,6 @@
 
 
 .item_rectangle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 15px;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    transition: all 0.3s ease;
-    min-height: 50px; /* Добавьте минимальную высоту */
     overflow: hidden; /* Предотвращает выход содержимого за границы */
-}
-
-.developer_text_main {
-    flex-grow: 1;
-    font-size: 16px;
-    color: #333;
-    padding: 5px 0;
-    overflow: hidden; /* Скрывает переполнение текста */
-    text-overflow: ellipsis; /* Добавляет троеточие при переполнении */
-    white-space: nowrap; /* Запрещает перенос текста */
-    max-width: calc(100% - 80px); /* Оставляет место для кнопок */
-}
-
-.category-actions {
-    display: flex;
-    gap: 10px;
-    margin-left: 15px;
-    flex-shrink: 0; /* Предотвращает сжатие кнопок */
-}
-
-.edit-input {
-    flex-grow: 1;
-    padding: 8px 12px;
-    font-size: 16px;
-    border: 2px solid #2196f3;
-    border-radius: 4px;
-    outline: none;
-    transition: border-color 0.3s;
-    max-width: calc(100% - 80px); /* Такая же ширина как у текста */
     box-sizing: border-box;
 }
