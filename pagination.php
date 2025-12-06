@@ -81,9 +81,9 @@ $query_list =
 
     "developer_search" => "SELECT autor_id, autor_name FROM autor WHERE lower(autor.autor_name) = lower($1)",
 
-    "genre_exists" => "SELECT genre_name from genre WHERE lower(genre_name) = lower($1)",
+    "genre_exists" => "SELECT genre_name, genre_id from genre WHERE lower(genre_name) = lower($1)",
 
-    "category_exists" => "SELECT category_name from category WHERE lower(category_name) = lower($1)",
+    "category_exists" => "SELECT category_name, category_id from category WHERE lower(category_name) = lower($1)",
 
     "game_search" => "SELECT game_id, game_name FROM game WHERE lower(game.game_name) = lower($1)",
 
@@ -153,10 +153,41 @@ if($query == 'developers_get' || $query == 'developers_post' || $query == 'devel
         'extension' => $autor_pic_extension_arr
     );
 }
-elseif($query == 'genre_exists' || $query == 'category_exists')
+elseif($query == 'genre_exists' || $query == 'category_exists' || $query == 'categories_no_name' || $query == 'categories_name')
 {
-    $name = pg_fetch_assoc($result);
-    $data = array('gen_cat_name' => $name);
+    if ($query == 'genre_exists' || $query == 'category_exists')
+    {
+        $name = pg_fetch_assoc($result);
+        $data = array('gen_cat_name' => $name,);
+    }
+    else
+    {
+        $row = pg_fetch_assoc($result);
+
+        if ($row) {
+            
+            if ($query == 'categories_no_name' || $query == 'categories_name')
+            {
+                $data = array(
+                    'gen_cat_name' => $row['category_name'],
+                    'gen_cat_id' => $row['category_id'] 
+                );
+            }
+            else
+            {
+                $data = array(
+                    'gen_cat_name' => $row['genre_name'], 
+                    'gen_cat_id' => $row['genre_id']    
+                );
+            }
+
+        } else {
+            $data = array(
+                'gen_cat_name' => '',
+                'gen_cat_id' => null
+            );
+        }
+    }
 
 }
 else

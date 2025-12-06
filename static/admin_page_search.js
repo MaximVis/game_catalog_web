@@ -149,8 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                     }else if (searchType === 'categories') {
                         itemArray.push({
-                            category_id: response.category_id[i],
-                            category_name: response.category_name[i]
+                            category_id: response.gen_cat_id[i],
+                            category_name: response.gen_cat_name[i]
                         });
                     }
 
