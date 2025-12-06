@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInputDevelopers = document.getElementById('admin_search_developers');
     const DevelopersContainer = document.querySelector('.developers_container');
 
-    const searchInputCategories = document.getElementById('admin_search_developers');
+    const searchInputCategories = document.getElementById('admin_search_categories');
     const CategoriesContainer = document.querySelector('.categories_container');
 
     let isLoading = false; 
