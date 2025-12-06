@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
             query: query_bd
         }, function(data) {
             var response = JSON.parse(data);
-            console.log(response);
+            console.log('resp', response);
 
             if (!pagination) {
                 container.innerHTML = '';
@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (arrayKeys.length > 0) {
                 for (let i = 0; i < response[arrayKeys[0]].length; i++) {
+                    console.log("for");
                     if (searchType === 'games') {
                         itemArray.push({
                             game_id: response.game_id[i],
@@ -148,6 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             extension: response.extension[i]
                         });
                     }else if (searchType === 'categories') {
+                        console.log("ADD_");
                         itemArray.push({
                             category_id: response.gen_cat_id[i],
                             category_name: response.gen_cat_name[i]
