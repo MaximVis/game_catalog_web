@@ -49,27 +49,24 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!searchedName) {
             console.log("clr");
-            performSearch(searchType, searchedName, container);
+            queryAndDisplay(searchType, searchedName, container);
             return;
         }
         
         // 500мс после последнего ввода
         searchTimeout = setTimeout(() => {
             console.log("notclr");
-            performSearch(searchType, searchedName, container);
+            queryAndDisplay(searchType, searchedName, container);
         }, 500);
     }
 
     
-    function performSearch(search_type, itemName, container) {
+    // function performSearch(search_type, itemName, container) {
 
-        console.log(itemName);
+    //     console.log(itemName);
 
-        queryAndDisplay(search_type, itemName, container);
-
-        //hideLoadingIndicator();
-
-    }
+    //     queryAndDisplay(search_type, itemName, container);
+    // }
 
     function queryAndDisplay(searchType, gameName, container, pagination = false){
 
@@ -312,7 +309,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Функция показа индикатора загрузки
     function showLoadingIndicator(container) {
 
-        removeNoResultsMessage();
+        container.innerHTML = '';
+        //removeNoResultsMessage();
         
         // индикатор загрузки
         const loadingDiv = document.createElement('div');
@@ -324,12 +322,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // скрытие индикатора загрузки
-    function hideLoadingIndicator() {
-        const loadingIndicator = document.getElementById('search-loading');
-        if (loadingIndicator) {
-            loadingIndicator.remove();
-        }
-    }
+    // function hideLoadingIndicator() {
+    //     const loadingIndicator = document.getElementById('search-loading');
+    //     if (loadingIndicator) {
+    //         loadingIndicator.remove();
+    //     }
+    // }
     
     
     // удаление сообщения "нет результатов"
@@ -353,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
         clearTimeout(scrollTimeout);
         
         scrollTimeout = setTimeout(() => {
-            // Проверяем все условия
+
             if (isLoading || !hasMore) return;
             
             const now = Date.now();
