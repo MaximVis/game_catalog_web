@@ -374,7 +374,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
     // Инициализация обработчиков событий для существующих категорий
     initCategoryItems();
     
@@ -387,7 +386,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // и переинициализировать обработчики событий
         });
     }
-});
 
 function initCategoryItems() {
     const categoryItems = document.querySelectorAll('.item_rectangle');
