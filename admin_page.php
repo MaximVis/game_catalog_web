@@ -158,12 +158,12 @@
                     <!-- Форма изменения категорий -->
                     <form class="admin_form" id="form_change_category" method="POST">
                         <label class="form_word">Управление категориями игр:</label>
-                        <input class="input_form_search" type="text" id="based_name_category" name="based_name_category" placeholder="Введите категорию для добавления/удаления" required>
+                        <input class="input_form_search" type="text" id="based_name_category" name="based_name_category" placeholder="Введите категорию для добавления" required>
                         <div class="sub_message_a_pg" id="category_message"></div>
                         <input type="submit" class="search_value_button catgeory_genre" id="create_category" value="Добавить категорию">
-                        <input class="input_form_search" type="text" id="admin_search_categories" name="input_items_search" placeholder="Введите категорию" required>
                     </form>
 
+                    <input class="input_form_search" type="text" id="admin_search_categories" name="input_items_search" placeholder="Поиск категории">
                     <div class="categories_container">
                         <?php foreach ($list_categories as $category): ?>
                             <div class="categy_rectangle" data-category-id="<?= $category['category_id'] ?>">
