@@ -85,7 +85,7 @@
 
 
 
-.games_container, .developers_container, .categories_container {
+.games_container, .developers_container, .categories_container, .genres_container {
     display: grid;
     max-height: 500px; 
     overflow-y: auto; 
@@ -94,21 +94,21 @@
     gap: 10px;
 }
 
-.games_container::-webkit-scrollbar, .developers_container::-webkit-scrollbar, .categories_container::-webkit-scrollbar  {
+.games_container::-webkit-scrollbar, .developers_container::-webkit-scrollbar, .categories_container::-webkit-scrollbar, .genres_container::-webkit-scrollbar  {
     width: 4px;
 }
 
-.games_container::-webkit-scrollbar-track, .developers_container::-webkit-scrollbar-track, .categories_container::-webkit-scrollbar-track {
+.games_container::-webkit-scrollbar-track, .developers_container::-webkit-scrollbar-track, .categories_container::-webkit-scrollbar-track, .genres_container::-webkit-scrollbar-track {
     background: #f1f1f1; /* Цвет трека */
     border-radius: 4px;
 }
 
-.games_container::-webkit-scrollbar-thumb, .developers_container::-webkit-scrollbar-thumb, .categories_container::-webkit-scrollbar-thumb {
+.games_container::-webkit-scrollbar-thumb, .developers_container::-webkit-scrollbar-thumb, .categories_container::-webkit-scrollbar-thumb, .genres_container::-webkit-scrollbar-thumb {
     background: #888; /* Цвет ползунка */
     border-radius: 4px;
 }
 
-.games_container::-webkit-scrollbar-thumb:hover, .developers_container::-webkit-scrollbar-thumb:hover, .categories_container::-webkit-scrollbar-thumb:hover {
+.games_container::-webkit-scrollbar-thumb:hover, .developers_container::-webkit-scrollbar-thumb:hover, .categories_container::-webkit-scrollbar-thumb:hover, .genres_container::-webkit-scrollbar-thumb:hover {
     background: #555; /* Цвет ползунка при наведении */
 }
 
