@@ -6,13 +6,6 @@
     margin-top: 25px;
 }
 
-.game_text_description_game{
-    font-size: 26px;
-}
-
-
-
-
 
 .game_info{
     margin-top: 25px; 
@@ -68,7 +61,7 @@
     color: #ffffff;
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    font-size: 16px;
+    font-size: 20px;
     text-align: justify;
     padding: 0 10px;
 }
@@ -77,10 +70,6 @@
 
 
 @media (max-width: 1240px) {
-
-    .game_text_description_game{
-        font-size: 22px;
-    }
 
     .game_info{
         margin-top: 20px; 
@@ -104,10 +93,6 @@
 
 }
 @media (max-width: 940px){
-
-    .game_text_description_game{
-        font-size: 18px;
-    }
 
     .game_info{
         margin-top: 15px; 
