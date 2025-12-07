@@ -46,19 +46,19 @@ document.addEventListener('DOMContentLoaded', function() {
         if (searchType === 'games'){
             container = gamesContainer;
             searchedGameName= searchedName;
-            load_games = 0;
+            // load_games = 0;
         }
         else if(searchType === 'developers')
         {
             container = DevelopersContainer;
             searchedDevelopersName = searchedName;
-            load_developers = 0;
+            // load_developers = 0;
         }
         else if(searchType === 'categories')
         {
             container = CategoriesContainer;
             searchedCategoriesName = searchedName;
-            load_categories = 0;
+            // load_categories = 0;
         }
 
 
@@ -83,6 +83,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!pagination) {
             showLoadingIndicator(container);
+
+            if (searchType === 'games') {
+                load_games = 0;
+            } else if (searchType === 'developers') {
+                load_developers = 0;
+            } else if (searchType === 'categories') {
+                load_categories = 0;
+            }
         }
         else{
             if (searchType === 'games') {
