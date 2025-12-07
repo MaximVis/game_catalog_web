@@ -166,7 +166,7 @@
                     </form>
                     
                     <label class="form_word">Поиск категории:</label>
-                    <input class="input_form_search" type="text" id="admin_search_categories" name="input_items_search" placeholder="Поиск категории">
+                    <input class="input_form_search" type="text" id="admin_search_categories" name="input_items_search" placeholder="Введите категорию">
                     <div class="categories_container">
                         <?php foreach ($list_categories as $category): ?>
                             <div class="categy_rectangle" data-category-id="<?= $category['category_id'] ?>">
@@ -188,21 +188,30 @@
                 <div class="tab_content" id="genres_tab">
                     <!-- Форма изменения жанров -->
                     <form class="admin_form" id="form_change_genre" method="POST">
-                        <label class="form_word">Управление жанрами игр:</label>
-                        <input class="input_form_search" type="text" id="based_name_genre" name="based_name_genre" placeholder="Введите жанр для добавления/удаления" required>
+                        <label class="form_word">Добавление нового жанра:</label>
+                        <input class="input_form_search" type="text" id="based_name_genre" name="based_name_genre" placeholder="Введите жанр для добавления" required>
                         <div class="sub_message_a_pg" id="genre_message"></div>
-                        
                         <div class="form_actions">
                             <input type="submit" class="search_value_button catgeory_genre" id="create_genre" value="Добавить жанр">
-                            <input type="submit" class="search_value_button catgeory_genre" id="delete_genre" value="Удалить жанр">
-                        </div>
-                        
-                        <div class="form_update">
-                            <input class="input_form_search catgeory_genre_input" type="text" id="new_name_genre" name="new_name_genre" placeholder="Введите старое название жанра">
-                            <input class="input_form_search catgeory_genre_input" type="text" id="new_name_genre" name="new_name_genre" placeholder="Введите новое название жанра">
-                            <input type="submit" class="search_value_button catgeory_genre" id="update_genre" value="Изменить жанр">
                         </div>
                     </form>
+
+                    <label class="form_word">Поиск жанров:</label>
+                    <input class="input_form_search" type="text" id="admin_search_genres" name="input_items_search" placeholder="Введите жанр">
+                    <div class="genres_container">
+                        <?php foreach ($list_genres as $genre): ?>
+                            <div class="genre_rectangle" data-genre-id="<?= $genre['category_id'] ?>">
+                                <div class="developer_text_main"><?= htmlspecialchars($genre['category_name']) ?></div>
+
+                                <div class="genre-actions">
+                                    <button type="button" class="action-btn edit-btn" title="Редактировать жанр">✏️</button>
+                                    <button type="button" class="action-btn delete-btn" title="Удалить жанр">🗑️</button>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+
                 </div>
             </div>
         </div>
