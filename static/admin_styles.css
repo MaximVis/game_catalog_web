@@ -136,7 +136,7 @@
     }
 
     .input_form_search::placeholder {
-        font-size: 14px;
+        font-size: 20px;
     }
 
     .admin_form{
@@ -170,13 +170,13 @@
     }
 
     .input_form_search{
-        font-size: 12px;
+        font-size: 18px;
         outline: 1px solid #484848;
         outline-offset: -4px;
     }
 
     .input_form_search::placeholder {
-        font-size: 12px;
+        font-size: 18px;
     }
 
     .admin_form{

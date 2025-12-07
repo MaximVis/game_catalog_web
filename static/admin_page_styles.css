@@ -68,6 +68,7 @@
 .form_word {
     display: block;
     margin-top: 25px;
+    font-size: 28px;
 }
 
 
@@ -75,7 +76,7 @@
 .head_word {
     color: #ffffff;
     margin-bottom: 20px;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 500;
 }
 
@@ -111,57 +112,6 @@
 .games_container::-webkit-scrollbar-thumb:hover, .developers_container::-webkit-scrollbar-thumb:hover, .categories_container::-webkit-scrollbar-thumb:hover, .genres_container::-webkit-scrollbar-thumb:hover {
     background: #555; /* Цвет ползунка при наведении */
 }
-
-
-
-@media (max-width: 992px) {
-    .admin_tabs_header {
-        flex-wrap: wrap;
-    }
-    
-    .tab_button {
-        min-width: 100px;
-        padding: 14px 10px;
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 768px) {
-    .admin_tabs_header {
-        flex-direction: column;
-    }
-    
-    .tab_button {
-        width: 100%;
-        min-width: auto;
-        padding: 14px 18px;
-        text-align: left;
-        border-bottom: 1px solid #747474;
-    }
-    
-    .tab_button:last-child {
-        border-bottom: none;
-    }
-    
-    .tab_button.active {
-        border-right: none;
-    }
-}
-@media (max-width: 480px) {
-    .admin_tabs_content {
-        padding: 15px;
-    }
-    
-    .tab_content .admin_form {
-        padding: 0px;
-    }
-}
-
-
-
-
-
-
 
 
 
@@ -234,7 +184,61 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    overflow: hidden; /* Предотвращает выход содержимого за границы */
+    overflow: hidden;
     box-sizing: border-box;
     padding-left: 10px;
 }
+
+.game_text_main{
+    font-size: 24px;
+}
+
+
+@media (max-width: 1240px) {
+
+    .img_game_main {
+        width: 125px;
+        aspect-ratio: 16/9;
+    }
+
+    .game_text_main{
+        font-size: 20px;
+    }
+
+    .form_word {
+        font-size: 24px;
+    }
+
+    .head_word {
+        font-size: 28px;
+    }
+
+}
+@media (max-width: 940px) {
+
+    .item_rectangle {
+        height: 65px;
+    }
+
+    .game_text_main{
+        font-size: 18px;
+    }
+
+    .form_word {
+        font-size: 20px;
+    }
+
+    .head_word {
+        font-size: 24px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
