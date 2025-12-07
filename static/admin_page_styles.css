@@ -231,7 +231,17 @@
     .head_word {
         font-size: 24px;
     }
+
+    .admin_tabs_header {
+        flex-direction: column;
+        padding: 15px;
+    }
 }
+
+
+
+
+
 
 
 
