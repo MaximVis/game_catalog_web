@@ -207,7 +207,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     
                 }
-            }            
+            }      
+            
+            if (searchType === 'categories') {
+                setTimeout(initCategoryHandlers, 0);
+            }
+        
             
             isLoading = false; 
         }).fail(function() {
