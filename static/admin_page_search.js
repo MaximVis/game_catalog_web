@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("qad", searchType);
 
         if (!pagination) {
-            showLoadingIndicator(container);
+            showLoadingIndicator(searchType, container);
 
             if (searchType === 'games') {
                 load_games = 0;
@@ -209,13 +209,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 itemArray.forEach(item => {
                     let element;
                     if (searchType === 'games') {
-                        element = createGameElement(item);
+                        element = createElement(item, 'game');
                     } else if (searchType === 'developers') {
-                        element = createDeveloperElement(item);
+                        element = createElement(item, 'developer');
                     } else if (searchType === 'categories') {
-                        element = createCategoryElement(item);
+                        element = createElement(item, 'category');
                     } else if (searchType === 'genres') {
-                        element = createGenreElement(item);
+                        element = createElement(item, 'genre');
                     }
 
                     if (element) {
@@ -253,182 +253,198 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function createDeveloperElement(developer) {
-    
-        const link = document.createElement('a');
-        if (developer.autor_id) {
-            link.href = `/admin_developers_page.php?developer_id=${developer.autor_id}&input_items_search=${encodeURIComponent(developer.autor_name)}`;
-        } else {
-            link.href = `/admin_developers_page.php?input_items_search=${encodeURIComponent(developer.autor_name)}`;
-        }
-        
-        const developerDiv = document.createElement('div');
-        developerDiv.className = 'categy_rectangle';
-        
-        const getImagePath = (developer) => {
-            let defaultPath = 'devs_imgs/0.png';
-            
-            if (developer.autor_id && developer.extension) {
-                return `devs_imgs/${developer.autor_id}${developer.extension}`;
+    function createElement(item, type) {
+        // Определяем конфигурацию для каждого типа
+        const configs = {
+            'game': {
+                containerClass: 'game_rectangle',
+                textClass: 'game_text_main',
+                imageClass: 'img_game_main',
+                imageBasePath: 'game_imgs/',
+                isLink: true,
+                linkBase: '/game_admin.php?game=',
+                hasDescription: true,
+                descriptionClass: 'text_game_main_description',
+                descriptionField: 'genres'
+            },
+            'developer': {
+                containerClass: 'categy_rectangle',
+                textClass: 'developer_text_main',
+                imageClass: 'img_developer',
+                imageBasePath: 'devs_imgs/',
+                isLink: true,
+                linkBase: '/admin_developers_page.php',
+                linkParam: 'input_items_search',
+                hasAdditionalInfo: true
+            },
+            'category': {
+                containerClass: 'categy_rectangle',
+                textClass: 'developer_text_main',
+                isLink: false,
+                hasActions: true,
+                actionsClass: 'category-actions',
+                editTitle: 'Редактировать категорию',
+                deleteTitle: 'Удалить категорию'
+            },
+            'genre': {
+                containerClass: 'genre_rectangle',
+                textClass: 'developer_text_main',
+                isLink: false,
+                hasActions: true,
+                actionsClass: 'genre-actions',
+                editTitle: 'Редактировать жанр',
+                deleteTitle: 'Удалить жанр'
             }
-            
-            if (developer.autor_id) {
-                return `devs_imgs/${developer.autor_id}.png`;
-            }
-            
-            return defaultPath;
         };
-        
-        const img = document.createElement('img');
-        img.className = 'img_developer';
-        img.src = getImagePath(developer);
-        img.alt = developer.autor_name || 'Разработчик';
-        
-        img.onerror = function() {
-            this.src = 'devs_imgs/0.png';
-            console.warn(`Не удалось загрузить изображение для разработчика: ${developer.autor_name}`);
-        };
-        
-        const textDiv = document.createElement('div');
-        textDiv.className = 'developer_text_main';
-        textDiv.textContent = developer.autor_name || 'Неизвестный разработчик';
-        
-        if (developer.games_count || developer.description) {
-            const infoDiv = document.createElement('div');
-            infoDiv.className = 'developer_additional_info';
-            
-            if (developer.games_count) {
-                const gamesCount = document.createElement('span');
-                gamesCount.className = 'games_count';
-                gamesCount.textContent = `Игр: ${developer.games_count}`;
-                infoDiv.appendChild(gamesCount);
-            }
-            
-            if (developer.description) {
-                const description = document.createElement('p');
-                description.className = 'developer_description';
-                description.textContent = developer.description.substring(0, 100) + '...';
-                infoDiv.appendChild(description);
-            }
-            
-            textDiv.appendChild(infoDiv);
-        }
-        
-        developerDiv.appendChild(img);
-        developerDiv.appendChild(textDiv);
-        link.appendChild(developerDiv);
-        
-        return link;
-    }
-    
-    
-    function createGameElement(game) {
-        
-        const link = document.createElement('a');
-        link.href = `/game_admin.php?game=${encodeURIComponent(game.game_name)}`;
-        
-        const gameDiv = document.createElement('div');
-        gameDiv.className = 'game_rectangle';
-        
-        let imgSrc = 'game_imgs/0.png';
-        
-        if (game.extension && game.extension !== '') {
-            imgSrc = 'game_imgs/' + game.game_id + game.extension;
-        } else if (game.game_id) {
-            imgSrc = 'game_imgs/' + game.game_id + '.png';
-        }
-        
-        const img = document.createElement('img');
-        img.className = 'img_game_main';
-        img.src = imgSrc;
-        img.alt = game.game_name;
-        
-        img.onerror = function() {
-            this.src = 'game_imgs/0.png';
-        };
-        
-        const textDiv = document.createElement('div');
-        textDiv.className = 'game_text_main';
-        textDiv.textContent = game.game_name;
-        
-        const descriptionDiv = document.createElement('div');
-        descriptionDiv.className = 'text_game_main_description';
-        descriptionDiv.textContent = game.genres || '';
-        
-        textDiv.appendChild(descriptionDiv);
-        gameDiv.appendChild(img);
-        gameDiv.appendChild(textDiv);
-        link.appendChild(gameDiv);
-        
-        return link;
-    }
 
-    function createCategoryElement(category) {
-        const categoryDiv = document.createElement('div');
-        categoryDiv.className = 'categy_rectangle';
-        categoryDiv.dataset.categoryId = category.category_id;
-        
+        const config = configs[type];
+        if (!config) {
+            console.error('Неизвестный тип элемента:', type);
+            return null;
+        }
+
+        // Создаем основной контейнер
+        let container;
+        if (config.isLink) {
+            const link = document.createElement('a');
+            
+            if (type === 'game') {
+                link.href = `${config.linkBase}${encodeURIComponent(item.game_name)}`;
+            } else if (type === 'developer') {
+                if (item.autor_id) {
+                    link.href = `${config.linkBase}?developer_id=${item.autor_id}&${config.linkParam}=${encodeURIComponent(item.autor_name)}`;
+                } else {
+                    link.href = `${config.linkBase}?${config.linkParam}=${encodeURIComponent(item.autor_name)}`;
+                }
+            }
+            
+            container = document.createElement('div');
+            container.className = config.containerClass;
+            link.appendChild(container);
+        } else {
+            container = document.createElement('div');
+            container.className = config.containerClass;
+            
+            // Устанавливаем data-атрибуты
+            if (type === 'category' && item.category_id) {
+                container.dataset.categoryId = item.category_id;
+            } else if (type === 'genre' && item.genre_id) {
+                container.dataset.genreId = item.genre_id;
+            }
+        }
+
+        // Добавляем изображение (для игр и разработчиков)
+        if (config.imageClass && (type === 'game' || type === 'developer')) {
+            const img = document.createElement('img');
+            img.className = config.imageClass;
+            img.alt = item.game_name || item.autor_name || '';
+            
+            let imgSrc = config.imageBasePath + '0.png';
+            
+            if (type === 'game') {
+                if (item.extension && item.extension !== '') {
+                    imgSrc = config.imageBasePath + item.game_id + item.extension;
+                } else if (item.game_id) {
+                    imgSrc = config.imageBasePath + item.game_id + '.png';
+                }
+            } else if (type === 'developer') {
+                if (item.autor_id && item.extension) {
+                    imgSrc = config.imageBasePath + item.autor_id + item.extension;
+                } else if (item.autor_id) {
+                    imgSrc = config.imageBasePath + item.autor_id + '.png';
+                }
+            }
+            
+            img.src = imgSrc;
+            
+            img.onerror = function() {
+                this.src = config.imageBasePath + '0.png';
+                if (type === 'developer') {
+                    console.warn(`Не удалось загрузить изображение для разработчика: ${item.autor_name}`);
+                }
+            };
+            
+            container.appendChild(img);
+        }
+
+        // Добавляем текстовый блок
         const textDiv = document.createElement('div');
-        textDiv.className = 'developer_text_main';
-        textDiv.textContent = category.category_name || '';
+        textDiv.className = config.textClass;
         
-        const actionsDiv = document.createElement('div');
-        actionsDiv.className = 'category-actions';
-        
-        const editBtn = document.createElement('button');
-        editBtn.type = 'button';
-        editBtn.className = 'action-btn edit-btn';
-        editBtn.title = 'Редактировать категорию';
-        editBtn.textContent = '✏️';
-        
-        const deleteBtn = document.createElement('button');
-        deleteBtn.type = 'button';
-        deleteBtn.className = 'action-btn delete-btn';
-        deleteBtn.title = 'Удалить категорию';
-        deleteBtn.textContent = '🗑️';
-        
-        actionsDiv.appendChild(editBtn);
-        actionsDiv.appendChild(deleteBtn);
-        
-        categoryDiv.appendChild(textDiv);
-        categoryDiv.appendChild(actionsDiv);
-        
-        return categoryDiv;
+        if (type === 'game') {
+            textDiv.textContent = item.game_name || '';
+        } else if (type === 'developer') {
+            textDiv.textContent = item.autor_name || 'Неизвестный разработчик';
+        } else if (type === 'category') {
+            textDiv.textContent = item.category_name || '';
+        } else if (type === 'genre') {
+            textDiv.textContent = item.genre_name || '';
+        }
+
+        // Добавляем описание (для игр)
+        if (config.hasDescription && item[config.descriptionField]) {
+            const descriptionDiv = document.createElement('div');
+            descriptionDiv.className = config.descriptionClass;
+            descriptionDiv.textContent = item[config.descriptionField];
+            textDiv.appendChild(descriptionDiv);
+        }
+
+        // Добавляем дополнительную информацию (для разработчиков)
+        if (config.hasAdditionalInfo && type === 'developer') {
+            if (item.games_count || item.description) {
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'developer_additional_info';
+                
+                if (item.games_count) {
+                    const gamesCount = document.createElement('span');
+                    gamesCount.className = 'games_count';
+                    gamesCount.textContent = `Игр: ${item.games_count}`;
+                    infoDiv.appendChild(gamesCount);
+                }
+                
+                if (item.description) {
+                    const description = document.createElement('p');
+                    description.className = 'developer_description';
+                    description.textContent = item.description.substring(0, 100) + '...';
+                    infoDiv.appendChild(description);
+                }
+                
+                textDiv.appendChild(infoDiv);
+            }
+        }
+
+        container.appendChild(textDiv);
+
+        // Добавляем кнопки действий (для категорий и жанров)
+        if (config.hasActions) {
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = config.actionsClass;
+            
+            const editBtn = document.createElement('button');
+            editBtn.type = 'button';
+            editBtn.className = 'action-btn edit-btn';
+            editBtn.title = config.editTitle;
+            editBtn.textContent = '✏️';
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = 'button';
+            deleteBtn.className = 'action-btn delete-btn';
+            deleteBtn.title = config.deleteTitle;
+            deleteBtn.textContent = '🗑️';
+            
+            actionsDiv.appendChild(editBtn);
+            actionsDiv.appendChild(deleteBtn);
+            
+            container.appendChild(actionsDiv);
+        }
+
+        // Возвращаем либо ссылку, либо контейнер
+        if (config.isLink) {
+            return container.parentNode; // возвращаем ссылку
+        } else {
+            return container;
+        }
     }
-    
-    function createGenreElement(genre) {
-        const genreDiv = document.createElement('div');
-        genreDiv.className = 'genre_rectangle';
-        genreDiv.dataset.genreId = genre.genre_id;
-        
-        const textDiv = document.createElement('div');
-        textDiv.className = 'developer_text_main';
-        textDiv.textContent = genre.genre_name || '';
-        
-        const actionsDiv = document.createElement('div');
-        actionsDiv.className = 'genre-actions';
-        
-        const editBtn = document.createElement('button');
-        editBtn.type = 'button';
-        editBtn.className = 'action-btn edit-btn';
-        editBtn.title = 'Редактировать жанр';
-        editBtn.textContent = '✏️';
-        
-        const deleteBtn = document.createElement('button');
-        deleteBtn.type = 'button';
-        deleteBtn.className = 'action-btn delete-btn';
-        deleteBtn.title = 'Удалить жанр';
-        deleteBtn.textContent = '🗑️';
-        
-        actionsDiv.appendChild(editBtn);
-        actionsDiv.appendChild(deleteBtn);
-        
-        genreDiv.appendChild(textDiv);
-        genreDiv.appendChild(actionsDiv);
-        
-        return genreDiv;
-    }
-    
     
     function showLoadingIndicator(container) {
 
@@ -437,8 +453,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const loadingDiv = document.createElement('div');
         loadingDiv.className = 'loading-indicator';
         loadingDiv.id = 'search-loading';
-        loadingDiv.innerHTML = 'Поиск игр...';
-        
+
+        if (searchType === 'games') {
+            loadingDiv.innerHTML = 'Поиск игр...';
+        } else if (searchType === 'developers') {
+            loadingDiv.innerHTML = 'Поиск разработчиков...';
+        } else if (searchType === 'categories') {
+            loadingDiv.innerHTML = 'Поиск категорий...';
+        } else if (searchType === 'genres') {
+            loadingDiv.innerHTML = 'Поиск жанров...';
+        }
+
         container.prepend(loadingDiv);
     }
 
