@@ -198,7 +198,7 @@
 
                     <label class="form_word">Поиск жанров:</label>
                     <input class="input_form_search" type="text" id="admin_search_genres" name="input_items_search" placeholder="Введите жанр">
-                    <div class="genres_container">
+                   <div class="genres_container">
                         <?php foreach ($list_genres as $genre): ?>
                             <div class="genre_rectangle" data-genre-id="<?= $genre['genre_id'] ?>">
                                 <div class="developer_text_main"><?= htmlspecialchars($genre['genre_name']) ?></div>
