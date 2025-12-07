@@ -95,6 +95,15 @@ $query_list =
                         FROM category 
                         WHERE lower(category.category_name) LIKE lower($2) 
                         LIMIT 10 OFFSET $1;',
+
+    'genres_no_name' => 'SELECT genre.genre_id, genre.genre_name 
+                        FROM genre 
+                        LIMIT 10 OFFSET $1;',
+
+    'genres_name' => 'SELECT genre.genre_id, genre.genre_name 
+                        FROM genre 
+                        WHERE lower(genre.genre_name) LIKE lower($2) 
+                        LIMIT 10 OFFSET $1;',
 ];
 
 require_once 'config.php';
