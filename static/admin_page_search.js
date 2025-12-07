@@ -468,11 +468,17 @@ document.addEventListener('DOMContentLoaded', function() {
     initCategoryHandlers();
     
     function initCategoryHandlers() {
-    // Находим все элементы категорий
+        // Находим все элементы категорий которые еще не инициализированы
         const categoryItems = document.querySelectorAll('.categy_rectangle:not([data-initialized])');
         
         categoryItems.forEach(item => {
             const textElement = item.querySelector('.developer_text_main');
+            // Если нет текстового элемента (возможно, идет редактирование), пропускаем
+            if (!textElement) {
+                console.log('Пропускаем элемент без developer_text_main');
+                return;
+            }
+            
             const categoryName = textElement.textContent.trim();
             
             // Находим уже существующие кнопки в HTML
@@ -485,19 +491,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
+            // Удаляем старые обработчики (если они есть)
+            editBtn.replaceWith(editBtn.cloneNode(true));
+            deleteBtn.replaceWith(deleteBtn.cloneNode(true));
+            
+            // Находим новые кнопки
+            const newEditBtn = item.querySelector('.edit-btn');
+            const newDeleteBtn = item.querySelector('.delete-btn');
+            
             // Обработчик для кнопки редактирования
-            editBtn.addEventListener('click', function() {
-                enableCategoryEditing(item, textElement, categoryName);
+            newEditBtn.addEventListener('click', function() {
+                const currentTextElement = item.querySelector('.developer_text_main');
+                if (currentTextElement) {
+                    enableCategoryEditing(item, currentTextElement, categoryName);
+                }
             });
             
             // Обработчик для кнопки удаления
-            deleteBtn.addEventListener('click', function() {
-                // Выводим приветствие в консоль
+            newDeleteBtn.addEventListener('click', function() {
                 console.log('Привет! Категория: ' + categoryName);
                 
-                // Опционально: подтверждение удаления
                 if (confirm('Вы уверены, что хотите удалить категорию "' + categoryName + '"?')) {
-
                     const formData = new FormData();
                     formData.append('query', 'delete_category');
                     formData.append('based_input', categoryName); 
@@ -511,18 +525,29 @@ document.addEventListener('DOMContentLoaded', function() {
                         dataType: 'json',
                         success: function(response) {
                             if (response.status === true) {
-                                deleteCategory(item, categoryName)
+                                deleteCategory(item, categoryName);
                             } else {
-                                messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
+                                // Исправьте messageElement
+                                const messageElement = document.getElementById('category_message') || 
+                                                    item.querySelector('.message');
+                                if (messageElement) {
+                                    messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
+                                }
                             }
                         },
                         error: function(xhr, status, error) {
-                            messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
+                            const messageElement = document.getElementById('category_message') || 
+                                                item.querySelector('.message');
+                            if (messageElement) {
+                                messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
+                            }
                         }
                     });
-
                 }
             });
+            
+            // Помечаем элемент как инициализированный
+            item.dataset.initialized = 'true';
         });
     }
 
@@ -688,8 +713,11 @@ function cancelCategoryEditing(item, inputField, originalName) {
         <button type="button" class="action-btn delete-btn" title="Удалить категорию">🗑️</button>
     `;
     
+    // Удаляем флаг инициализации, чтобы обработчики установились заново
+    delete item.dataset.initialized;
+    
     // Повторно инициализируем обработчики для этой категории
-    initCategoryItem(item, textElement);
+    initCategoryHandlers();
 }
 
 function updateCategoryUI(item, newName) {
@@ -709,10 +737,12 @@ function updateCategoryUI(item, newName) {
         <button type="button" class="action-btn delete-btn" title="Удалить категорию">🗑️</button>
     `;
     
-    // Повторно инициализируем обработчики для обновленного элемента
-    initCategoryItem(item, textElement);
+    // Удаляем флаг инициализации
+    delete item.dataset.initialized;
     
-    // Можно добавить уведомление об успешном сохранении
+    // Повторно инициализируем обработчики
+    initCategoryHandlers();
+    
     console.log('Категория обновлена на: ' + newName);
 }
 
