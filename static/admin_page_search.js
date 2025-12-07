@@ -207,20 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     
                 }
-            }
-
-            if (!pagination)
-            {
-                if (searchType === 'games') {
-                    load_games += 10;
-                } else if (searchType === 'developers') {
-                    load_developers += 10;
-                } else if (searchType === 'categories') {
-                    load_categories += 10;
-                    setTimeout(initCategoryHandlers, 0);
-                }
-            }
-            
+            }            
             
             isLoading = false; 
         }).fail(function() {
