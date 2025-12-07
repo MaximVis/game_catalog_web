@@ -179,7 +179,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else if (searchType === 'developers') {
                         element = createDeveloperElement(item);
                     } else if (searchType === 'categories') {
-                        console.log("ELEMENT_CREATES");
                         element =  createCategoryElement(item);
                     }
 
@@ -191,7 +190,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             } else {
                 if (!pagination) {
-                    container.innerHTML = '<div class="no-games-message">Игры не найдены</div>';
+                    if (searchType === 'games') {
+                        container.innerHTML = '<div class="no-games-message">Игры не найдены</div>';
+                    } else if (searchType === 'developers') {
+                        container.innerHTML = '<div class="no-games-message">Разработчики не найдены</div>';
+                    } else if (searchType === 'categories') {
+                         container.innerHTML = '<div class="no-games-message">Категории не найдены</div>';
+                    }
+                    
                 }
             }
 
@@ -201,6 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 load_developers += 10;
             } else if (searchType === 'categories') {
                 load_categories += 10;
+                initCategoryHandlers();
             }
             
             
@@ -458,65 +465,68 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
+    initCategoryHandlers();
     
-
+    function initCategoryHandlers() {
     // Находим все элементы категорий
-    const categoryItems = document.querySelectorAll('.categy_rectangle');
-    
-    categoryItems.forEach(item => {
-        const textElement = item.querySelector('.developer_text_main');
-        const categoryName = textElement.textContent.trim();
+        const categoryItems = document.querySelectorAll('.categy_rectangle:not([data-initialized])');
         
-        // Находим уже существующие кнопки в HTML
-        const editBtn = item.querySelector('.edit-btn');
-        const deleteBtn = item.querySelector('.delete-btn');
-        
-        // Проверяем, что кнопки найдены
-        if (!editBtn || !deleteBtn) {
-            console.error('Кнопки не найдены в элементе:', item);
-            return;
-        }
-        
-        // Обработчик для кнопки редактирования
-        editBtn.addEventListener('click', function() {
-            enableCategoryEditing(item, textElement, categoryName);
-        });
-        
-        // Обработчик для кнопки удаления
-        deleteBtn.addEventListener('click', function() {
-            // Выводим приветствие в консоль
-            console.log('Привет! Категория: ' + categoryName);
+        categoryItems.forEach(item => {
+            const textElement = item.querySelector('.developer_text_main');
+            const categoryName = textElement.textContent.trim();
             
-            // Опционально: подтверждение удаления
-            if (confirm('Вы уверены, что хотите удалить категорию "' + categoryName + '"?')) {
+            // Находим уже существующие кнопки в HTML
+            const editBtn = item.querySelector('.edit-btn');
+            const deleteBtn = item.querySelector('.delete-btn');
+            
+            // Проверяем, что кнопки найдены
+            if (!editBtn || !deleteBtn) {
+                console.error('Кнопки не найдены в элементе:', item);
+                return;
+            }
+            
+            // Обработчик для кнопки редактирования
+            editBtn.addEventListener('click', function() {
+                enableCategoryEditing(item, textElement, categoryName);
+            });
+            
+            // Обработчик для кнопки удаления
+            deleteBtn.addEventListener('click', function() {
+                // Выводим приветствие в консоль
+                console.log('Привет! Категория: ' + categoryName);
+                
+                // Опционально: подтверждение удаления
+                if (confirm('Вы уверены, что хотите удалить категорию "' + categoryName + '"?')) {
 
-                const formData = new FormData();
-                formData.append('query', 'delete_category');
-                formData.append('based_input', categoryName); 
+                    const formData = new FormData();
+                    formData.append('query', 'delete_category');
+                    formData.append('based_input', categoryName); 
 
-                $.ajax({
-                    url: 'uploader.php',
-                    type: 'POST',
-                    data: formData, 
-                    processData: false, 
-                    contentType: false, 
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.status === true) {
-                            deleteCategory(item, categoryName)
-                        } else {
+                    $.ajax({
+                        url: 'uploader.php',
+                        type: 'POST',
+                        data: formData, 
+                        processData: false, 
+                        contentType: false, 
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status === true) {
+                                deleteCategory(item, categoryName)
+                            } else {
+                                messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
+                            }
+                        },
+                        error: function(xhr, status, error) {
                             messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
                         }
-                    },
-                    error: function(xhr, status, error) {
-                        messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
-                    }
-                });
+                    });
 
-            }
+                }
+            });
         });
-    });
+    }
+
+    
 
     function deleteCategory(item, categoryName) {
         // Показываем анимацию удаления
