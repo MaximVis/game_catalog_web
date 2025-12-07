@@ -121,7 +121,14 @@ function handleFormSubmit(itemType, basedInputId, newInputId, messageElement) {
             dataType: 'json',
             success: function(response) {
                 if (response.status === true) {
-                    messageElement.textContent = 'Данные сохранены';
+                    if (itemType === "genre")
+                    {
+                        messageElement.textContent = `Жанр "${newName}" сохранен`;
+                    }
+                    else{
+                        messageElement.textContent = `Категория "${newName}" сохранена`;
+                    }
+                    
                 } else {
                     messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
                 }
