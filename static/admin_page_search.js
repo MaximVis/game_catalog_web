@@ -519,6 +519,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализация обработчиков при загрузке
     initCategoryHandlers();
     initGenreHandlers();
+
+
+
+
+
+
+
+    
     
     // Функции для категорий
     function initCategoryHandlers() {

@@ -165,7 +165,7 @@
 
 
 
-.category-actions {
+.category-actions, .genre-actions {
     display: flex;
     gap: 10px;
     margin-left: 15px;
