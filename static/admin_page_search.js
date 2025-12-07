@@ -446,7 +446,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    function showLoadingIndicator(container) {
+    function showLoadingIndicator(searchType, container) {
 
         container.innerHTML = '';
     
