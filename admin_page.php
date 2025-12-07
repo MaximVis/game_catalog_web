@@ -200,8 +200,8 @@
                     <input class="input_form_search" type="text" id="admin_search_genres" name="input_items_search" placeholder="Введите жанр">
                     <div class="genres_container">
                         <?php foreach ($list_genres as $genre): ?>
-                            <div class="genre_rectangle" data-genre-id="<?= $genre['category_id'] ?>">
-                                <div class="developer_text_main"><?= htmlspecialchars($genre['category_name']) ?></div>
+                            <div class="genre_rectangle" data-genre-id="<?= $genre['genre_id'] ?>">
+                                <div class="developer_text_main"><?= htmlspecialchars($genre['genre_name']) ?></div>
 
                                 <div class="genre-actions">
                                     <button type="button" class="action-btn edit-btn" title="Редактировать жанр">✏️</button>
