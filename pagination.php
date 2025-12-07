@@ -162,7 +162,8 @@ if($query == 'developers_get' || $query == 'developers_post' || $query == 'devel
         'extension' => $autor_pic_extension_arr
     );
 }
-elseif($query == 'genre_exists' || $query == 'category_exists' || $query == 'categories_no_name' || $query == 'categories_name')
+elseif($query == 'genre_exists' || $query == 'category_exists' || $query == 'categories_no_name' ||
+     $query == 'categories_name' || $query == 'genres_no_name' || $query == 'genres_name')
 {
     if ($query == 'genre_exists' || $query == 'category_exists')
     {
