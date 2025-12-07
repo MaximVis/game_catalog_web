@@ -68,9 +68,9 @@
         <h1 class = "head_word">Панель администратора</h1>
 
 
-         <!-- Контейнер для табов -->
+         <!-- контейнер вкладок -->
         <div class="admin_tabs_container">
-            <!-- Кнопки переключения табов -->
+
             <div class="admin_tabs_header">
                 <button class="tab_button active" data_tab="games">Игры</button>
                 <button class="tab_button" data_tab="developers">Разработчики</button>
@@ -78,11 +78,11 @@
                 <button class="tab_button" data_tab="genres">Жанры</button>
             </div>
 
-            <!-- Содержимое табов -->
+            <!-- содержимое табов -->
             <div class="admin_tabs_content">
-                <!-- Таб 1: Игры -->
+                <!--  Игры -->
                 <div class="tab_content active" id="games_tab">
-                    <!-- Форма поиска игры -->
+
                     <form action="game_admin.php" method="GET"><button class ="button_menu">Добавить новую игру</button></form>
                     <form class="admin_form" id="admin_form_game">
                         <label class="form_word">Поиск игры:</label>
@@ -113,15 +113,14 @@
                     </div>
                 </div>
 
-                <!-- Таб 2: Разработчики -->
+                <!-- разработчики -->
                 <div class="tab_content" id="developers_tab">
-                    <!-- Форма поиска разработчика -->
+
                     <form action="admin_developers_page.php" method="GET"><button class ="button_menu">Добавить нового разработчика</button></br></form>
                     <form class="admin_form" id="admin_form_dev">
                         <label class="form_word">Поиск разработчика:</label>
                         <input class="input_form_search" type="text" id="admin_search_developers" name="input_items_search" placeholder="Введите разработчика" required>
                         <input type="hidden" name="admin_search" value="true">
-                        <!-- <input type="submit" class="search_value_button" value="Поиск разработчика"> -->
                     </form>
 
                     <div class="developers_container">
@@ -153,9 +152,9 @@
                     </div>
                 </div>
 
-                <!-- Таб 3: Категории -->
+                <!-- категории -->
                 <div class="tab_content" id="categories_tab">
-                    <!-- Форма изменения категорий -->
+
                     <form class="admin_form" id="form_change_category" method="POST">
                         <label class="form_word">Добавление новой категории:</label>
                         <input class="input_form_search" type="text" id="based_name_category" name="based_name_category" placeholder="Введите категорию для добавления" required>
@@ -184,9 +183,9 @@
                     
                 </div>
 
-                <!-- Таб 4: Жанры -->
+                <!-- жанры -->
                 <div class="tab_content" id="genres_tab">
-                    <!-- Форма изменения жанров -->
+
                     <form class="admin_form" id="form_change_genre" method="POST">
                         <label class="form_word">Добавление нового жанра:</label>
                         <input class="input_form_search" type="text" id="based_name_genre" name="based_name_genre" placeholder="Введите жанр для добавления" required>

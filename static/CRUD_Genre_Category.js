@@ -123,10 +123,10 @@ function handleFormSubmit(itemType, basedInputId, newInputId, messageElement) {
                 if (response.status === true) {
                     if (itemType === "genre")
                     {
-                        messageElement.textContent = `Жанр "${newName}" сохранен`;
+                        messageElement.textContent = `Жанр "${basedName}" сохранен`;
                     }
                     else{
-                        messageElement.textContent = `Категория "${newName}" сохранена`;
+                        messageElement.textContent = `Категория "${basedName}" сохранена`;
                     }
                     
                 } else {
