@@ -557,34 +557,48 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     function deleteCategory(item, categoryName) {
-        // Показываем анимацию удаления
+        console.log('Удаление категории:', categoryName, 'элемент:', item);
+        
+        // Показываем анимацию удаления только для конкретного элемента
         item.style.opacity = '0.5';
         item.style.transform = 'translateX(-20px)';
         
         // Через короткую задержку удаляем элемент
         setTimeout(() => {
             item.style.transition = 'all 0.3s ease';
-            item.style.height = '0';
-            item.style.padding = '0';
-            item.style.margin = '0';
-            item.style.opacity = '0';
-            item.style.transform = 'translateX(100px)';
-            item.style.overflow = 'hidden';
+            item.style.height = item.offsetHeight + 'px'; // Сохраняем высоту для анимации
             
-            // Полное удаление из DOM
+            // Через мгновение начинаем анимацию
             setTimeout(() => {
-                item.remove();
+                item.style.height = '0';
+                item.style.padding = '0';
+                item.style.margin = '0';
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(100px)';
+                item.style.overflow = 'hidden';
                 
-                // Проверяем, есть ли еще категории
-                const container = document.querySelector('.categories_container');
-                const remainingItems = container.querySelectorAll('.item_rectangle');
+                // Полное удаление из DOM
+                setTimeout(() => {
+                    if (item.parentNode) {
+                        item.remove();
+                        console.log('Элемент удален из DOM');
+                    }
+                    
+                    // Проверяем, есть ли еще категории
+                    const container = document.querySelector('.categories_container');
+                    // ИСПРАВЛЕНИЕ: ищем правильный класс
+                    const remainingItems = container.querySelectorAll('.categy_rectangle');
+                    
+                    console.log('Осталось элементов:', remainingItems.length);
+                    
+                    if (remainingItems.length === 0) {
+                        // Если категорий не осталось, показываем сообщение
+                        container.innerHTML = '<div class="empty-message">Нет категорий</div>';
+                    }
+                    
+                }, 300);
                 
-                if (remainingItems.length === 0) {
-                    // Если категорий не осталось, показываем сообщение
-                    container.innerHTML = '<div class="empty-message">Нет категорий</div>';
-                }
-                
-            }, 300);
+            }, 10); // Небольшая задержка перед началом анимации
             
         }, 100);
     }
