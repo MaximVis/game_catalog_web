@@ -9,8 +9,8 @@
 /* Заголовок табов */
 .admin_tabs_header {
     display: flex;
-    background-color: #484848;
-    border-bottom: 2px solid #747474;
+    background-color: #202020;
+    border-bottom: 2px solid #fff;
 }
 
 /* Кнопки табов */
