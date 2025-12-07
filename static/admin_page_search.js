@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Элементы DOM
     const searchInputGames = document.getElementById('admin_search_game');
     const gamesContainer = document.querySelector('.games_container');
 
@@ -254,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createElement(item, type) {
-        // Определяем конфигурацию для каждого типа
+        // конфигурация для каждого типа
         const configs = {
             'game': {
                 containerClass: 'game_rectangle',
@@ -303,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return null;
         }
 
-        // Создаем основной контейнер
+        // основной контейнер
         let container;
         if (config.isLink) {
             const link = document.createElement('a');
@@ -325,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
             container = document.createElement('div');
             container.className = config.containerClass;
             
-            // Устанавливаем data-атрибуты
+            // data-атрибуты
             if (type === 'category' && item.category_id) {
                 container.dataset.categoryId = item.category_id;
             } else if (type === 'genre' && item.genre_id) {
@@ -333,7 +332,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Добавляем изображение (для игр и разработчиков)
+        //  изображение (для игр и разработчиков)
         if (config.imageClass && (type === 'game' || type === 'developer')) {
             const img = document.createElement('img');
             img.className = config.imageClass;
@@ -367,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
             container.appendChild(img);
         }
 
-        // Добавляем текстовый блок
+        //  текстовый блок
         const textDiv = document.createElement('div');
         textDiv.className = config.textClass;
         
@@ -381,7 +380,7 @@ document.addEventListener('DOMContentLoaded', function() {
             textDiv.textContent = item.genre_name || '';
         }
 
-        // Добавляем описание (для игр)
+        //  описание (для игр)
         if (config.hasDescription && item[config.descriptionField]) {
             const descriptionDiv = document.createElement('div');
             descriptionDiv.className = config.descriptionClass;
@@ -389,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
             textDiv.appendChild(descriptionDiv);
         }
 
-        // Добавляем дополнительную информацию (для разработчиков)
+        //  дополнительная информация (для разработчиков)
         if (config.hasAdditionalInfo && type === 'developer') {
             if (item.games_count || item.description) {
                 const infoDiv = document.createElement('div');
@@ -415,7 +414,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         container.appendChild(textDiv);
 
-        // Добавляем кнопки действий (для категорий и жанров)
+        // кнопки действий (для категорий и жанров)
         if (config.hasActions) {
             const actionsDiv = document.createElement('div');
             actionsDiv.className = config.actionsClass;
@@ -438,9 +437,9 @@ document.addEventListener('DOMContentLoaded', function() {
             container.appendChild(actionsDiv);
         }
 
-        // Возвращаем либо ссылку, либо контейнер
+        // возврат ссылки/ контейнер
         if (config.isLink) {
-            return container.parentNode; // возвращаем ссылку
+            return container.parentNode; //  ссылка
         } else {
             return container;
         }
@@ -526,9 +525,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
     
-    
-    // Функции для категорий
+    // функции для категорий
     function initCategoryHandlers() {
         const categoryItems = document.querySelectorAll('.categy_rectangle:not([data-initialized])');
         
@@ -778,7 +777,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Категория обновлена на: ' + newName);
     }
 
-    // Функции для жанров (по аналогии с категориями)
+    // функции для жанров
     function initGenreHandlers() {
         const genreItems = document.querySelectorAll('.genre_rectangle:not([data-initialized])');
         
