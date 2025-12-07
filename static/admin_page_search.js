@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 load_developers += 10;
             } else if (searchType === 'categories') {
                 load_categories += 10;
-                initCategoryHandlers();
+                setTimeout(initCategoryHandlers, 0);
             }
             
             
@@ -752,14 +752,23 @@ function initCategoryItem(item, textElement) {
     const deleteBtn = item.querySelector('.delete-btn');
     
     if (editBtn && deleteBtn) {
-        // Назначаем обработчики для кнопок
-        editBtn.addEventListener('click', function() {
+        // Удаляем старые обработчики
+        editBtn.replaceWith(editBtn.cloneNode(true));
+        deleteBtn.replaceWith(deleteBtn.cloneNode(true));
+        
+        const newEditBtn = item.querySelector('.edit-btn');
+        const newDeleteBtn = item.querySelector('.delete-btn');
+        
+        newEditBtn.addEventListener('click', function() {
             enableCategoryEditing(item, textElement, categoryName);
         });
         
-        deleteBtn.addEventListener('click', function() {
+        newDeleteBtn.addEventListener('click', function() {
             console.log('Привет! Категория: ' + categoryName);
         });
+        
+        // Помечаем как инициализированный
+        item.dataset.initialized = 'true';
     }
 }
 
