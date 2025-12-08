@@ -954,6 +954,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function saveGenreChanges(item, inputField, originalName) {
+
+
+
         const newName = inputField.value.trim();
         
         if (!newName) {
@@ -971,6 +974,12 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('query', 'update_genre');
         formData.append('based_input', originalName); 
         formData.append('new_input', newName); 
+
+        const actionsContainer = item.querySelector('.genre-actions');
+        if (!actionsContainer) {
+            console.error('Не найден контейнер действий для категории');
+            return;
+        }
 
         if(await checkItemExists(newName, "genre_exists")) {
             createWarningMessage(actionsContainer, `Жанр "${newName}" уже существует, изменения не сохранены`);
@@ -1019,6 +1028,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         delete item.dataset.initialized;
         
+
         initGenreHandlers();
     }
 
