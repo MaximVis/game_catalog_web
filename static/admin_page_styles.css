@@ -187,11 +187,12 @@
 }
 
 .editing-notification {
-    color: rgb(255, 0, 0);
+    color: rgb(255, 129, 129);
     font-size: 12px;
     width: 100%;
     flex-basis: 100%;
     order: 999;
+    text-align: center;
 }
 
 .developer_text_main{
