@@ -599,6 +599,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function deleteCategory(item, categoryName) {
+        
+        deleteWarningMessage();
         console.log('Удаление категории:', categoryName, 'элемент:', item);
         
         item.style.opacity = '0.5';
@@ -860,6 +862,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function deleteGenre(item, genreName) {
         console.log('Удаление жанра:', genreName, 'элемент:', item);
+        deleteWarningMessage();
         
         item.style.opacity = '0.5';
         item.style.transform = 'translateX(-20px)';
@@ -955,7 +958,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function saveGenreChanges(item, inputField, originalName) {
 
-
+        deleteWarningMessage();
 
         const newName = inputField.value.trim();
         
@@ -998,17 +1001,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.status === true) {
                     updateGenreUI(item, newName);
                 } else {
-                    const messageElement = document.getElementById('genre_message');
-                    if (messageElement) {
-                        messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
-                    }
+                    createWarningMessage(actionsContainer, "Ошибка сервера, сохранение не выполнено");
                 }
             },
             error: function(xhr, status, error) {
-                const messageElement = document.getElementById('genre_message');
-                if (messageElement) {
-                    messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
-                }
+                createWarningMessage(actionsContainer, "Ошибка сервера, сохранение не выполнено");
             }
         });
     }
@@ -1027,7 +1024,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         
         delete item.dataset.initialized;
-        
+        deleteWarningMessage();
 
         initGenreHandlers();
     }
