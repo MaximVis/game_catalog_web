@@ -714,7 +714,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
 
         if(await checkItemExists(newName, "category_exists")) {
-            createWarningMessage(`Категория "${newName}" уже существует, изменения не сохранены`);
+            const editingNotification = createWarningMessage(item, actionsContainer, `Категория "${newName}" уже существует, изменения не сохранены`);
             return;
         }
 
@@ -784,16 +784,16 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Категория обновлена на: ' + newName);
     }
 
-    function createWarningMessage(message_text){
+    function createWarningMessage(item, actionsContainer, message_text) {
         const editingNotification = document.createElement('div');
         editingNotification.className = 'editing-notification';
-        editingNotification.textContent = 'ведется редактирование';
+        editingNotification.textContent = message_text;
         editingNotification.style.cssText = 'color: #ff9800; font-size: 12px; font-style: italic; margin-top: 5px;';
-
-        const actionsContainer = item.querySelector('.category-actions');
-
+        
+        // Вставляем уведомление после контейнера действий
         actionsContainer.parentNode.insertBefore(editingNotification, actionsContainer.nextSibling);
-
+        
+        return editingNotification; // Возвращаем элемент для дальнейшего управления
     }
 
     // функции для жанров
