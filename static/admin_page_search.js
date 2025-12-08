@@ -693,7 +693,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function saveCategoryChanges(item, inputField, originalName) {
+    async function saveCategoryChanges(item, inputField, originalName) {
         const newName = inputField.value.trim();
         
         if (!newName) {
@@ -711,6 +711,12 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('query', 'update_category');
         formData.append('based_input', originalName); 
         formData.append('new_input', newName); 
+        
+
+        if(await checkItemExists(newName, "category_exists")) {
+            createWarningMessage(`Категория "${newName}" уже существует, изменения не сохранены`);
+            return;
+        }
 
         $.ajax({
             url: 'uploader.php',
@@ -721,6 +727,7 @@ document.addEventListener('DOMContentLoaded', function() {
             dataType: 'json',
             success: function(response) {
                 if (response.status === true) {
+                    editingNotification.remove();
                     updateCategoryUI(item, newName);
                 } else {
                     const messageElement = document.getElementById('category_message');
@@ -775,6 +782,18 @@ document.addEventListener('DOMContentLoaded', function() {
         initCategoryHandlers();
         
         console.log('Категория обновлена на: ' + newName);
+    }
+
+    function createWarningMessage(message_text){
+        const editingNotification = document.createElement('div');
+        editingNotification.className = 'editing-notification';
+        editingNotification.textContent = 'ведется редактирование';
+        editingNotification.style.cssText = 'color: #ff9800; font-size: 12px; font-style: italic; margin-top: 5px;';
+
+        const actionsContainer = item.querySelector('.category-actions');
+
+        actionsContainer.parentNode.insertBefore(editingNotification, actionsContainer.nextSibling);
+
     }
 
     // функции для жанров
