@@ -53,7 +53,6 @@ function logoutUser() {
     session_destroy();
 }
 
-// Инициализируем сессию при подключении файла
 initSession();
 
 ?>
