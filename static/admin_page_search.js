@@ -718,16 +718,12 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        let editingNotification = null;
-
         if(await checkItemExists(newName, "category_exists")) {
-            editingNotification = createWarningMessage(actionsContainer, `Категория "${newName}" уже существует, изменения не сохранены`);
+            createWarningMessage(actionsContainer, `Категория "${newName}" уже существует, изменения не сохранены`);
             return;
         }
 
-        const allNotifications = document.querySelectorAll('.editing-notification');
-        allNotifications.forEach(notification => notification.remove());
-
+        deleteWarningMessage();
 
         $.ajax({
             url: 'uploader.php',
@@ -797,12 +793,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const editingNotification = document.createElement('div');
         editingNotification.className = 'editing-notification';
         editingNotification.textContent = message_text;
-        editingNotification.style.cssText = 'color: #ff9800; font-size: 12px; font-style: italic; margin-top: 5px;';
         
         // Вставляем уведомление после контейнера действий
         actionsContainer.parentNode.insertBefore(editingNotification, actionsContainer.nextSibling);
+    }
+
+    function deleteWarningMessage(){
+        const allNotifications = document.querySelectorAll('.editing-notification');
         
-        return editingNotification; // Возвращаем элемент для дальнейшего управления
+        if(allNotifications.length > 0)
+        {
+            allNotifications.forEach(notification => notification.remove());
+        }
     }
 
     // функции для жанров
