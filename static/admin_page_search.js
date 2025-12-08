@@ -725,6 +725,11 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        if (editingNotification) {
+            editingNotification.remove();
+        }
+
+
         $.ajax({
             url: 'uploader.php',
             type: 'POST',
@@ -734,10 +739,6 @@ document.addEventListener('DOMContentLoaded', function() {
             dataType: 'json',
             success: function(response) {
                 if (response.status === true) {
-                    if (editingNotification)
-                    {
-                        editingNotification.remove();
-                    }
                     updateCategoryUI(item, newName);
                 } else {
                     const messageElement = document.getElementById('category_message');
