@@ -725,9 +725,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        if (editingNotification) {
-            editingNotification.remove();
-        }
+        const allNotifications = document.querySelectorAll('.editing-notification');
+        allNotifications.forEach(notification => notification.remove());
 
 
         $.ajax({
