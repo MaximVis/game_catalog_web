@@ -718,8 +718,10 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        let editingNotification;
+
         if(await checkItemExists(newName, "category_exists")) {
-            const editingNotification = createWarningMessage(item, actionsContainer, `Категория "${newName}" уже существует, изменения не сохранены`);
+            editingNotification = createWarningMessage(actionsContainer, `Категория "${newName}" уже существует, изменения не сохранены`);
             return;
         }
 
@@ -732,7 +734,10 @@ document.addEventListener('DOMContentLoaded', function() {
             dataType: 'json',
             success: function(response) {
                 if (response.status === true) {
-                    editingNotification.remove();
+                    if (editingNotification)
+                    {
+                        editingNotification.remove();
+                    }
                     updateCategoryUI(item, newName);
                 } else {
                     const messageElement = document.getElementById('category_message');
