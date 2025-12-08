@@ -718,7 +718,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        let editingNotification;
+        let editingNotification = null;
 
         if(await checkItemExists(newName, "category_exists")) {
             editingNotification = createWarningMessage(actionsContainer, `Категория "${newName}" уже существует, изменения не сохранены`);

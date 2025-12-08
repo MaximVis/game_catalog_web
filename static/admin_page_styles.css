@@ -177,10 +177,26 @@
     overflow: hidden;
     box-sizing: border-box;
     padding-left: 10px;
+    display: flex;
+    flex-wrap: wrap; 
+    position: relative;
 }
 
 .game_text_main{
     font-size: 24px;
+}
+
+.editing-notification {
+    color: rgb(255, 152, 0);
+    font-size: 12px;
+    font-style: italic;
+    width: 100%;
+    flex-basis: 100%;
+    order: 999;
+}
+
+.developer_text_main{
+    flex: 1; 
 }
 
 
