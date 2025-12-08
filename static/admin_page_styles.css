@@ -187,9 +187,8 @@
 }
 
 .editing-notification {
-    color: rgb(255, 152, 0);
+    color: rgb(255, 0, 0);
     font-size: 12px;
-    font-style: italic;
     width: 100%;
     flex-basis: 100%;
     order: 999;
