@@ -110,7 +110,7 @@
 .category-actions, .genre-actions {
     display: flex;
     gap: 10px;
-    margin-left: 15px;
+    padding-right: 10px;
 }
 
 .action-btn {
