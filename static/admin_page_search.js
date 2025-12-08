@@ -694,6 +694,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function saveCategoryChanges(item, inputField, originalName) {
+
+        deleteWarningMessage();
+
         const newName = inputField.value.trim();
         
         if (!newName) {
@@ -723,8 +726,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        deleteWarningMessage();
-
         $.ajax({
             url: 'uploader.php',
             type: 'POST',
@@ -736,17 +737,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.status === true) {
                     updateCategoryUI(item, newName);
                 } else {
-                    const messageElement = document.getElementById('category_message');
-                    if (messageElement) {
-                        messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
-                    }
+                    createWarningMessage(actionsContainer, "Ошибка сервера, сохранение не выполнено");
+                    return;
                 }
             },
             error: function(xhr, status, error) {
-                const messageElement = document.getElementById('category_message');
-                if (messageElement) {
-                    messageElement.textContent = "Ошибка сервера, сохранение не выполнено";
-                }
+                createWarningMessage(actionsContainer, "Ошибка сервера, сохранение не выполнено");
+                return;
             }
         });
     }
@@ -765,6 +762,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         
         delete item.dataset.initialized;
+        deleteWarningMessage();
         
         initCategoryHandlers();
     }
@@ -787,24 +785,6 @@ document.addEventListener('DOMContentLoaded', function() {
         initCategoryHandlers();
         
         console.log('Категория обновлена на: ' + newName);
-    }
-
-    function createWarningMessage(actionsContainer, message_text) {
-        const editingNotification = document.createElement('div');
-        editingNotification.className = 'editing-notification';
-        editingNotification.textContent = message_text;
-        
-        // Вставляем уведомление после контейнера действий
-        actionsContainer.parentNode.insertBefore(editingNotification, actionsContainer.nextSibling);
-    }
-
-    function deleteWarningMessage(){
-        const allNotifications = document.querySelectorAll('.editing-notification');
-        
-        if(allNotifications.length > 0)
-        {
-            allNotifications.forEach(notification => notification.remove());
-        }
     }
 
     // функции для жанров
@@ -973,7 +953,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function saveGenreChanges(item, inputField, originalName) {
+    async function saveGenreChanges(item, inputField, originalName) {
         const newName = inputField.value.trim();
         
         if (!newName) {
@@ -991,6 +971,12 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('query', 'update_genre');
         formData.append('based_input', originalName); 
         formData.append('new_input', newName); 
+
+        if(await checkItemExists(newName, "genre_exists")) {
+            createWarningMessage(actionsContainer, `Жанр "${newName}" уже существует, изменения не сохранены`);
+            return;
+        }
+
 
         $.ajax({
             url: 'uploader.php',
@@ -1055,6 +1041,24 @@ document.addEventListener('DOMContentLoaded', function() {
         initGenreHandlers();
         
         console.log('Жанр обновлен на: ' + newName);
+    }
+
+    function createWarningMessage(actionsContainer, message_text) {
+        const editingNotification = document.createElement('div');
+        editingNotification.className = 'editing-notification';
+        editingNotification.textContent = message_text;
+        
+        // Вставляем уведомление после контейнера действий
+        actionsContainer.parentNode.insertBefore(editingNotification, actionsContainer.nextSibling);
+    }
+
+    function deleteWarningMessage(){
+        const allNotifications = document.querySelectorAll('.editing-notification');
+        
+        if(allNotifications.length > 0)
+        {
+            allNotifications.forEach(notification => notification.remove());
+        }
     }
 
 });
