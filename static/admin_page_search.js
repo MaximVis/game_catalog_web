@@ -712,6 +712,11 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('based_input', originalName); 
         formData.append('new_input', newName); 
         
+        const actionsContainer = item.querySelector('.category-actions');
+        if (!actionsContainer) {
+            console.error('Не найден контейнер действий для категории');
+            return;
+        }
 
         if(await checkItemExists(newName, "category_exists")) {
             const editingNotification = createWarningMessage(item, actionsContainer, `Категория "${newName}" уже существует, изменения не сохранены`);
@@ -774,8 +779,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const actionsContainer = item.querySelector('.category-actions');
         actionsContainer.innerHTML = `
             <button type="button" class="action-btn edit-btn" title="Редактировать категорию">✏️</button>
-            <button type="button" class="action-btn delete-btn" title="Удалить категорию">🗑️</button>
-        `;
+            <button type="button" class="action-btn delete-btn" title="Удалить категорию">🗑️</button>`;
         
         delete item.dataset.initialized;
         
@@ -784,7 +788,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Категория обновлена на: ' + newName);
     }
 
-    function createWarningMessage(item, actionsContainer, message_text) {
+    function createWarningMessage(actionsContainer, message_text) {
         const editingNotification = document.createElement('div');
         editingNotification.className = 'editing-notification';
         editingNotification.textContent = message_text;
