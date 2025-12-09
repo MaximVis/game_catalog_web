@@ -1,4 +1,4 @@
-// Скрипт для предпросмотра на странице игры
+// скрипт для предпросмотра на странице игры
 document.addEventListener('DOMContentLoaded', function() {
     const fileInput = document.getElementById('screensaver');
     const gameNameInput = document.getElementById('game_name');
@@ -6,20 +6,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const gameDescriptionInput = document.getElementById('game_description');
     const cancelBtn = document.getElementById('cancelUpload');
     
-    // Элементы предпросмотра карточек
+    // элементы предпросмотра карточек
     const previewImages = document.querySelectorAll('.img_game_main_max, .img_game_main_min');
     const previewTitles = document.querySelectorAll('.game_text_main');
     const previewGenresMax = document.getElementById('previewGenres');
     const previewGenresMin = document.getElementById('previewGenresMin');
     const selectedGenresContainer = document.getElementById('selectedGenres');
     
-    // Элементы предпросмотра страницы игры
+    // элементы предпросмотра страницы игры
     const previewGameName = document.getElementById('previewGameName');
     const previewDeveloper = document.getElementById('previewDeveloper');
     const previewGameImage = document.getElementById('previewGameImage');
     const previewGameDescription = document.getElementById('previewGameDescription');
     
-    // Сохраняем исходные src изображений для возможности отката
+    // сохранение исходного изображения для возможности отката
     previewImages.forEach(img => {
         img.setAttribute('data-original-src', img.src);
     });
@@ -27,13 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
         previewGameImage.setAttribute('data-original-src', previewGameImage.src);
     }
     
-    // Обновление картинки в превью при загрузке файла
+    // обновление картинки в превью при загрузке файла
     function previewImage(input) {
         if (input.files && input.files[0]) {
             const reader = new FileReader();
             
             reader.onload = function(e) {
-                // Обновляем все превью изображений (карточки и страница)
+                // обновление превью изображений (карточки и страница)
                 previewImages.forEach(img => {
                     img.src = e.target.result;
                 });
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     previewGameImage.src = e.target.result;
                 }
                 
-                // Показываем кнопку отмены
+                // кнопка отмены
                 if (cancelBtn) {
                     cancelBtn.style.display = 'inline-block';
                 }
@@ -49,23 +49,23 @@ document.addEventListener('DOMContentLoaded', function() {
             
             reader.readAsDataURL(input.files[0]);
         } else {
-            // Если файл не выбран (загрузчик закрыт без выбора)
+            // если файл не выбран (загрузчик закрыт без выбора)
             cancelImageUpload();
         }
     }
     
-    // Отмена загрузки картинки
+    // отмена загрузки картинки
     function cancelImageUpload() {
         const fileInput = document.getElementById('screensaver');
         const cancelBtn = document.getElementById('cancelUpload');
         const defaultImage = 'game_imgs/0.png';
         
-        // Сбрасываем поле файла
+        // сброс поля файла
         if (fileInput) {
             fileInput.value = '';
         }
         
-        // Возвращаем исходные изображения для всех превью
+        // исходные изображения для всех превью
         previewImages.forEach(img => {
             const originalImage = img.getAttribute('data-original-src') || defaultImage;
             img.src = originalImage;
@@ -76,18 +76,17 @@ document.addEventListener('DOMContentLoaded', function() {
             previewGameImage.src = originalImage;
         }
         
-        // Скрываем кнопку отмены
         if (cancelBtn) {
             cancelBtn.style.display = 'none';
         }
     }
     
-    // Обновление названия в превью при вводе
+    // обновление названия в превью при вводе
     function updatePreviewTitle() {
         const previewTitles = document.querySelectorAll('.game_text_main');
         const gameName = gameNameInput.value || 'Название игры';
         
-        // Обновляем превью в карточках
+        // обновляем превью в карточках
         previewTitles.forEach(titleElement => {
             const titleText = titleElement.childNodes[0];
             if (titleText && titleText.nodeType === Node.TEXT_NODE) {
@@ -98,13 +97,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Обновляем превью на странице игры
+        // обновляем превью на странице игры
         if (previewGameName) {
             previewGameName.textContent = gameName;
         }
     }
     
-    // Обновление разработчика в превью
+    // обновление разработчика в превью
     function updatePreviewDeveloper() {
         const developer = developerInput.value || 'Имя разработчика';
         if (previewDeveloper) {
@@ -112,16 +111,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Обновление описания в превью
+    // обновление описания в превью
     function updatePreviewDescription() {
         const description = gameDescriptionInput.value || 'Описание игры';
         if (previewGameDescription) {
-            // Сохраняем переносы строк
             previewGameDescription.innerHTML = description.replace(/\n/g, '<br>');
         }
     }
     
-    // Обновление жанров в превью
+    // обновление жанров в превью
     function updatePreviewGenres() {
         const genreTags = selectedGenresContainer.querySelectorAll('.genre_tag');
         const genreNames = Array.from(genreTags).map(tag => {
@@ -143,14 +141,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Инициализация обработчиков событий
+    // инициализация обработчиков событий
     if (fileInput) {
         fileInput.addEventListener('change', function() {
             previewImage(this);
         });
         
         fileInput.addEventListener('click', function() {
-            // Сохраняем текущее состояние на случай отмены
             previewImages.forEach(img => {
                 if (!img.getAttribute('data-original-src')) {
                     img.setAttribute('data-original-src', img.src);
@@ -178,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
         gameDescriptionInput.addEventListener('input', updatePreviewDescription);
     }
     
-    // Обновление жанров при изменении выбранных жанров
+    // обновление жанров при изменении выбранных жанров
     if (selectedGenresContainer) {
         const observer = new MutationObserver(updatePreviewGenres);
         observer.observe(selectedGenresContainer, {
@@ -188,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Инициализация предпросмотра при загрузке
     updatePreviewTitle();
     updatePreviewDeveloper();
     updatePreviewDescription();
