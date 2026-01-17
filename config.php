@@ -42,10 +42,10 @@
 // }
 
 
-define('DB_HOST', 'dpg-d4hmosodl3ps739sqiog-a.frankfurt-postgres.render.com');
-define('DB_NAME', 'gc_db_6xp1');
-define('DB_USER', 'muser');
-define('DB_PASS', 'XmwimDkkGWUrKFYQeKPjSszOgS4MDJ9w');
+define('DB_HOST', 'dpg-d5lnljcmrvns73ekjfa0-a.frankfurt-postgres.render.com');
+define('DB_NAME', 'game_catalog_db_p7ox');
+define('DB_USER', 'game_catalog_db_p7ox_user');
+define('DB_PASS', 'eFgZEvIAWV93dMzMMBsY87GlN2UF6pn4');
 define('DB_PORT', '5432');
 define('DB_SSLMODE', 'require');
 
