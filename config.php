@@ -58,7 +58,9 @@ function get_db_connection() {
     $dbconn = pg_connect($connection_string);
     
     if (!$dbconn) {
-        die("Ошибка подключения к базе данных");
+        http_response_code(500);
+        require_once 'page_500.php';
+        exit();
     }
     
     return $dbconn;
