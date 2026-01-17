@@ -50,15 +50,29 @@ define('DB_PORT', '5432');
 define('DB_SSLMODE', 'require');
 
 function get_db_connection() {
+
+    $old_error_reporting = error_reporting(0);
+
     $connection_string = sprintf(
         "host=%s port=%s dbname=%s user=%s password=%s sslmode=%s",
         DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS, DB_SSLMODE
     );
     
     $dbconn = pg_connect($connection_string);
+
+    error_reporting($old_error_reporting);
     
     if (!$dbconn) {
-        http_response_code(500);
+        // Проверяем, были ли отправлены заголовки
+        if (!headers_sent()) {
+            http_response_code(500);
+        }
+        
+        // Очищаем любой вывод
+        if (ob_get_length()) {
+            ob_clean();
+        }
+        
         require_once 'page_500.php';
         exit();
     }
